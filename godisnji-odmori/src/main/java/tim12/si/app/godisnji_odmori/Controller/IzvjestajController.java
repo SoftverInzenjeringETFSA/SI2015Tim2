@@ -8,13 +8,14 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import tim12.si.app.godisnji_odmori.ViewModel.*;
+import tim12.si.app.godisnji_odmori.ZaposlenikNotFound;
 import tim12.si.app.godisnji_odmori.Model.*;
 import tim12.si.app.godisnji_odmori.View.*;
 
 public class IzvjestajController {
 	
 	private Session session;
-	
+	private SektorController sc;
 	public IzvjestajController(Session session)
 	{
 		this.session=session;
@@ -24,30 +25,25 @@ public class IzvjestajController {
 	/** 
 	 * @param godina
 	 */
-	public List<IzvjestajVM> dajGodisnjiIzvjestaj(int godina) {
+	public List<IzvjestajVM> dajGodisnjiIzvjestaj(Sektor sektor,int godina) {
 		IzvjestajVM ivm= new IzvjestajVM();
 		List<IzvjestajVM> lista = new ArrayList<IzvjestajVM>();	
 		
-		/*Transaction t = session.beginTransaction();
 		
-		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana(z.ime, z.prezime, "
-				+ "(Select count(p1.prisustvo_id) From Prisustvo p1, Zaposlenik z1 WHere p1.zaposlenik_id = z1.zaposlenik_id AND z1.zaposlenik_id = z.zaposlenik_id), "
-				+ "(Select count(o1.odsustvo_id) FROM Zaposlenik z1, Odsustvo o1 WHERE o1.zaposlenik_id = z1.zaposlenik_id AND z1.zaposlenik_id = z.zaposlenik_id), "
-				+ "z.broj_dana_godisnjeg - (Select count(o1.odsustvo_id) FROM Zaposlenik z1, Odsustvo o1, TipOdsustva to1 WHERE z1.zaposlenik_id = z.zaposlenik_id  AND z1.zaposlenik_id = o1.zaposlenik_id AND o1.tip = to1.id_odsustva AND to1.id_odsustva = 1)) "
-				+ " FROM Zaposlenik z, Sektor s WHERE z.sektor_id = s.sektor_id  AND s.naziv = :sektor";
+		String naziv=sc.dajNazivSektora((int)sektor.getSektor_id());
+		Transaction t = session.beginTransaction();
+		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana(s.naziv, z.ime, "+
+				"z.prezime, count(p.prisustvo_id)"
+				+ "FROM Zaposlenik z, Sektor s, Prisustvo p "
+				+ "WHERE s.naziv = :naziv AND s.sektor_id = z.sektor_id AND z.zaposlenik_id = p.zaposlenik_id AND YEAR(p.datum)=:godina";
 		Query q = session.createQuery(hql);
-		q.setString("sektor", sektor);
+		q.setString("sektor", naziv);
 		
 		List l = q.list();
 		t.commit();
-		ArrayList<ZaposlenikBrDana> zvm = new ArrayList<ZaposlenikBrDana>();
 		for (int i=0; i<l.size(); i++)
-				zvm.add((ZaposlenikBrDana) l.get(i));
-		return zvm;*/
-		
-		
-		
-		
+				lista.add((IzvjestajVM) l.get(i));
+
 		return lista;
 	}
 

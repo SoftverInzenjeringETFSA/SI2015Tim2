@@ -7,17 +7,27 @@ public class IzvjestajZapVM {
 	public String zaposlenikPrezime;
 	public int radniDani;
 	public int neradniDani;
+	public int godina;
 	
 	//Konstruktori
-	public IzvjestajZapVM (String sektor, String zaposlenikIme, String zaposlenikPrezime, int radniDani, int neradniDani)
+	public IzvjestajZapVM (String sektor, String zaposlenikIme, String zaposlenikPrezime, int radniDani, int neradniDani, int godina)
 	{
 		this.sektor=sektor;
 		this.zaposlenikIme=zaposlenikIme;
 		this.zaposlenikPrezime=zaposlenikPrezime;
 		this.radniDani=radniDani;
 		this.neradniDani=neradniDani;
+		this.godina=godina;
 	}
 	
+	public int getGodina() {
+		return godina;
+	}
+
+	public void setGodina(int godina) {
+		this.godina = godina;
+	}
+
 	public IzvjestajZapVM() {}
 	
 	//Getteri i setteri

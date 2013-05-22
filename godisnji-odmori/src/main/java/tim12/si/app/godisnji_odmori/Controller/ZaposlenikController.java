@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 import javax.print.DocFlavor.STRING;
+import javax.swing.JOptionPane;
 import javax.swing.text.StyledEditorKit.BoldAction;
 
 import org.hibernate.Criteria;
@@ -210,6 +211,26 @@ public class ZaposlenikController
 				zvm.add((ZaposlenikBrDana) l.get(i));
 		return zvm;
 	}
+	public ArrayList<ZaposlenikBrDana> DajZaposlenikeZaGodisnjiIzvjestaj(String sektor,int godina)  {
+			Transaction t = session.beginTransaction();
+			//JOptionPane.showMessageDialog(null, godina);
+		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana(z.ime, z.prezime, "
+				+ "(Select count(p1.prisustvo_id) From Prisustvo p1, Zaposlenik z1 WHere p1.zaposlenik_id = z1.zaposlenik_id AND z1.zaposlenik_id = z.zaposlenik_id AND YEAR(p1.datum)=:godina ), "
+				+ "(Select count(o1.odsustvo_id) FROM Zaposlenik z1, Odsustvo o1 WHERE o1.zaposlenik_id = z1.zaposlenik_id AND z1.zaposlenik_id = z.zaposlenik_id AND YEAR(o1.datum)=:godina),"
+				+ "z.broj_dana_godisnjeg - (Select count(o1.odsustvo_id) FROM Zaposlenik z1, Odsustvo o1, TipOdsustva to1 WHERE z1.zaposlenik_id = z.zaposlenik_id  AND z1.zaposlenik_id = o1.zaposlenik_id AND o1.tip = to1.id_odsustva AND to1.id_odsustva = 1)) "	
+				+ " FROM Zaposlenik z, Sektor s WHERE z.sektor_id = s.sektor_id  AND s.naziv = :sektor";
+		Query q = session.createQuery(hql);
+		q.setString("sektor", sektor);
+		q.setInteger("godina", godina);
+		List l = q.list();
+		t.commit();
+		ArrayList<ZaposlenikBrDana> zvm = new ArrayList<ZaposlenikBrDana>();
+		for (int i=0; i<l.size(); i++)
+				zvm.add((ZaposlenikBrDana) l.get(i));
+	
+		return zvm;
+	}
+	
 	
 	public ZaposlenikBrDana DajZaposlenikViewModelZaZahtjev(String username) throws ZaposlenikNotFound{
 		Transaction t = session.beginTransaction();

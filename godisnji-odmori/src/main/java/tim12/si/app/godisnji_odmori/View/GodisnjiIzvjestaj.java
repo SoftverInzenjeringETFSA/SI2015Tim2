@@ -42,6 +42,7 @@ public class GodisnjiIzvjestaj {
 	private SektorController sc;
 	private JYearChooser godina;
 	private IzvjestajController ic;
+
 	final static Logger logger = Logger.getLogger(GodisnjiIzvjestaj.class);
 	
 	/**
@@ -68,8 +69,9 @@ public class GodisnjiIzvjestaj {
 	 */
 	public GodisnjiIzvjestaj() {
 		
+
 		initialize();
-		frmSolutionsiGodisnji.setVisible(true);	
+		frmSolutionsiGodisnji.setVisible(true);
 		DefaultTableModel model1 = (DefaultTableModel) table.getModel();
     	
     	int rowCount = model1.getRowCount();
@@ -78,14 +80,11 @@ public class GodisnjiIzvjestaj {
     	    model1.removeRow(i);
     	}
 		
-    	
+		
 		try{
 			SektorController sc = new SektorController();
 			String sektori[] = sc.dajSveSektore();
-			
-			System.out.println("tusam");
 			cbSektori.setModel(new DefaultComboBoxModel(sektori));
-			
 			cbSektori.setSelectedIndex(-1);
 			
 			cbSektori.addActionListener (new ActionListener () {
@@ -94,23 +93,31 @@ public class GodisnjiIzvjestaj {
 			    	try {
 			    	sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 			    	ZaposlenikController zc = new ZaposlenikController(sess);
-			    	ArrayList<ZaposlenikBrDana> al = zc.DajZaposlenikeZaIzvjestaj((String)cbSektori.getSelectedItem());
+			    	ArrayList<ZaposlenikBrDana> al = zc.DajZaposlenikeZaGodisnjiIzvjestaj((String)cbSektori.getSelectedItem(),godina.getValue());
 			    	DefaultTableModel model = (DefaultTableModel) table.getModel();
-			    	//List<IzvjestajVM> lista=ic.dajGodisnjiIzvjestaj(godina.getValue());
+			    	
 			    	int rowCount = model.getRowCount();
 			    	//Remove rows one by one from the end of the table
 			    	for (int i = rowCount - 1; i >= 0; i--) {
 			    	    model.removeRow(i);
 			    	}
-			    	
+			    int brojiRadne=0;
+			    int brojiNeradne=0;
 			    	for (int i=0; i<al.size(); i++)
 			    	{
 			    		
-			    		Object[] objs = {(String)cbSektori.getSelectedItem(), al.get(i).getZaposlenikIme(), al.get(i).getZaposlenikPrezime(), al.get(i).getRadniDani(), al.get(i).getNeradniDani() };
+			    		Object[] objs = {(String)cbSektori.getSelectedItem(), al.get(i).getZaposlenikIme(), al.get(i).getZaposlenikPrezime(), al.get(i).getRadniDani(), al.get(i).getPreostaloSlobodnih()};
 			    		model.addRow(objs);
+			    		brojiRadne+=al.get(i).getRadniDani();
+			    		brojiNeradne+=al.get(i).getPreostaloSlobodnih();
+			    		
+			    		
 			    	}
+			    	Object[] objs = {"", "", "Ukupno: ", brojiRadne,brojiNeradne};
+			    	model.addRow(objs);
 			    	
 			    	
+			    	//events = oc.dajSvaOdsustva((String)combobox.getSelectedItem());
 			    	
 			    }
 			    	catch (Exception er) {
@@ -118,7 +125,7 @@ public class GodisnjiIzvjestaj {
 			    		logger.error(er);
 						JOptionPane.showMessageDialog(frame, er.getMessage(),
 								"Greška", JOptionPane.INFORMATION_MESSAGE);
-						
+
 
 					} finally {
 						if (sess != null)
@@ -137,6 +144,7 @@ public class GodisnjiIzvjestaj {
 		} finally {
 			
 		}
+			
 	}
 
 	/**
