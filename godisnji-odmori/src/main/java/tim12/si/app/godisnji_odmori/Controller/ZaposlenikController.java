@@ -215,6 +215,8 @@ public class ZaposlenikController
 	
 	public ArrayList<ZaposlenikBrDana> DajZaposlenikeZaMjesecniIzvjestaj(String sektor, int mjesec)  {
 		Transaction t = session.beginTransaction();
+		//JOptionPane.showMessageDialog(null, mjesec);
+		mjesec=mjesec+1;
 	String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana(z.ime, z.prezime, "
 			+ "(Select count(p1.prisustvo_id) From Prisustvo p1, Zaposlenik z1 WHERE p1.zaposlenik_id = z1.zaposlenik_id AND z1.zaposlenik_id = z.zaposlenik_id AND MONTH(p1.datum)=:mjesec ), "
 			+ "(Select count(o1.odsustvo_id) FROM Zaposlenik z1, Odsustvo o1 WHERE o1.zaposlenik_id = z1.zaposlenik_id AND z1.zaposlenik_id = z.zaposlenik_id AND MONTH(o1.datum)=:mjesec),"

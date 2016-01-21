@@ -45,7 +45,7 @@ public class MjesecniIzvjestaj {
 	private JTable table;
 	private JComboBox comboBox;
 	private JButton btnPrikaiIzvjetaj;
-	private JMonthChooser monthChooser;
+	private JMonthChooser mjesec;
 	private JDialog frame;
 	final static Logger logger = Logger.getLogger(MjesecniIzvjestaj.class);
 
@@ -91,7 +91,7 @@ public class MjesecniIzvjestaj {
 			    	try {
 			    	sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 			    	ZaposlenikController zc = new ZaposlenikController(sess);
-			    	ArrayList<ZaposlenikBrDana> al = zc.DajZaposlenikeZaGodisnjiIzvjestaj((String)comboBox.getSelectedItem(), monthChooser.getMonth());
+			    	ArrayList<ZaposlenikBrDana> al = zc.DajZaposlenikeZaMjesecniIzvjestaj((String)comboBox.getSelectedItem(), mjesec.getMonth());
 			    	DefaultTableModel model = (DefaultTableModel) table.getModel();
 			    	
 			    	int rowCount = model.getRowCount();
@@ -189,9 +189,9 @@ public class MjesecniIzvjestaj {
 		lblMjesec.setBounds(206, 12, 59, 20);
 		frmSolutionsiMjesecni.getContentPane().add(lblMjesec);
 		
-		monthChooser = new JMonthChooser();
-		monthChooser.setBounds(261, 11, 117, 22);
-		frmSolutionsiMjesecni.getContentPane().add(monthChooser);
+		mjesec = new JMonthChooser();
+		mjesec.setBounds(251, 11, 117, 22);
+		frmSolutionsiMjesecni.getContentPane().add(mjesec);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmSolutionsiMjesecni.setJMenuBar(menuBar);
