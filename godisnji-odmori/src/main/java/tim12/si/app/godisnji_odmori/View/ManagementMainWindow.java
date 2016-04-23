@@ -29,15 +29,17 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
 import java.util.Calendar;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ManagementMainWindow {
 
 	private JFrame frmSolutionsi;
 	private JTextField txtHaso;
 	private JTextField txtHasi;
-	private JTextField txtkcl;
 	private JTextField textField_2;
-	private JTextField txtSarajevo;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_3;
@@ -143,7 +145,12 @@ public class ManagementMainWindow {
 		lblZahtjevaekaju.setBounds(54, 25, 207, 14);
 		panel_1.add(lblZahtjevaekaju);
 		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(54, 50, 221, 131);
+		panel_1.add(scrollPane_1);
+		
 		JList list = new JList();
+		scrollPane_1.setViewportView(list);
 		list.setModel(new AbstractListModel() {
 			String[] values = new String[] {"Zahtjev od Haso Hasi\u0107"};
 			public int getSize() {
@@ -153,19 +160,17 @@ public class ManagementMainWindow {
 				return values[index];
 			}
 		});
-		list.setBounds(54, 50, 221, 131);
-		panel_1.add(list);
 		
 		JButton btnPogledajDetalje = new JButton("Pogledaj detalje zahtjeva");
-		btnPogledajDetalje.setBounds(30, 208, 189, 23);
+		btnPogledajDetalje.setBounds(54, 245, 221, 23);
 		panel_1.add(btnPogledajDetalje);
 		
 		JButton btnNewButton = new JButton("Odustani");
-		btnNewButton.setBounds(234, 208, 89, 23);
+		btnNewButton.setBounds(179, 208, 96, 23);
 		panel_1.add(btnNewButton);
 		
-		JButton btnPregledKalendara = new JButton("Pregled kalendara");
-		btnPregledKalendara.setBounds(113, 245, 141, 23);
+		JButton btnPregledKalendara = new JButton("Kalendar");
+		btnPregledKalendara.setBounds(54, 208, 96, 23);
 		panel_1.add(btnPregledKalendara);
 		
 		JPanel panel_2 = new JPanel();
@@ -175,7 +180,7 @@ public class ManagementMainWindow {
 		JPanel panel_3 = new JPanel();
 		panel_3.setLayout(null);
 		panel_3.setBorder(new TitledBorder(null, "Osnovni podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_3.setBounds(35, 11, 249, 216);
+		panel_3.setBounds(35, 11, 289, 126);
 		panel_2.add(panel_3);
 		
 		JLabel label_2 = new JLabel("Id zaposlenika:");
@@ -190,75 +195,39 @@ public class ManagementMainWindow {
 		label_8.setBounds(10, 71, 120, 14);
 		panel_3.add(label_8);
 		
-		JLabel label_9 = new JLabel("Broj li\u010Dne karte:");
-		label_9.setBounds(10, 95, 120, 14);
-		panel_3.add(label_9);
-		
-		JLabel label_10 = new JLabel("Spol:");
-		label_10.setBounds(10, 119, 120, 14);
-		panel_3.add(label_10);
-		
 		JLabel label_11 = new JLabel("Datum ro\u0111enja:");
-		label_11.setBounds(10, 143, 120, 14);
+		label_11.setBounds(10, 96, 120, 14);
 		panel_3.add(label_11);
-		
-		JLabel label_12 = new JLabel("Mjesto ro\u0111enja:");
-		label_12.setBounds(10, 167, 120, 14);
-		panel_3.add(label_12);
-		
-		JLabel label_13 = new JLabel("Nacionalnost:");
-		label_13.setBounds(10, 191, 120, 14);
-		panel_3.add(label_13);
 		
 		JLabel label_14 = new JLabel("12352");
 		label_14.setBounds(148, 23, 91, 14);
 		panel_3.add(label_14);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(140, 116, 99, 20);
-		panel_3.add(comboBox);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(140, 188, 99, 20);
-		panel_3.add(comboBox_1);
-		
 		txtHaso = new JTextField();
 		txtHaso.setText("Haso");
-		txtHaso.setBounds(140, 44, 99, 20);
+		txtHaso.setBounds(140, 44, 139, 20);
 		panel_3.add(txtHaso);
 		txtHaso.setColumns(10);
 		
 		txtHasi = new JTextField();
 		txtHasi.setText("Hasi\u0107");
-		txtHasi.setBounds(140, 68, 99, 20);
+		txtHasi.setBounds(140, 68, 139, 20);
 		panel_3.add(txtHasi);
 		txtHasi.setColumns(10);
 		
-		txtkcl = new JTextField();
-		txtkcl.setText("125KcL3");
-		txtkcl.setBounds(140, 92, 99, 20);
-		panel_3.add(txtkcl);
-		txtkcl.setColumns(10);
-		
 		textField_2 = new JTextField();
 		textField_2.setText("15.02.1978.");
-		textField_2.setBounds(140, 140, 99, 20);
+		textField_2.setBounds(140, 93, 139, 20);
 		panel_3.add(textField_2);
 		textField_2.setColumns(10);
 		
-		txtSarajevo = new JTextField();
-		txtSarajevo.setText("Sarajevo");
-		txtSarajevo.setBounds(140, 164, 99, 20);
-		panel_3.add(txtSarajevo);
-		txtSarajevo.setColumns(10);
-		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBorder(new TitledBorder(null, "Podaci o zaposlenju", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_5.setBounds(322, 139, 285, 88);
+		panel_5.setBounds(35, 136, 289, 99);
 		panel_2.add(panel_5);
 		panel_5.setLayout(null);
 		
-		JLabel lblDatumZaposlenja = new JLabel("Datum zaposlenja:");
+		JLabel lblDatumZaposlenja = new JLabel("Broj dana odmora:");
 		lblDatumZaposlenja.setBounds(10, 30, 107, 14);
 		panel_5.add(lblDatumZaposlenja);
 		
@@ -267,20 +236,20 @@ public class ManagementMainWindow {
 		panel_5.add(lblSektor);
 		
 		textField_3 = new JTextField();
-		textField_3.setText("25.10.2001.");
-		textField_3.setBounds(127, 27, 128, 20);
+		textField_3.setText("20");
+		textField_3.setBounds(141, 27, 138, 20);
 		panel_5.add(textField_3);
 		textField_3.setColumns(10);
 		
 		JComboBox comboBox_2 = new JComboBox();
 		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Ekonomski"}));
-		comboBox_2.setBounds(127, 52, 128, 20);
+		comboBox_2.setBounds(141, 52, 138, 20);
 		panel_5.add(comboBox_2);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setLayout(null);
 		panel_4.setBorder(new TitledBorder(null, "Kontakt podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_4.setBounds(322, 33, 285, 100);
+		panel_4.setBounds(35, 235, 289, 99);
 		panel_2.add(panel_4);
 		
 		JLabel label_15 = new JLabel("E-mail:");
@@ -294,17 +263,17 @@ public class ManagementMainWindow {
 		textField = new JTextField();
 		textField.setText("hhasic1@gmail.com");
 		textField.setColumns(10);
-		textField.setBounds(127, 23, 148, 20);
+		textField.setBounds(127, 23, 152, 20);
 		panel_4.add(textField);
 		
 		textField_1 = new JTextField();
 		textField_1.setText("+387 62 256 364");
 		textField_1.setColumns(10);
-		textField_1.setBounds(127, 48, 148, 20);
+		textField_1.setBounds(127, 48, 152, 20);
 		panel_4.add(textField_1);
 		
 		JLabel label_17 = new JLabel("Ismeta Mujezinovi\u0107a 23/5");
-		label_17.setBounds(127, 76, 148, 14);
+		label_17.setBounds(127, 76, 152, 14);
 		panel_4.add(label_17);
 		
 		JLabel label_18 = new JLabel("Adresa:");
@@ -313,38 +282,53 @@ public class ManagementMainWindow {
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Zaposlenici", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_6.setBounds(10, 238, 672, 110);
+		panel_6.setBounds(334, 11, 354, 323);
 		panel_2.add(panel_6);
 		panel_6.setLayout(null);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 23, 344, 289);
+		panel_6.add(scrollPane);
+		
 		table = new JTable();
+		scrollPane.setViewportView(table);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"Id zaposlenika", "Ime", "Prezime", "Sektor", "Broj dana odmora"},
+				{"13212", "Osman", "Lav", "IT", "15"},
 				{"12352", "Haso", "Hasi\u0107", "Ekonomski", "20"},
 			},
 			new String[] {
-				"New column", "New column", "New column", "New column", "New column"
+				"ID zaposlenika", "Ime", "Prezime", "Sektor", "Broj dana godi\u0161njeg"
 			}
-		));
-		table.setBounds(10, 23, 652, 76);
-		panel_6.add(table);
+		) {
+			boolean[] columnEditables = new boolean[] {
+				true, true, true, true, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
 		
-		JButton btnDodajZaposlenika = new JButton("Dodaj novog zaposlenika");
-		btnDodajZaposlenika.setBounds(495, 7, 187, 23);
+		JButton btnDodajZaposlenika = new JButton("Dodaj zaposlenika");
+		btnDodajZaposlenika.setBounds(45, 356, 119, 23);
 		panel_2.add(btnDodajZaposlenika);
 		
-		JButton btnOdustani = new JButton("Odustani");
-		btnOdustani.setBounds(593, 356, 89, 23);
-		panel_2.add(btnOdustani);
-		
-		JButton btnUrediPodatkeO = new JButton("Uredi podatke o zaposleniku");
-		btnUrediPodatkeO.setBounds(210, 356, 195, 23);
+		JButton btnUrediPodatkeO = new JButton("Uredi zaposlenika");
+		btnUrediPodatkeO.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnUrediPodatkeO.setBounds(386, 356, 117, 23);
 		panel_2.add(btnUrediPodatkeO);
 		
-		JButton btnObriiZaposlenika = new JButton("Obri\u0161i zaposlenika");
-		btnObriiZaposlenika.setBounds(415, 356, 168, 23);
+		JButton btnObriiZaposlenika = new JButton("Obriši zaposlenika");
+		btnObriiZaposlenika.setBounds(527, 356, 117, 23);
 		panel_2.add(btnObriiZaposlenika);
+		
+		JButton btnSpasiPromjene = new JButton("Spasi promjene");
+		btnSpasiPromjene.setBounds(198, 356, 117, 23);
+		panel_2.add(btnSpasiPromjene);
 		
 		JPanel panel_7 = new JPanel();
 		tabbedPane.addTab("Sektori", null, panel_7, null);
@@ -352,7 +336,7 @@ public class ManagementMainWindow {
 		
 		JPanel panel_8 = new JPanel();
 		panel_8.setBorder(new TitledBorder(null, "Sektori", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_8.setBounds(10, 63, 258, 305);
+		panel_8.setBounds(393, 27, 258, 305);
 		panel_7.add(panel_8);
 		panel_8.setLayout(null);
 		
@@ -371,7 +355,7 @@ public class ManagementMainWindow {
 		
 		JPanel panel_9 = new JPanel();
 		panel_9.setBorder(new TitledBorder(null, "Podaci o sektoru", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_9.setBounds(278, 63, 349, 234);
+		panel_9.setBounds(10, 27, 349, 305);
 		panel_7.add(panel_9);
 		panel_9.setLayout(null);
 		
@@ -423,36 +407,40 @@ public class ManagementMainWindow {
 		txtrEkonomskiSektorSe.setBounds(89, 185, 250, 38);
 		panel_9.add(txtrEkonomskiSektorSe);
 		
-		JButton btnDodajNoviSektor = new JButton("Dodaj novi sektor");
-		btnDodajNoviSektor.setBounds(385, 23, 156, 23);
+		JButton btnDodajNoviSektor = new JButton("Dodaj sektor");
+		btnDodajNoviSektor.setBounds(26, 356, 124, 23);
 		panel_7.add(btnDodajNoviSektor);
 		
-		JButton btnSpasiIzmjene = new JButton("Spasi izmjene");
-		btnSpasiIzmjene.setBounds(551, 23, 131, 23);
+		JButton btnSpasiIzmjene = new JButton("Uredi sektor");
+		btnSpasiIzmjene.setBounds(393, 356, 124, 23);
 		panel_7.add(btnSpasiIzmjene);
 		
-		JButton btnOdustani_1 = new JButton("Odustani");
-		btnOdustani_1.setBounds(593, 345, 89, 23);
-		panel_7.add(btnOdustani_1);
-		
-		JButton btnObriiSektor = new JButton("Obri\u0161i sektor");
-		btnObriiSektor.setBounds(460, 345, 123, 23);
+		JButton btnObriiSektor = new JButton("Obriši sektor");
+		btnObriiSektor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnObriiSektor.setBounds(527, 356, 124, 23);
 		panel_7.add(btnObriiSektor);
+		
+		JButton btnSpasiPromjene_1 = new JButton("Spasi promjene");
+		btnSpasiPromjene_1.setBounds(186, 356, 124, 23);
+		panel_7.add(btnSpasiPromjene_1);
 		
 		JPanel panel_10 = new JPanel();
 		tabbedPane.addTab("Izvje�taji", null, panel_10, null);
 		panel_10.setLayout(null);
 		
 		JButton btnNewButton_1 = new JButton("Mjese\u010Dni izvje\u0161taj");
-		btnNewButton_1.setBounds(65, 94, 251, 103);
+		btnNewButton_1.setBounds(217, 70, 251, 49);
 		panel_10.add(btnNewButton_1);
 		
 		JButton btnGodinjiIzvjetaj = new JButton("Godi\u0161nji izvje\u0161taj");
-		btnGodinjiIzvjetaj.setBounds(326, 94, 251, 103);
+		btnGodinjiIzvjetaj.setBounds(217, 155, 251, 49);
 		panel_10.add(btnGodinjiIzvjetaj);
 		
-		JButton btnIzvjetajOPreostalom = new JButton("Izvje\u0161taj o broju dana godi\u0161njeg odmora za svakog uposlenika");
-		btnIzvjetajOPreostalom.setBounds(162, 208, 331, 110);
+		JButton btnIzvjetajOPreostalom = new JButton("Izvještaj o preostalim danima");
+		btnIzvjetajOPreostalom.setBounds(217, 237, 251, 49);
 		panel_10.add(btnIzvjetajOPreostalom);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -467,7 +455,7 @@ public class ManagementMainWindow {
 		JMenu mnOdjava = new JMenu("Odjava");
 		menuBar.add(mnOdjava);
 		
-		JMenuItem mntmLogOut = new JMenuItem("Log out");
+		JMenuItem mntmLogOut = new JMenuItem("Odjavi se");
 		mnOdjava.add(mntmLogOut);
 	}
 }

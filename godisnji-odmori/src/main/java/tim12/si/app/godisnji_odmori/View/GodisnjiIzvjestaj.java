@@ -8,6 +8,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JScrollPane;
 
 public class GodisnjiIzvjestaj {
 
@@ -48,35 +49,40 @@ public class GodisnjiIzvjestaj {
 		frmSolutionsiGodisnji.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSolutionsiGodisnji.getContentPane().setLayout(null);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 11, 639, 102);
+		frmSolutionsiGodisnji.getContentPane().add(scrollPane);
+		
 		table = new JTable();
+		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"Sektor", "Ime", "Prezime", "Radni dani", "Neradni dani", "Ukupno radni", "Ukupno neradni"},
 				{"IT", "Haso", "Hasi\u0107", "125", "10", "125", "10"},
 				{null, null, null, null, null, null, null},
 				{null, null, null, null, "Ukupno:", "125", "10"},
 			},
 			new String[] {
-				"New column", "New column", "New column", "New column", "New column", "New column", "New column"
+				"Sektor", "Ime", "Prezime", "Radni dani", "Neradni dani", "Ukupno radni", "Ukupno neradni"
 			}
 		));
-		table.setBounds(10, 11, 639, 64);
-		frmSolutionsiGodisnji.getContentPane().add(table);
+		table.getColumnModel().getColumn(6).setPreferredWidth(99);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 130, 639, 99);
+		frmSolutionsiGodisnji.getContentPane().add(scrollPane_1);
 		
 		table_1 = new JTable();
+		scrollPane_1.setViewportView(table_1);
 		table_1.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"Sektor", "Ime", "Prezime", "Radni dani", "Neradni dani", "Ukupno radni ", "Ukupno neradni"},
 				{"Ekonomski", "Hanuma", "Rami\u0107", "130", "0", "130", "0"},
 				{null, null, null, null, null, null, null},
 				{null, null, null, "", "Ukupno:", "130", "0"},
 			},
 			new String[] {
-				"New column", "New column", "New column", "New column", "New column", "New column", "New column"
+				"Sektor", "Ime", "Prezime", "Radni dani", "Neradni dani", "Ukupno radni", "Ukupno neradni"
 			}
 		));
-		table_1.setBounds(10, 86, 639, 64);
-		frmSolutionsiGodisnji.getContentPane().add(table_1);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmSolutionsiGodisnji.setJMenuBar(menuBar);
@@ -90,7 +96,7 @@ public class GodisnjiIzvjestaj {
 		JMenu mnOdjava = new JMenu("Odjava");
 		menuBar.add(mnOdjava);
 		
-		JMenuItem mntmLogout = new JMenuItem("Log out");
+		JMenuItem mntmLogout = new JMenuItem("Odjavi se");
 		mnOdjava.add(mntmLogout);
 	}
 

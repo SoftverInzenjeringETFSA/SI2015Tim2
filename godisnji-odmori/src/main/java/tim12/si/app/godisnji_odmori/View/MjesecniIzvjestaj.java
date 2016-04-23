@@ -8,6 +8,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JScrollPane;
 
 public class MjesecniIzvjestaj {
 
@@ -47,22 +48,26 @@ public class MjesecniIzvjestaj {
 		frmSolutionsiMjesecni.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSolutionsiMjesecni.getContentPane().setLayout(null);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 11, 712, 224);
+		frmSolutionsiMjesecni.getContentPane().add(scrollPane);
+		
 		table = new JTable();
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"Sektor", "Ime", "Prezime", "Radni dani", "Neradni dani", "Ukupno radni ", "Ukupno neradni"},
-				{"Ekonomski", "Haso", "Hasi\u0107", "125", "10", "125", "10"},
-				{"IT", "Hanuma", "Rami\u0107", "253", "25", "253", "25"},
 				{null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null},
-				{null, null, null, null, "Ukupno:", "378", "35"},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, "Ukupno:", null, null},
 			},
 			new String[] {
-				"New column", "New column", "New column", "New column", "New column", "New column", "New column"
+				"Sektor", "Ime", "Prezime", "Radni dani", "Neradni dani", "Ukupno radni", "Ukupno neradni"
 			}
 		));
-		table.setBounds(10, 11, 729, 240);
-		frmSolutionsiMjesecni.getContentPane().add(table);
+		table.getColumnModel().getColumn(3).setMinWidth(60);
+		table.getColumnModel().getColumn(6).setPreferredWidth(167);
+		scrollPane.setViewportView(table);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmSolutionsiMjesecni.setJMenuBar(menuBar);
@@ -76,7 +81,7 @@ public class MjesecniIzvjestaj {
 		JMenu mnOdjava = new JMenu("Odjava");
 		menuBar.add(mnOdjava);
 		
-		JMenuItem mntmLogOut = new JMenuItem("Log out");
+		JMenuItem mntmLogOut = new JMenuItem("Odjavi se");
 		mnOdjava.add(mntmLogOut);
 	}
 }

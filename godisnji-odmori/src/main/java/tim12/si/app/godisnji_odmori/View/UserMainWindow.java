@@ -134,7 +134,7 @@ public class UserMainWindow {
 		
 		JPanel panel_10 = new JPanel();
 		panel_10.setBorder(new TitledBorder(null, "Osnovni podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_10.setBounds(26, 11, 249, 216);
+		panel_10.setBounds(26, 11, 285, 126);
 		panel_9.add(panel_10);
 		panel_10.setLayout(null);
 		
@@ -150,63 +150,29 @@ public class UserMainWindow {
 		label_24.setBounds(10, 71, 120, 14);
 		panel_10.add(label_24);
 		
-		JLabel label_25 = new JLabel("Broj li\u010Dne karte:");
-		label_25.setBounds(10, 95, 120, 14);
-		panel_10.add(label_25);
-		
-		JLabel label_26 = new JLabel("Spol:");
-		label_26.setBounds(10, 119, 120, 14);
-		panel_10.add(label_26);
-		
 		JLabel label_27 = new JLabel("Datum ro\u0111enja:");
-		label_27.setBounds(10, 143, 120, 14);
+		label_27.setBounds(10, 96, 120, 14);
 		panel_10.add(label_27);
 		
-		JLabel label_28 = new JLabel("Mjesto ro\u0111enja:");
-		label_28.setBounds(10, 167, 120, 14);
-		panel_10.add(label_28);
-		
-		JLabel label_29 = new JLabel("Nacionalnost:");
-		label_29.setBounds(10, 191, 120, 14);
-		panel_10.add(label_29);
-		
 		JLabel label_19 = new JLabel("12352");
-		label_19.setBounds(148, 23, 91, 14);
+		label_19.setBounds(184, 23, 91, 14);
 		panel_10.add(label_19);
 		
 		JLabel lblHaso = new JLabel("Haso");
-		lblHaso.setBounds(148, 47, 91, 14);
+		lblHaso.setBounds(184, 47, 91, 14);
 		panel_10.add(lblHaso);
 		
 		JLabel lblHasi = new JLabel("Hasi\u0107");
-		lblHasi.setBounds(148, 71, 91, 14);
+		lblHasi.setBounds(184, 71, 91, 14);
 		panel_10.add(lblHasi);
 		
-		JLabel lblkcl = new JLabel("125KcL3");
-		lblkcl.setBounds(148, 95, 91, 14);
-		panel_10.add(lblkcl);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Mu\u0161ki", "\u017Denski"}));
-		comboBox_1.setBounds(148, 116, 91, 20);
-		panel_10.add(comboBox_1);
-		
 		JLabel label_30 = new JLabel("15.02.1978.");
-		label_30.setBounds(148, 143, 91, 14);
+		label_30.setBounds(184, 96, 91, 14);
 		panel_10.add(label_30);
-		
-		JLabel lblSarajevo = new JLabel("Sarajevo");
-		lblSarajevo.setBounds(148, 167, 91, 14);
-		panel_10.add(lblSarajevo);
-		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Nepoznato", "Bo\u0161njak", "Srbin", "Hrvat", "Rom", "Ostalo"}));
-		comboBox_2.setBounds(148, 188, 91, 20);
-		panel_10.add(comboBox_2);
 		
 		JPanel panel_11 = new JPanel();
 		panel_11.setBorder(new TitledBorder(null, "Kontakt podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_11.setBounds(313, 11, 285, 94);
+		panel_11.setBounds(26, 154, 285, 104);
 		panel_9.add(panel_11);
 		panel_11.setLayout(null);
 		
@@ -240,7 +206,7 @@ public class UserMainWindow {
 		
 		JPanel panel_12 = new JPanel();
 		panel_12.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Promjena \u0161ifre", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_12.setBounds(313, 116, 285, 111);
+		panel_12.setBounds(326, 11, 285, 126);
 		panel_9.add(panel_12);
 		panel_12.setLayout(null);
 		
@@ -270,7 +236,7 @@ public class UserMainWindow {
 		
 		JPanel panel_13 = new JPanel();
 		panel_13.setBorder(new TitledBorder(null, "Informacije", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_13.setBounds(26, 259, 572, 110);
+		panel_13.setBounds(26, 293, 585, 110);
 		panel_9.add(panel_13);
 		panel_13.setLayout(null);
 		
@@ -315,12 +281,8 @@ public class UserMainWindow {
 		panel_13.add(label_4);
 		
 		JButton btnSpasiPromjene = new JButton("Spasi promjene");
-		btnSpasiPromjene.setBounds(351, 380, 142, 23);
+		btnSpasiPromjene.setBounds(469, 154, 142, 23);
 		panel_9.add(btnSpasiPromjene);
-		
-		JButton btnOdustani_2 = new JButton("Odustani");
-		btnOdustani_2.setBounds(503, 380, 89, 23);
-		panel_9.add(btnOdustani_2);
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Godi�nji odmor", null, panel_1, null);
@@ -340,12 +302,8 @@ public class UserMainWindow {
 		panel_1.add(lblDanaGodinjegOdmora);
 		
 		JButton btnRezervisiGodisnjiOdmor = new JButton("Rezervisi godisnji odmor");
-		btnRezervisiGodisnjiOdmor.setBounds(280, 368, 195, 23);
+		btnRezervisiGodisnjiOdmor.setBounds(385, 367, 195, 23);
 		panel_1.add(btnRezervisiGodisnjiOdmor);
-		
-		JButton btnOdustani = new JButton("Odustani");
-		btnOdustani.setBounds(502, 368, 89, 23);
-		panel_1.add(btnOdustani);
 		
 		JPanel panel_8 = new JPanel();
 		panel_8.setBorder(new TitledBorder(null, "Vremenski interval", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -374,12 +332,8 @@ public class UserMainWindow {
 		panel_2.setLayout(null);
 		
 		JButton button = new JButton("Kreiraj zahtjev");
-		button.setBounds(359, 380, 132, 23);
+		button.setBounds(439, 380, 132, 23);
 		panel_2.add(button);
-		
-		JButton button_1 = new JButton("Odustani");
-		button_1.setBounds(505, 380, 89, 23);
-		panel_2.add(button_1);
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setBorder(new TitledBorder(null, "Vremenski interval", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -414,7 +368,7 @@ public class UserMainWindow {
 		panel_7.add(textArea);
 		
 		JCheckBox chckbxNalazSpecijaliste = new JCheckBox("Nalaz specijaliste");
-		chckbxNalazSpecijaliste.setBounds(55, 347, 132, 23);
+		chckbxNalazSpecijaliste.setBounds(79, 354, 132, 23);
 		panel_2.add(chckbxNalazSpecijaliste);
 		
 		JPanel panel_3 = new JPanel();
@@ -465,12 +419,8 @@ public class UserMainWindow {
 		panel_5.add(textArea_1);
 		
 		JButton btnKreirajZahtjev = new JButton("Kreiraj zahtjev");
-		btnKreirajZahtjev.setBounds(339, 368, 140, 23);
+		btnKreirajZahtjev.setBounds(401, 368, 140, 23);
 		panel_3.add(btnKreirajZahtjev);
-		
-		JButton btnOdustani_1 = new JButton("Odustani");
-		btnOdustani_1.setBounds(504, 368, 89, 23);
-		panel_3.add(btnOdustani_1);
 		
 		JPanel panel_14 = new JPanel();
 		panel_14.setBorder(new TitledBorder(null, "Vrijeme odsustva", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -506,7 +456,7 @@ public class UserMainWindow {
 		JMenu mnOdjava = new JMenu("Odjava");
 		menuBar.add(mnOdjava);
 		
-		JMenuItem mntmLogOut = new JMenuItem("Log out");
+		JMenuItem mntmLogOut = new JMenuItem("Odjavi se");
 		mnOdjava.add(mntmLogOut);
 	}
 }

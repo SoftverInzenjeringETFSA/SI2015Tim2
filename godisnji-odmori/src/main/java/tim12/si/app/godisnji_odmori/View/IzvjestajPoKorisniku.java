@@ -8,12 +8,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JScrollPane;
 
 public class IzvjestajPoKorisniku {
 
 	private JFrame frmSolutionsiIzvjetaj;
 	private JTable table;
-	private JTable table_1;
 
 	/**
 	 * Launch the application.
@@ -48,36 +48,24 @@ public class IzvjestajPoKorisniku {
 		frmSolutionsiIzvjetaj.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSolutionsiIzvjetaj.getContentPane().setLayout(null);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 11, 644, 80);
+		frmSolutionsiIzvjetaj.getContentPane().add(scrollPane);
+		
 		table = new JTable();
+		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"Sektor", "Ime", "Prezime", "Radni dani", "Neradni dani", "Preostalo slobodnih"},
 				{"Ekonomski", "Haso", "Hasi\u0107", "125", "15", "10"},
 				{"Ekonomski", "Haso", "Hasi\u0107", "263", "17", "8"},
 				{null, null, null, null, null, null},
 				{null, null, null, null, "", ""},
 			},
 			new String[] {
-				"New column", "New column", "New column", "New column", "New column", "New column"
+				"Sektor", "Ime", "Prezime", "Radni dani", "Neradni dani", "Preostalo slobodno"
 			}
 		));
-		table.setBounds(10, 11, 644, 80);
-		frmSolutionsiIzvjetaj.getContentPane().add(table);
-		
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Sektor", "Ime", "Prezime", "Radni dani", "Neradni dani", "Preostalo slobodnih"},
-				{"IT", "Ramo", "Rami\u0107", "150", "10", "20"},
-				{"IT", "Ramo", null, "253", "20", "10"},
-				{null, null, null, null, null, null},
-			},
-			new String[] {
-				"New column", "New column", "New column", "New column", "New column", "New column"
-			}
-		));
-		table_1.setBounds(10, 107, 644, 80);
-		frmSolutionsiIzvjetaj.getContentPane().add(table_1);
+		table.getColumnModel().getColumn(5).setPreferredWidth(122);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmSolutionsiIzvjetaj.setJMenuBar(menuBar);
@@ -91,7 +79,7 @@ public class IzvjestajPoKorisniku {
 		JMenu mnOdjava = new JMenu("Odjava");
 		menuBar.add(mnOdjava);
 		
-		JMenuItem mntmLogOut = new JMenuItem("Log out");
+		JMenuItem mntmLogOut = new JMenuItem("Odjavi se");
 		mnOdjava.add(mntmLogOut);
 	}
 
