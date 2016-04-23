@@ -1,5 +1,8 @@
 package tim12.si.app.godisnji_odmori.Controller;
 
+import tim12.si.app.godisnji_odmori.ViewModel.*;
+import tim12.si.app.godisnji_odmori.Model.*;
+
 public class TipOdsustvaController {
 	
 
