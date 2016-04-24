@@ -1,6 +1,6 @@
 package tim12.si.app.godisnji_odmori;
 
-import junit.framework.Test;
+
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import tim12.si.app.godisnji_odmori.Model.*;
@@ -8,73 +8,112 @@ import tim12.si.app.godisnji_odmori.Controller.*;
 import tim12.si.app.godisnji_odmori.ViewModel.*;
 import java.util.Date;
 import java.util.List;
+import org.junit.Before;
+import org.junit.Test;
 
 public class OdsustvoTest extends TestCase {
 	
 	OdsustvoController oC = new OdsustvoController ();
 	
+	 
+	@Test
 	public void testdodajOdsustvo () {
 		
-		Odsustvo odsustvo = new Odsustvo();
-		odsustvo.setZaposlenik_id(0);
-		odsustvo.setDatum( new Date (7/25/2016));
-		odsustvo.setOpis("Testni opis");
-		odsustvo.setTip(1);
+		
+		int brojSvihOdsustva= oC.dajSvaOdsustva().size();
+		
+		oC.dodajOdsustvo(kreirajOdsustvo(new Date(25/11/2016),"Ajla", "Alic","Bolest"));
 		
 		
+		assertEquals(oC.dajSvaOdsustva().size(), brojSvihOdsustva+1);
 		
-		oC.dodajOdsustvo(odsustvo);
-		
-		//Koda nakon sto se upise u bazu provjeriti da li je stvarno upisano
-		
-		
-	
-		assertTrue(true);
 		
           }
-	
+	@Test
 	public void testdajOdsustvaPoTipu () {
 		
 		
+		oC.dodajOdsustvo(kreirajOdsustvo(new Date(25/7/2016),"Kerim", "Balic","Godisnji"));
+		oC.dodajOdsustvo(kreirajOdsustvo(new Date(25/7/2016),"Kerim", "Balic","Godisnji"));
+		
 		List<OdsustvoVM> listaPoTipu = oC.dajOdsustvaPoTipu(1);
 		
-		//Provjeriti broj ovih koje dobijamo sa brojem u bazi
+		//TIpOdsustvva godisnji treba u bazi da bude pod ID 1 ??
 		
-		
-		assertTrue(true);
+		assertEquals(listaPoTipu.size(),2);
 		
           }
-	
+	@Test
 	public void testdajOdsustvaPoZaposleniku () {
 		
-         List<OdsustvoVM> listaPoTipu = oC.dajOdsutvaPoZaposleniku(1);
+		oC.dodajOdsustvo(kreirajOdsustvo(new Date(25/7/2016),"Kerim", "Balic","Bolest"));
+		oC.dodajOdsustvo(kreirajOdsustvo(new Date(25/7/2016),"Kerim", "Balic","Bolest"));
+		oC.dodajOdsustvo(kreirajOdsustvo(new Date(25/7/2016),"Kerim", "Balic","Bolest"));
 		
-		//Provjeriti broj ovih koje dobijamo sa brojem u bazi
+		List<OdsustvoVM> listaPoZaposleniku = oC.dajOdsutvaPoZaposleniku(1);
 		
-		assertTrue(true);
+		//Zaposlenik Kerim Balic treba u bazi da bude pod ID 1 ??
+		
+		assertEquals(listaPoZaposleniku.size(),3);
 		
           }
-	
+	@Test
 	public void testdajOdsustvaPoPeriodu () {
 		
+		oC.dodajOdsustvo(kreirajOdsustvo(new Date(5/6/2016),"Kerim", "Balic","Bolest"));
+		oC.dodajOdsustvo(kreirajOdsustvo(new Date(25/6/2016),"Kerim", "Balic","Bolest"));
+		oC.dodajOdsustvo(kreirajOdsustvo(new Date(16/6/2016),"Kerim", "Balic","Bolest"));
+		
+		List<OdsustvoVM> listaPoPeriodu=oC.dajOdsustvaPoPeriodu(new Date (10/6/2016), new Date(28/6/2016));
 		
 		
-		
-		assertTrue(true);
+		assertEquals(listaPoPeriodu.size(),2);
 		
           }
+	@Test
 	public void testdajOdsustvaPoSektoru () {
 		
 		
-		assertTrue(true);
+		oC.dodajOdsustvo(kreirajOdsustvo(new Date(25/7/2016),"Timur", "Cerimagic","Bolest"));
+		oC.dodajOdsustvo(kreirajOdsustvo(new Date(25/7/2016),"Timur", "Cerimagic","Bolest"));
+		oC.dodajOdsustvo(kreirajOdsustvo(new Date(25/7/2016),"Timur", "Cerimagic","Bolest"));
+		
+		List<OdsustvoVM> listaPoSektoru=oC.dajOdsustvaPoSektoru(2);
+		
+		//timur treba biti u sektori razlictiom od kerima i ajle i da mu je sketor ID 2
+		
+		assertEquals(listaPoSektoru.size(),3);
 		
           }
+	@Test
 	public void testdajSvaOdsustva () {
 		
 		
-		assertTrue(true);
+		
+		assertEquals(oC.dajSvaOdsustva(),44);
+		
+		//44 je prouzvoljan broj i treba provjerit u bazi koje ce biti prije nego sto se testira
 		
           }
+	
+	public OdsustvoVM kreirajOdsustvo (Date datum, String ime, String prezime,String tip) {
+		
+		OdsustvoVM odsustvo = new OdsustvoVM();
+		
+		odsustvo.zaposlenikIme=ime;
+		odsustvo.zaposlenikPrezime=prezime;
+		odsustvo.datum= datum;
+		odsustvo.tipOdsustva=tip;
+		odsustvo.opis="Imam visoku temperaturu";
+		
+		return odsustvo;
+		
+			
+	
+
+
+		}
+	
 
 	
 

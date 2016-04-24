@@ -10,7 +10,7 @@ public class OdsustvoController {
 	 * 
 	 * @param odsustvo
 	 */
-	public void dodajOdsustvo(Odsustvo odsustvo) {
+	public void dodajOdsustvo(OdsustvoVM odsustvo) {
 		// TODO - implement OdsustvoController.dodajOdsustvo
 		throw new UnsupportedOperationException();
 	}
