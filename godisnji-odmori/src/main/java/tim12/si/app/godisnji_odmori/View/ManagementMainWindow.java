@@ -33,13 +33,13 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDateChooser;
 
 public class ManagementMainWindow {
 
 	private JFrame frmSolutionsi;
 	private JTextField txtHaso;
 	private JTextField txtHasi;
-	private JTextField textField_2;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_3;
@@ -75,16 +75,16 @@ public class ManagementMainWindow {
 	private void initialize() {
 		frmSolutionsi = new JFrame();
 		frmSolutionsi.setTitle("SolutionSI");
-		frmSolutionsi.setBounds(100, 100, 733, 489);
+		frmSolutionsi.setBounds(100, 100, 840, 489);
 		frmSolutionsi.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSolutionsi.getContentPane().setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 11, 697, 407);
+		tabbedPane.setBounds(10, 11, 804, 407);
 		frmSolutionsi.getContentPane().add(tabbedPane);
 		
 		JPanel panel = new JPanel();
-		tabbedPane.addTab("Po�etna", null, panel, null);
+		tabbedPane.addTab("Početna", null, panel, null);
 		panel.setLayout(null);
 		
 		JLabel label = new JLabel("");
@@ -108,7 +108,7 @@ public class ManagementMainWindow {
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(label_3);
 		
-		JLabel lblMenadmentLjudskihResursa = new JLabel("Menad\u017Ement ljudskih resursa");
+		JLabel lblMenadmentLjudskihResursa = new JLabel("Menadžment ljudskih resursa");
 		lblMenadmentLjudskihResursa.setBounds(70, 258, 219, 20);
 		lblMenadmentLjudskihResursa.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(lblMenadmentLjudskihResursa);
@@ -123,11 +123,11 @@ public class ManagementMainWindow {
 		label_6.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(label_6);
 		
-		JLabel label_7 = new JLabel("Za ovu godinu Vam je ostalo da iskoristite jo\u0161 20 dana od godi\u0161njeg odmora");
-		label_7.setBounds(10, 346, 468, 26);
-		label_7.setForeground(new Color(128, 0, 0));
-		label_7.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
-		panel.add(label_7);
+		JLabel lblZaOvuGodinu = new JLabel("Za ovu godinu Vam je ostalo da iskoristite još ");
+		lblZaOvuGodinu.setBounds(10, 346, 292, 26);
+		lblZaOvuGodinu.setForeground(new Color(128, 0, 0));
+		lblZaOvuGodinu.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
+		panel.add(lblZaOvuGodinu);
 		
 		JLabel lblMujoMuji = new JLabel("Mujo Muji\u0107");
 		lblMujoMuji.setBounds(30, 150, 89, 26);
@@ -135,24 +135,24 @@ public class ManagementMainWindow {
 		panel.add(lblMujoMuji);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(349, 36, 333, 279);
+		panel_1.setBounds(421, 36, 368, 279);
 		panel_1.setBorder(new TitledBorder(null, "Zahtjevi za obradu", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblZahtjevaekaju = new JLabel("1 zahtjev \u010Deka na obradu");
+		JLabel lblZahtjevaekaju = new JLabel("1 zahtjev čeka na obradu");
 		lblZahtjevaekaju.setHorizontalAlignment(SwingConstants.CENTER);
 		lblZahtjevaekaju.setBounds(54, 25, 207, 14);
 		panel_1.add(lblZahtjevaekaju);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(54, 50, 221, 131);
+		scrollPane_1.setBounds(54, 50, 269, 131);
 		panel_1.add(scrollPane_1);
 		
 		JList list = new JList();
 		scrollPane_1.setViewportView(list);
 		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Zahtjev od Haso Hasi\u0107"};
+			String[] values = new String[] {"Zahtjev od Haso Hasić"};
 			public int getSize() {
 				return values.length;
 			}
@@ -162,12 +162,24 @@ public class ManagementMainWindow {
 		});
 		
 		JButton btnPogledajDetalje = new JButton("Pogledaj zahtjev");
-		btnPogledajDetalje.setBounds(153, 245, 122, 23);
+		btnPogledajDetalje.setBounds(175, 245, 148, 23);
 		panel_1.add(btnPogledajDetalje);
 		
 		JButton btnPregledKalendara = new JButton("Kalendar");
-		btnPregledKalendara.setBounds(54, 245, 89, 23);
+		btnPregledKalendara.setBounds(54, 245, 111, 23);
 		panel_1.add(btnPregledKalendara);
+		
+		JLabel label_7 = new JLabel("20");
+		label_7.setForeground(new Color(128, 0, 0));
+		label_7.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
+		label_7.setBounds(302, 347, 30, 25);
+		panel.add(label_7);
+		
+		JLabel lblDanaOdGodinjeg = new JLabel("dana od godišnjeg odmora");
+		lblDanaOdGodinjeg.setForeground(new Color(128, 0, 0));
+		lblDanaOdGodinjeg.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
+		lblDanaOdGodinjeg.setBounds(330, 346, 160, 26);
+		panel.add(lblDanaOdGodinjeg);
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Zaposlenici", null, panel_2, null);
@@ -191,7 +203,7 @@ public class ManagementMainWindow {
 		label_8.setBounds(10, 71, 120, 14);
 		panel_3.add(label_8);
 		
-		JLabel label_11 = new JLabel("Datum ro\u0111enja:");
+		JLabel label_11 = new JLabel("Datum rođenja:");
 		label_11.setBounds(10, 96, 120, 14);
 		panel_3.add(label_11);
 		
@@ -206,16 +218,15 @@ public class ManagementMainWindow {
 		txtHaso.setColumns(10);
 		
 		txtHasi = new JTextField();
-		txtHasi.setText("Hasi\u0107");
+		txtHasi.setText("Hasić");
 		txtHasi.setBounds(140, 68, 139, 20);
 		panel_3.add(txtHasi);
 		txtHasi.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setText("15.02.1978.");
-		textField_2.setBounds(140, 93, 139, 20);
-		panel_3.add(textField_2);
-		textField_2.setColumns(10);
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setDateFormatString("yyyy-MM-dd");
+		dateChooser.setBounds(140, 96, 139, 19);
+		panel_3.add(dateChooser);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBorder(new TitledBorder(null, "Podaci o zaposlenju", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -268,7 +279,7 @@ public class ManagementMainWindow {
 		textField_1.setBounds(127, 48, 152, 20);
 		panel_4.add(textField_1);
 		
-		JLabel label_17 = new JLabel("Ismeta Mujezinovi\u0107a 23/5");
+		JLabel label_17 = new JLabel("Ismeta Mujezinovića 23/5");
 		label_17.setBounds(127, 76, 152, 14);
 		panel_4.add(label_17);
 		
@@ -278,12 +289,12 @@ public class ManagementMainWindow {
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Zaposlenici", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_6.setBounds(334, 11, 354, 323);
+		panel_6.setBounds(334, 11, 455, 323);
 		panel_2.add(panel_6);
 		panel_6.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 23, 344, 289);
+		scrollPane.setBounds(10, 23, 435, 289);
 		panel_6.add(scrollPane);
 		
 		table = new JTable();
@@ -305,9 +316,11 @@ public class ManagementMainWindow {
 				return columnEditables[column];
 			}
 		});
+		table.getColumnModel().getColumn(0).setPreferredWidth(86);
+		table.getColumnModel().getColumn(4).setPreferredWidth(120);
 		
 		JButton btnDodajZaposlenika = new JButton("Dodaj zaposlenika");
-		btnDodajZaposlenika.setBounds(45, 356, 119, 23);
+		btnDodajZaposlenika.setBounds(35, 356, 143, 23);
 		panel_2.add(btnDodajZaposlenika);
 		
 		JButton btnUrediPodatkeO = new JButton("Uredi zaposlenika");
@@ -315,15 +328,15 @@ public class ManagementMainWindow {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnUrediPodatkeO.setBounds(386, 356, 117, 23);
+		btnUrediPodatkeO.setBounds(408, 356, 140, 23);
 		panel_2.add(btnUrediPodatkeO);
 		
 		JButton btnObriiZaposlenika = new JButton("Obriši zaposlenika");
-		btnObriiZaposlenika.setBounds(527, 356, 117, 23);
+		btnObriiZaposlenika.setBounds(610, 356, 140, 23);
 		panel_2.add(btnObriiZaposlenika);
 		
 		JButton btnSpasiPromjene = new JButton("Spasi promjene");
-		btnSpasiPromjene.setBounds(198, 356, 117, 23);
+		btnSpasiPromjene.setBounds(198, 356, 126, 23);
 		panel_2.add(btnSpasiPromjene);
 		
 		JPanel panel_7 = new JPanel();
@@ -332,13 +345,18 @@ public class ManagementMainWindow {
 		
 		JPanel panel_8 = new JPanel();
 		panel_8.setBorder(new TitledBorder(null, "Sektori", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_8.setBounds(393, 27, 258, 305);
+		panel_8.setBounds(478, 27, 282, 305);
 		panel_7.add(panel_8);
 		panel_8.setLayout(null);
 		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(10, 25, 262, 269);
+		panel_8.add(scrollPane_2);
+		
 		JList list_1 = new JList();
+		scrollPane_2.setViewportView(list_1);
 		list_1.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Ekonomski sektor", "Tehni\u010Dki sektor", "Pravni sektor", "IT sektor"};
+			String[] values = new String[] {"Ekonomski sektor", "Tehnički sektor", "Pravni sektor", "IT sektor"};
 			public int getSize() {
 				return values.length;
 			}
@@ -346,12 +364,10 @@ public class ManagementMainWindow {
 				return values[index];
 			}
 		});
-		list_1.setBounds(10, 25, 238, 269);
-		panel_8.add(list_1);
 		
 		JPanel panel_9 = new JPanel();
 		panel_9.setBorder(new TitledBorder(null, "Podaci o sektoru", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_9.setBounds(10, 27, 349, 305);
+		panel_9.setBounds(35, 27, 349, 305);
 		panel_7.add(panel_9);
 		panel_9.setLayout(null);
 		
@@ -395,20 +411,24 @@ public class ManagementMainWindow {
 		spinner_2.setBounds(295, 144, 44, 20);
 		panel_9.add(spinner_2);
 		
+		JScrollPane scrollPane_3 = new JScrollPane();
+		scrollPane_3.setBounds(89, 185, 250, 89);
+		panel_9.add(scrollPane_3);
+		
 		JTextArea txtrEkonomskiSektorSe = new JTextArea();
+		txtrEkonomskiSektorSe.setLineWrap(true);
+		scrollPane_3.setViewportView(txtrEkonomskiSektorSe);
 		txtrEkonomskiSektorSe.setToolTipText("");
 		txtrEkonomskiSektorSe.setFont(new Font("Monospaced", Font.PLAIN, 12));
 		txtrEkonomskiSektorSe.setRows(10);
 		txtrEkonomskiSektorSe.setText("Ekonomski sektor se bavi ekonomskim \r\nposlovima kompanije");
-		txtrEkonomskiSektorSe.setBounds(89, 185, 250, 38);
-		panel_9.add(txtrEkonomskiSektorSe);
 		
 		JButton btnDodajNoviSektor = new JButton("Dodaj sektor");
-		btnDodajNoviSektor.setBounds(26, 356, 124, 23);
+		btnDodajNoviSektor.setBounds(59, 356, 124, 23);
 		panel_7.add(btnDodajNoviSektor);
 		
 		JButton btnSpasiIzmjene = new JButton("Uredi sektor");
-		btnSpasiIzmjene.setBounds(393, 356, 124, 23);
+		btnSpasiIzmjene.setBounds(496, 356, 124, 23);
 		panel_7.add(btnSpasiIzmjene);
 		
 		JButton btnObriiSektor = new JButton("Obriši sektor");
@@ -416,27 +436,27 @@ public class ManagementMainWindow {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnObriiSektor.setBounds(527, 356, 124, 23);
+		btnObriiSektor.setBounds(630, 356, 124, 23);
 		panel_7.add(btnObriiSektor);
 		
 		JButton btnSpasiPromjene_1 = new JButton("Spasi promjene");
-		btnSpasiPromjene_1.setBounds(186, 356, 124, 23);
+		btnSpasiPromjene_1.setBounds(232, 356, 124, 23);
 		panel_7.add(btnSpasiPromjene_1);
 		
 		JPanel panel_10 = new JPanel();
-		tabbedPane.addTab("Izvje�taji", null, panel_10, null);
+		tabbedPane.addTab("Izvještaji", null, panel_10, null);
 		panel_10.setLayout(null);
 		
-		JButton btnNewButton_1 = new JButton("Mjese\u010Dni izvje\u0161taj");
-		btnNewButton_1.setBounds(217, 70, 251, 49);
+		JButton btnNewButton_1 = new JButton("Mjesečni izvještaj");
+		btnNewButton_1.setBounds(269, 69, 251, 49);
 		panel_10.add(btnNewButton_1);
 		
-		JButton btnGodinjiIzvjetaj = new JButton("Godi\u0161nji izvje\u0161taj");
-		btnGodinjiIzvjetaj.setBounds(217, 155, 251, 49);
+		JButton btnGodinjiIzvjetaj = new JButton("Godišnji izvještaj");
+		btnGodinjiIzvjetaj.setBounds(269, 151, 251, 49);
 		panel_10.add(btnGodinjiIzvjetaj);
 		
 		JButton btnIzvjetajOPreostalom = new JButton("Izvještaj o preostalim danima");
-		btnIzvjetajOPreostalom.setBounds(217, 237, 251, 49);
+		btnIzvjetajOPreostalom.setBounds(269, 236, 251, 49);
 		panel_10.add(btnIzvjetajOPreostalom);
 		
 		JMenuBar menuBar = new JMenuBar();
