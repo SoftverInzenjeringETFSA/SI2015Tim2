@@ -1,5 +1,6 @@
 package tim12.si.app.godisnji_odmori.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import tim12.si.app.godisnji_odmori.ViewModel.*;
 import tim12.si.app.godisnji_odmori.Model.*;
@@ -35,12 +36,12 @@ public class ZahtjevController {
 		throw new UnsupportedOperationException();
 	}
 
-	public List<Zahtjev> dajNeobradjeneZahtjeve() {
+	public ArrayList<Zahtjev> dajNeobradjeneZahtjeve() {
 		// TODO - implement ZahtjevController.dajNeobradjeneZahtjeve
 		throw new UnsupportedOperationException();
 	}
 
-	public List<Zahtjev> dajSveZahtjeve() {
+	public ArrayList<Zahtjev> dajSveZahtjeve() {
 		// TODO - implement ZahtjevController.dajSveZahtjeve
 		throw new UnsupportedOperationException();
 	}

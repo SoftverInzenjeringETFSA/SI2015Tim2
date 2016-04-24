@@ -49,9 +49,9 @@ public class ZahtjevControllerTest extends TestCase {
 		z2.setZahtjev_id(zc.kreirajZahtjev(zvm));
 		
 		zc.obradiZahtjev(z1.getZahtjev_id());
-		List<Zahtjev> neobradjeni = zc.dajNeobradjeneZahtjeve();
+		ArrayList<Zahtjev> neobradjeni = zc.dajNeobradjeneZahtjeve();
 		
-		assertFalse(neobradjeni.contains(z1));
+		assertEquals(neobradjeni.size(),1);
 			
 	}
 	@Test
