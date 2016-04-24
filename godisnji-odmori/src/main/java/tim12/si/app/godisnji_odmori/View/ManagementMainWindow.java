@@ -161,16 +161,12 @@ public class ManagementMainWindow {
 			}
 		});
 		
-		JButton btnPogledajDetalje = new JButton("Pogledaj detalje zahtjeva");
-		btnPogledajDetalje.setBounds(54, 245, 221, 23);
+		JButton btnPogledajDetalje = new JButton("Pogledaj zahtjev");
+		btnPogledajDetalje.setBounds(153, 245, 122, 23);
 		panel_1.add(btnPogledajDetalje);
 		
-		JButton btnNewButton = new JButton("Odustani");
-		btnNewButton.setBounds(179, 208, 96, 23);
-		panel_1.add(btnNewButton);
-		
 		JButton btnPregledKalendara = new JButton("Kalendar");
-		btnPregledKalendara.setBounds(54, 208, 96, 23);
+		btnPregledKalendara.setBounds(54, 245, 89, 23);
 		panel_1.add(btnPregledKalendara);
 		
 		JPanel panel_2 = new JPanel();
