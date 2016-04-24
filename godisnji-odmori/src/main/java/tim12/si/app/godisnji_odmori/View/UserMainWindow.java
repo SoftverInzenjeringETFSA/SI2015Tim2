@@ -343,7 +343,7 @@ public class UserMainWindow {
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setBorder(new TitledBorder(null, "Vremenski interval", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_6.setBounds(79, 11, 492, 220);
+		panel_6.setBounds(79, 11, 492, 124);
 		panel_2.add(panel_6);
 		panel_6.setLayout(null);
 		
@@ -355,23 +355,30 @@ public class UserMainWindow {
 		lblDo_1.setBounds(290, 31, 114, 14);
 		panel_6.add(lblDo_1);
 		
-		JCalendar calendar_3 = new JCalendar();
-		calendar_3.setBounds(42, 52, 198, 153);
-		panel_6.add(calendar_3);
+		JDateChooser dateChooser_2 = new JDateChooser();
+		dateChooser_2.setDateFormatString("yyyy,MM,dd");
+		dateChooser_2.setBounds(52, 56, 128, 20);
+		panel_6.add(dateChooser_2);
 		
-		JCalendar calendar_4 = new JCalendar();
-		calendar_4.setBounds(265, 52, 198, 153);
-		panel_6.add(calendar_4);
+		JDateChooser dateChooser_3 = new JDateChooser();
+		dateChooser_3.setDateFormatString("yyyy,MM,dd");
+		dateChooser_3.setBounds(317, 56, 133, 20);
+		panel_6.add(dateChooser_3);
 		
 		JPanel panel_7 = new JPanel();
 		panel_7.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Razlog bolovanja", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_7.setBounds(79, 242, 492, 87);
+		panel_7.setBounds(79, 161, 492, 168);
 		panel_2.add(panel_7);
 		panel_7.setLayout(null);
 		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 23, 472, 134);
+		panel_7.add(scrollPane_1);
+		
 		JTextArea textArea = new JTextArea();
-		textArea.setBounds(10, 20, 472, 56);
-		panel_7.add(textArea);
+		scrollPane_1.setViewportView(textArea);
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
 		
 		JCheckBox chckbxNalazSpecijaliste = new JCheckBox("Nalaz specijaliste");
 		chckbxNalazSpecijaliste.setBounds(79, 354, 132, 23);
@@ -396,21 +403,21 @@ public class UserMainWindow {
 		panel_4.add(lblPrezime);
 		
 		JLabel lblSektor = new JLabel("Sektor:");
-		lblSektor.setBounds(340, 58, 46, 14);
+		lblSektor.setBounds(328, 58, 46, 14);
 		panel_4.add(lblSektor);
 		
 		textField = new JTextField();
-		textField.setBounds(100, 34, 86, 20);
+		textField.setBounds(100, 34, 107, 20);
 		panel_4.add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(100, 72, 86, 20);
+		textField_1.setBounds(100, 72, 107, 20);
 		panel_4.add(textField_1);
 		textField_1.setColumns(10);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(385, 55, 86, 20);
+		comboBox.setBounds(374, 55, 114, 20);
 		panel_4.add(comboBox);
 		
 		JPanel panel_5 = new JPanel();
@@ -425,6 +432,8 @@ public class UserMainWindow {
 		panel_5.add(scrollPane);
 		
 		JTextArea textArea_1 = new JTextArea();
+		textArea_1.setWrapStyleWord(true);
+		textArea_1.setLineWrap(true);
 		scrollPane.setViewportView(textArea_1);
 		textArea_1.setFont(new Font("Monospaced", Font.PLAIN, 11));
 		
@@ -447,11 +456,13 @@ public class UserMainWindow {
 		panel_14.add(lblDo);
 		
 		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(98, 22, 91, 20);
+		dateChooser.setDateFormatString("yyyy,MM,dd");
+		dateChooser.setBounds(98, 22, 112, 20);
 		panel_14.add(dateChooser);
 		
 		JDateChooser dateChooser_1 = new JDateChooser();
-		dateChooser_1.setBounds(376, 22, 91, 20);
+		dateChooser_1.setDateFormatString("yyyy,MM,dd");
+		dateChooser_1.setBounds(376, 22, 112, 20);
 		panel_14.add(dateChooser_1);
 		
 		JMenuBar menuBar = new JMenuBar();
