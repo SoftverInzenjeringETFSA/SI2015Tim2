@@ -8,6 +8,11 @@ public class Odsustvo {
 	private int tip;
 	private String opis;
 
+	
+	public Odsustvo ()
+	{
+		
+	}
 	public int getZaposlenik_id()
 	{
 		return this.zaposlenik_id;
