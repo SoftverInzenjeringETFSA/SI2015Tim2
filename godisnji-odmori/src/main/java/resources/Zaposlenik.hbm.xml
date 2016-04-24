@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 24, 2016 5:41:18 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="tim12.si.app.godisnji_odmori.Model.Zaposlenik" table="ZAPOSLENIK">
+        <id name="zaposlenik_id" type="int">
+            <column name="ZAPOSLENIK_ID" />
+            <generator class="native" />
+        </id>
+        <property name="ime" type="java.lang.String">
+            <column name="IME" />
+        </property>
+        <property name="prezime" type="java.lang.String">
+            <column name="PREZIME" />
+        </property>
+        <property name="username" type="java.lang.String">
+            <column name="USERNAME" />
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="PASSWORD" />
+        </property>
+        <property name="sektor_id" type="int">
+            <column name="SEKTOR_ID" />
+        </property>
+        <property name="datum_rodjenja" type="java.util.Date">
+            <column name="DATUM_RODJENJA" />
+        </property>
+        <property name="email" type="java.lang.String">
+            <column name="EMAIL" />
+        </property>
+        <property name="adresa_stanovanja" type="java.lang.String">
+            <column name="ADRESA_STANOVANJA" />
+        </property>
+        <property name="telefon" type="java.lang.String">
+            <column name="TELEFON" />
+        </property>
+        <property name="broj_dana_godisnjeg" type="int">
+            <column name="BROJ_DANA_GODISNJEG" />
+        </property>
+        <property name="privilegija" type="java.lang.Boolean">
+            <column name="PRIVILEGIJA" />
+        </property>
+    </class>
+</hibernate-mapping>

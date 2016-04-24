@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 24, 2016 5:46:58 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="tim12.si.app.godisnji_odmori.Model.Kalendar" table="KALENDAR">
+        <id name="kalendar_id" type="int" access="field">
+            <column name="KALENDAR_ID" />
+            <generator class="native" />
+        </id>
+        <property name="datum" type="java.util.Date">
+            <column name="DATUM" />
+        </property>
+        <property name="mjesec" type="java.lang.String">
+            <column name="MJESEC" />
+        </property>
+        <property name="dan" type="java.lang.String">
+            <column name="DAN" />
+        </property>
+        <property name="vikend" type="java.lang.Boolean">
+            <column name="VIKEND" />
+        </property>
+        <property name="praznik" type="java.lang.Boolean">
+            <column name="PRAZNIK" />
+        </property>
+        <property name="opis_praznika" type="java.lang.String">
+            <column name="OPIS_PRAZNIKA" />
+        </property>
+    </class>
+</hibernate-mapping>

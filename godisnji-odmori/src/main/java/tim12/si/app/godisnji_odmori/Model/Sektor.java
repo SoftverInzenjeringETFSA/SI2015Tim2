@@ -1,6 +1,6 @@
 package tim12.si.app.godisnji_odmori.Model;
 
-public class Sektor {
+public class Sektor implements java.io.Serializable {
 	private int sektor_id;
 	private String naziv;
 	private int godina_osnivanja;
