@@ -11,7 +11,7 @@ public class ZahtjevController {
 	 * 
 	 * @param zahtjev
 	 */
-	public void kreirajZahtjev(Zahtjev zahtjev) {
+	public int kreirajZahtjev(ZahtjevVM zahtjev) {
 		// TODO - implement ZahtjevController.kreirajZahtjev
 		throw new UnsupportedOperationException();
 	}
@@ -35,12 +35,12 @@ public class ZahtjevController {
 		throw new UnsupportedOperationException();
 	}
 
-	public List<ZahtjevVM> dajNeobradjeneZahtjeve() {
+	public List<Zahtjev> dajNeobradjeneZahtjeve() {
 		// TODO - implement ZahtjevController.dajNeobradjeneZahtjeve
 		throw new UnsupportedOperationException();
 	}
 
-	public List<ZahtjevVM> dajSveZahtjeve() {
+	public List<Zahtjev> dajSveZahtjeve() {
 		// TODO - implement ZahtjevController.dajSveZahtjeve
 		throw new UnsupportedOperationException();
 	}
