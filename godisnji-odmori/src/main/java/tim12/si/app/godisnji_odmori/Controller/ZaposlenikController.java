@@ -12,11 +12,11 @@ public class ZaposlenikController {
 	 */	
 	public static int brojZaposlenih=0;
 	public ZaposlenikController(){};
-	public void DodajZaposlenika(Zaposlenik zaposlenik) {
-
+	public void DodajZaposlenika(Zaposlenik zaposlenik) 
+	{
 		brojZaposlenih+=1;
 		// TODO - implement ZaposlenikController.dodajZaposlenika
-		throw new UnsupportedOperationException();
+		//throw new UnsupportedOperationException();
 	}
 	public int BrojZapolsenih()
 	{

@@ -26,7 +26,7 @@ public class ZaposlenikTest {
 		
 	}
 	@Test
-	public void TestBrojZaposlenih() throws ParseException 
+	public void TestDodajZaposlenika() throws ParseException 
 	{
 		String date_s = "2011-01-18";  
 	    SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
@@ -44,7 +44,19 @@ public class ZaposlenikTest {
 		zaposlenikController.DodajZaposlenika(zaposlenik);
 		assertEquals(zaposlenikController.BrojZapolsenih(),1);
 	}
-	//@Test(expected = Exception.UnsupportedOperationException)
+	/*@Test(expected = UnsupportedOperationException.class)
+	public void TestBrojZaposlenihError() throws ParseException 
+	{
+		String date_s = "2011-01-18";  
+	    SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
+	    Date date = dt.parse(date_s);
+
+		Zaposlenik zaposlenik= new Zaposlenik("Merseda","Camdzic",1,date,"mers@gmail.com","Kosevo 4","1234567",15,false);
+		//zaposlenikController.DodajZaposlenika(zaposlenik);
+		assertEquals(zaposlenikController.BrojZapolsenih(),1);
+	}*/
+	
+	
 	
 
 }
