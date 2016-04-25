@@ -4,7 +4,9 @@ import static org.junit.Assert.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -56,6 +58,18 @@ public class ZaposlenikTest {
 		assertEquals(zaposlenikController.BrojZapolsenih(),1);
 	}*/
 	
+	@Test
+	public void TestModificirajZaposlenika() throws ParseException
+	{
+		String date_s = "2011-01-18";  
+	    SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
+	    Date date = dt.parse(date_s);
+		List<Zaposlenik> listaZaposlenika= new ArrayList<Zaposlenik>();
+		Zaposlenik zaposlenik= new Zaposlenik("Merseda","Camdzic",1,date,"mers@gmail.com","Kosevo 4","1234567",15,false);
+		listaZaposlenika.add(zaposlenik);
+		zaposlenikController.ModificirajZaposlenika(zaposlenik);
+		assertEquals("Merseda",zaposlenik.getIme());
+	}
 	
 	
 

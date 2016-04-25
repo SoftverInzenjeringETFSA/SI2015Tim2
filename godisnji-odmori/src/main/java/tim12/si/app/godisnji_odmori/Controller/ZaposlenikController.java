@@ -10,6 +10,7 @@ public class ZaposlenikController {
 	 * 
 	 * @param zaposlenik
 	 */	
+
 	public static int brojZaposlenih=0;
 	public ZaposlenikController(){};
 	public void DodajZaposlenika(Zaposlenik zaposlenik) 
@@ -27,11 +28,12 @@ public class ZaposlenikController {
 	 * @param zaposlenik
 	 */
 	public void ModificirajZaposlenika(Zaposlenik zaposlenik) {
+		
+		//treba da pronadje zaposlenika u bazi ili listi
 		// TODO - implement ZaposlenikController.modificirajZaposlenika
 		throw new UnsupportedOperationException();
 	}
 	
-
 	/**
 	 * 
 	 * @param zaposlenikID

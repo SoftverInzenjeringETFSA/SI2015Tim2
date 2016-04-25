@@ -15,6 +15,7 @@ public class Zaposlenik {
 	private String telefon;
 	private int broj_dana_godisnjeg;
 	private Boolean privilegija;
+	
 	public Zaposlenik(){};
 	public Zaposlenik(String ime, String prezime,int sektorID,Date datumRodjenja, String email,String adresaStanovanja,String telefon,int brojDanaGodisnjeg, Boolean privilegija)
 	{
