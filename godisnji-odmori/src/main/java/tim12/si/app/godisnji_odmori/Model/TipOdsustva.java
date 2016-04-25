@@ -1,6 +1,6 @@
 package tim12.si.app.godisnji_odmori.Model;
 
-public class TipOdsustva {
+public class TipOdsustva implements java.io.Serializable {
 	
 	private int id_odsustva;
 	private String naziv;

@@ -14,7 +14,6 @@ public class GodisnjiIzvjestaj {
 
 	private JFrame frmSolutionsiGodisnji;
 	private JTable table;
-	private JTable table_1;
 
 	/**
 	 * Launch the application.
@@ -66,23 +65,6 @@ public class GodisnjiIzvjestaj {
 			}
 		));
 		table.getColumnModel().getColumn(6).setPreferredWidth(99);
-		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 130, 639, 99);
-		frmSolutionsiGodisnji.getContentPane().add(scrollPane_1);
-		
-		table_1 = new JTable();
-		scrollPane_1.setViewportView(table_1);
-		table_1.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Ekonomski", "Hanuma", "Rami\u0107", "130", "0", "130", "0"},
-				{null, null, null, null, null, null, null},
-				{null, null, null, "", "Ukupno:", "130", "0"},
-			},
-			new String[] {
-				"Sektor", "Ime", "Prezime", "Radni dani", "Neradni dani", "Ukupno radni", "Ukupno neradni"
-			}
-		));
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmSolutionsiGodisnji.setJMenuBar(menuBar);

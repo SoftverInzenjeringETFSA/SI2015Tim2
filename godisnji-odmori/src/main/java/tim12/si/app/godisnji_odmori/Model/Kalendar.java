@@ -2,8 +2,9 @@ package tim12.si.app.godisnji_odmori.Model;
 
 import java.util.Date;
 
-public class Kalendar {
+public class Kalendar implements java.io.Serializable {
 
+	private int kalendar_id;
 	private Date datum;
 	private String mjesec;
 	private String dan;
@@ -11,6 +12,16 @@ public class Kalendar {
 	private Boolean praznik;
 	private String opis_praznika;
 
+	public int getkalendar_id()
+	{
+		return this.kalendar_id;
+	}
+	
+	public void setKalendar_id(int kalendar_id)
+	{
+		this.kalendar_id = kalendar_id;
+	}
+	
 	public Date getDatum()
 	{
 		return this.datum;

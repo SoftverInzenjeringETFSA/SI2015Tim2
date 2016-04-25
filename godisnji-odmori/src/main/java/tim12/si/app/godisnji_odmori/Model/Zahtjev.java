@@ -2,7 +2,7 @@ package tim12.si.app.godisnji_odmori.Model;
 
 import java.util.Date;
 
-public class Zahtjev {
+public class Zahtjev implements java.io.Serializable {
 	private int zahtjev_id;
 	private int podnosilac_id;
 	private Date pocetak_odsustva;

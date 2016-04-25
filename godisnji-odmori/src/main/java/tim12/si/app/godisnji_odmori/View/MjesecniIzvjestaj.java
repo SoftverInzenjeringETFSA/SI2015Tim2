@@ -9,6 +9,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
+import javax.swing.JComboBox;
 
 public class MjesecniIzvjestaj {
 
@@ -49,7 +50,7 @@ public class MjesecniIzvjestaj {
 		frmSolutionsiMjesecni.getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 712, 224);
+		scrollPane.setBounds(10, 57, 712, 178);
 		frmSolutionsiMjesecni.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -68,6 +69,10 @@ public class MjesecniIzvjestaj {
 		table.getColumnModel().getColumn(3).setMinWidth(60);
 		table.getColumnModel().getColumn(6).setPreferredWidth(167);
 		scrollPane.setViewportView(table);
+		
+		JComboBox mjesecCB = new JComboBox();
+		mjesecCB.setBounds(10, 11, 91, 20);
+		frmSolutionsiMjesecni.getContentPane().add(mjesecCB);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmSolutionsiMjesecni.setJMenuBar(menuBar);

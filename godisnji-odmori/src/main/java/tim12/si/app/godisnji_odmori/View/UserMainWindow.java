@@ -25,6 +25,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPasswordField;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class UserMainWindow {
 
@@ -74,7 +76,7 @@ public class UserMainWindow {
 		frmSolutionsi.getContentPane().add(tabbedPane);
 		
 		JPanel panel = new JPanel();
-		tabbedPane.addTab("Po�etna", null, panel, null);
+		tabbedPane.addTab("Početna", null, panel, null);
 		panel.setLayout(null);
 		
 		JLabel label = new JLabel("");
@@ -88,10 +90,10 @@ public class UserMainWindow {
 		lblHasoHasi.setBounds(35, 188, 89, 26);
 		panel.add(lblHasoHasi);
 		
-		JLabel lblZaOvuGodinu = new JLabel("Za ovu godinu Vam je ostalo da iskoristite jo\u0161 20 dana od godi\u0161njeg odmora");
+		JLabel lblZaOvuGodinu = new JLabel("Za ovu godinu Vam je ostalo da iskoristite još");
 		lblZaOvuGodinu.setForeground(new Color(128, 0, 0));
 		lblZaOvuGodinu.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
-		lblZaOvuGodinu.setBounds(10, 377, 468, 26);
+		lblZaOvuGodinu.setBounds(10, 377, 291, 26);
 		panel.add(lblZaOvuGodinu);
 		
 		JLabel lblSektor_1 = new JLabel("Sektor:");
@@ -128,51 +130,63 @@ public class UserMainWindow {
 		calendar.setBounds(263, 115, 333, 227);
 		panel.add(calendar);
 		
+		JLabel label_5 = new JLabel("20");
+		label_5.setForeground(new Color(128, 0, 0));
+		label_5.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
+		label_5.setBounds(311, 379, 27, 26);
+		panel.add(label_5);
+		
+		JLabel lblDanaOdGodinjeg = new JLabel("dana od godišnjeg odmora");
+		lblDanaOdGodinjeg.setForeground(new Color(128, 0, 0));
+		lblDanaOdGodinjeg.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
+		lblDanaOdGodinjeg.setBounds(335, 379, 164, 26);
+		panel.add(lblDanaOdGodinjeg);
+		
 		JPanel panel_9 = new JPanel();
 		tabbedPane.addTab("Informacije", null, panel_9, null);
 		panel_9.setLayout(null);
 		
 		JPanel panel_10 = new JPanel();
 		panel_10.setBorder(new TitledBorder(null, "Osnovni podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_10.setBounds(26, 11, 285, 126);
+		panel_10.setBounds(10, 11, 285, 159);
 		panel_9.add(panel_10);
 		panel_10.setLayout(null);
 		
 		JLabel label_20 = new JLabel("Id zaposlenika:");
-		label_20.setBounds(10, 23, 120, 14);
+		label_20.setBounds(10, 40, 120, 14);
 		panel_10.add(label_20);
 		
 		JLabel label_23 = new JLabel("Ime:");
-		label_23.setBounds(10, 47, 120, 14);
+		label_23.setBounds(10, 64, 120, 14);
 		panel_10.add(label_23);
 		
 		JLabel label_24 = new JLabel("Prezime:");
-		label_24.setBounds(10, 71, 120, 14);
+		label_24.setBounds(10, 88, 120, 14);
 		panel_10.add(label_24);
 		
-		JLabel label_27 = new JLabel("Datum ro\u0111enja:");
-		label_27.setBounds(10, 96, 120, 14);
+		JLabel label_27 = new JLabel("Datum rođenja:");
+		label_27.setBounds(10, 113, 120, 14);
 		panel_10.add(label_27);
 		
 		JLabel label_19 = new JLabel("12352");
-		label_19.setBounds(184, 23, 91, 14);
+		label_19.setBounds(184, 40, 91, 14);
 		panel_10.add(label_19);
 		
 		JLabel lblHaso = new JLabel("Haso");
-		lblHaso.setBounds(184, 47, 91, 14);
+		lblHaso.setBounds(184, 64, 91, 14);
 		panel_10.add(lblHaso);
 		
-		JLabel lblHasi = new JLabel("Hasi\u0107");
-		lblHasi.setBounds(184, 71, 91, 14);
+		JLabel lblHasi = new JLabel("Hasić");
+		lblHasi.setBounds(184, 88, 91, 14);
 		panel_10.add(lblHasi);
 		
 		JLabel label_30 = new JLabel("15.02.1978.");
-		label_30.setBounds(184, 96, 91, 14);
+		label_30.setBounds(184, 113, 91, 14);
 		panel_10.add(label_30);
 		
 		JPanel panel_11 = new JPanel();
 		panel_11.setBorder(new TitledBorder(null, "Kontakt podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_11.setBounds(26, 154, 285, 104);
+		panel_11.setBounds(10, 192, 285, 134);
 		panel_9.add(panel_11);
 		panel_11.setLayout(null);
 		
@@ -200,25 +214,25 @@ public class UserMainWindow {
 		lblAdresa.setBounds(10, 77, 46, 14);
 		panel_11.add(lblAdresa);
 		
-		JLabel lblIsmetaMujezinovia = new JLabel("Ismeta Mujezinovi\u0107a 23/5");
+		JLabel lblIsmetaMujezinovia = new JLabel("Ismeta Mujezinovića 23/5");
 		lblIsmetaMujezinovia.setBounds(127, 77, 148, 14);
 		panel_11.add(lblIsmetaMujezinovia);
 		
 		JPanel panel_12 = new JPanel();
 		panel_12.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Promjena \u0161ifre", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_12.setBounds(326, 11, 285, 126);
+		panel_12.setBounds(326, 192, 285, 134);
 		panel_9.add(panel_12);
 		panel_12.setLayout(null);
 		
-		JLabel lblStaraifra = new JLabel("* Stara \u0161ifra:");
+		JLabel lblStaraifra = new JLabel("* Stara šifra:");
 		lblStaraifra.setBounds(10, 32, 154, 14);
 		panel_12.add(lblStaraifra);
 		
-		JLabel lblnovaifra = new JLabel("* Nova \u0161ifra:");
+		JLabel lblnovaifra = new JLabel("* Nova šifra:");
 		lblnovaifra.setBounds(10, 58, 154, 14);
 		panel_12.add(lblnovaifra);
 		
-		JLabel lblPotvrditeNovu = new JLabel("* Potvrdite novu \u0161ifru:");
+		JLabel lblPotvrditeNovu = new JLabel("* Potvrdite novu šifru:");
 		lblPotvrditeNovu.setBounds(10, 86, 154, 14);
 		panel_12.add(lblPotvrditeNovu);
 		
@@ -236,7 +250,7 @@ public class UserMainWindow {
 		
 		JPanel panel_13 = new JPanel();
 		panel_13.setBorder(new TitledBorder(null, "Informacije", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_13.setBounds(26, 293, 585, 110);
+		panel_13.setBounds(326, 11, 285, 159);
 		panel_9.add(panel_13);
 		panel_13.setLayout(null);
 		
@@ -248,20 +262,20 @@ public class UserMainWindow {
 		label_1.setBounds(219, 29, 46, 14);
 		panel_13.add(label_1);
 		
-		JLabel lblIskoritenoDanaGodinjeg = new JLabel("Iskori\u0161teno dana godi\u0161njeg odmora:");
-		lblIskoritenoDanaGodinjeg.setBounds(275, 29, 231, 14);
+		JLabel lblIskoritenoDanaGodinjeg = new JLabel("Iskorišteno dana godišnjeg odmora:");
+		lblIskoritenoDanaGodinjeg.setBounds(10, 104, 231, 14);
 		panel_13.add(lblIskoritenoDanaGodinjeg);
 		
-		JLabel lblOstaloDanaGodinjeg = new JLabel("Ostalo dana godi\u0161njeg odmora:");
-		lblOstaloDanaGodinjeg.setBounds(275, 54, 231, 14);
+		JLabel lblOstaloDanaGodinjeg = new JLabel("Ostalo dana godišnjeg odmora:");
+		lblOstaloDanaGodinjeg.setBounds(10, 129, 231, 14);
 		panel_13.add(lblOstaloDanaGodinjeg);
 		
 		JLabel label_2 = new JLabel("10");
-		label_2.setBounds(516, 29, 46, 14);
+		label_2.setBounds(219, 104, 46, 14);
 		panel_13.add(label_2);
 		
 		JLabel label_3 = new JLabel("20");
-		label_3.setBounds(516, 54, 46, 14);
+		label_3.setBounds(219, 129, 46, 14);
 		panel_13.add(label_3);
 		
 		JLabel lblBrojDanaBolovanja = new JLabel("Broj dana bolovanja:");
@@ -281,14 +295,18 @@ public class UserMainWindow {
 		panel_13.add(label_4);
 		
 		JButton btnSpasiPromjene = new JButton("Spasi promjene");
-		btnSpasiPromjene.setBounds(469, 154, 142, 23);
+		btnSpasiPromjene.setBounds(317, 380, 142, 23);
 		panel_9.add(btnSpasiPromjene);
 		
+		JButton btnOdbaciPromjene = new JButton("Odbaci promjene");
+		btnOdbaciPromjene.setBounds(469, 380, 142, 23);
+		panel_9.add(btnOdbaciPromjene);
+		
 		JPanel panel_1 = new JPanel();
-		tabbedPane.addTab("Godi�nji odmor", null, panel_1, null);
+		tabbedPane.addTab("Godišnji odmor", null, panel_1, null);
 		panel_1.setLayout(null);
 		
-		JLabel lblOstaloVamJe = new JLabel("Ostalo Vam je jo\u0161 ");
+		JLabel lblOstaloVamJe = new JLabel("Ostalo Vam je još ");
 		lblOstaloVamJe.setBounds(104, 295, 108, 14);
 		panel_1.add(lblOstaloVamJe);
 		
@@ -297,11 +315,11 @@ public class UserMainWindow {
 		lblX.setBounds(222, 295, 22, 14);
 		panel_1.add(lblX);
 		
-		JLabel lblDanaGodinjegOdmora = new JLabel("dana godi\u0161njeg odmora za ovu godinu");
+		JLabel lblDanaGodinjegOdmora = new JLabel("dana godišnjeg odmora za ovu godinu");
 		lblDanaGodinjegOdmora.setBounds(254, 295, 278, 14);
 		panel_1.add(lblDanaGodinjegOdmora);
 		
-		JButton btnRezervisiGodisnjiOdmor = new JButton("Rezervisi godisnji odmor");
+		JButton btnRezervisiGodisnjiOdmor = new JButton("Rezerviši godišnji odmor");
 		btnRezervisiGodisnjiOdmor.setBounds(385, 367, 195, 23);
 		panel_1.add(btnRezervisiGodisnjiOdmor);
 		
@@ -337,7 +355,7 @@ public class UserMainWindow {
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setBorder(new TitledBorder(null, "Vremenski interval", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_6.setBounds(79, 11, 492, 220);
+		panel_6.setBounds(79, 11, 492, 130);
 		panel_2.add(panel_6);
 		panel_6.setLayout(null);
 		
@@ -349,23 +367,29 @@ public class UserMainWindow {
 		lblDo_1.setBounds(290, 31, 114, 14);
 		panel_6.add(lblDo_1);
 		
-		JCalendar calendar_3 = new JCalendar();
-		calendar_3.setBounds(42, 52, 198, 153);
-		panel_6.add(calendar_3);
+		JDateChooser dateChooser_2 = new JDateChooser();
+		dateChooser_2.setDateFormatString("yyyy-MM-dd");
+		dateChooser_2.setBounds(52, 56, 114, 20);
+		panel_6.add(dateChooser_2);
 		
-		JCalendar calendar_4 = new JCalendar();
-		calendar_4.setBounds(265, 52, 198, 153);
-		panel_6.add(calendar_4);
+		JDateChooser dateChooser_3 = new JDateChooser();
+		dateChooser_3.setDateFormatString("yyyy-MM-dd");
+		dateChooser_3.setBounds(300, 56, 114, 20);
+		panel_6.add(dateChooser_3);
 		
 		JPanel panel_7 = new JPanel();
 		panel_7.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Razlog bolovanja", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_7.setBounds(79, 242, 492, 87);
+		panel_7.setBounds(79, 158, 492, 171);
 		panel_2.add(panel_7);
 		panel_7.setLayout(null);
 		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 20, 472, 140);
+		panel_7.add(scrollPane_1);
+		
 		JTextArea textArea = new JTextArea();
-		textArea.setBounds(10, 20, 472, 56);
-		panel_7.add(textArea);
+		textArea.setLineWrap(true);
+		scrollPane_1.setViewportView(textArea);
 		
 		JCheckBox chckbxNalazSpecijaliste = new JCheckBox("Nalaz specijaliste");
 		chckbxNalazSpecijaliste.setBounds(79, 354, 132, 23);
@@ -376,47 +400,52 @@ public class UserMainWindow {
 		panel_3.setLayout(null);
 		
 		JPanel panel_4 = new JPanel();
-		panel_4.setBorder(new TitledBorder(null, "Licni podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_4.setBounds(91, 52, 450, 123);
+		panel_4.setBorder(new TitledBorder(null, "Lični podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_4.setBounds(43, 52, 498, 123);
 		panel_3.add(panel_4);
 		panel_4.setLayout(null);
 		
 		JLabel lblIme = new JLabel("Ime:");
-		lblIme.setBounds(22, 37, 46, 14);
+		lblIme.setBounds(22, 37, 68, 14);
 		panel_4.add(lblIme);
 		
 		JLabel lblPrezime = new JLabel("Prezime:");
-		lblPrezime.setBounds(22, 75, 46, 14);
+		lblPrezime.setBounds(22, 75, 68, 14);
 		panel_4.add(lblPrezime);
 		
 		JLabel lblSektor = new JLabel("Sektor:");
-		lblSektor.setBounds(263, 57, 46, 14);
+		lblSektor.setBounds(299, 58, 46, 14);
 		panel_4.add(lblSektor);
 		
 		textField = new JTextField();
-		textField.setBounds(73, 34, 86, 20);
+		textField.setBounds(100, 34, 112, 20);
 		panel_4.add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(73, 72, 86, 20);
+		textField_1.setBounds(100, 72, 112, 20);
 		panel_4.add(textField_1);
 		textField_1.setColumns(10);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(308, 54, 86, 20);
+		comboBox.setBounds(376, 55, 112, 20);
 		panel_4.add(comboBox);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBorder(new TitledBorder(null, "Razlog odsustva", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_5.setBounds(91, 257, 450, 100);
+		panel_5.setBounds(43, 257, 498, 100);
 		panel_3.add(panel_5);
 		panel_5.setLayout(null);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(10, 23, 478, 66);
+		panel_5.add(scrollPane);
+		
 		JTextArea textArea_1 = new JTextArea();
+		textArea_1.setLineWrap(true);
+		scrollPane.setViewportView(textArea_1);
 		textArea_1.setFont(new Font("Monospaced", Font.PLAIN, 11));
-		textArea_1.setBounds(10, 23, 430, 66);
-		panel_5.add(textArea_1);
 		
 		JButton btnKreirajZahtjev = new JButton("Kreiraj zahtjev");
 		btnKreirajZahtjev.setBounds(401, 368, 140, 23);
@@ -424,24 +453,26 @@ public class UserMainWindow {
 		
 		JPanel panel_14 = new JPanel();
 		panel_14.setBorder(new TitledBorder(null, "Vrijeme odsustva", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_14.setBounds(91, 186, 450, 58);
+		panel_14.setBounds(43, 186, 498, 58);
 		panel_3.add(panel_14);
 		panel_14.setLayout(null);
 		
 		JLabel lblOd = new JLabel("Od:");
-		lblOd.setBounds(10, 22, 46, 14);
+		lblOd.setBounds(24, 22, 46, 14);
 		panel_14.add(lblOd);
 		
 		JLabel lblDo = new JLabel("Do:");
-		lblDo.setBounds(234, 22, 46, 14);
+		lblDo.setBounds(330, 22, 46, 14);
 		panel_14.add(lblDo);
 		
 		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(59, 22, 91, 20);
+		dateChooser.setDateFormatString("yyyy-MM-dd");
+		dateChooser.setBounds(98, 22, 112, 20);
 		panel_14.add(dateChooser);
 		
 		JDateChooser dateChooser_1 = new JDateChooser();
-		dateChooser_1.setBounds(280, 22, 91, 20);
+		dateChooser_1.setDateFormatString("yyyy-MM-dd");
+		dateChooser_1.setBounds(376, 22, 112, 20);
 		panel_14.add(dateChooser_1);
 		
 		JMenuBar menuBar = new JMenuBar();

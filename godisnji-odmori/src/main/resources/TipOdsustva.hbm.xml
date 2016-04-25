@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 24, 2016 5:41:18 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="tim12.si.app.godisnji_odmori.Model.TipOdsustva" table="TIPODSUSTVA">
+        <id name="id_odsustva" type="int">
+            <column name="ID_ODSUSTVA" />
+            <generator class="native" />
+        </id>
+        <property name="naziv" type="java.lang.String">
+            <column name="NAZIV" />
+        </property>
+        <property name="opis" type="java.lang.String">
+            <column name="OPIS" />
+        </property>
+    </class>
+</hibernate-mapping>
