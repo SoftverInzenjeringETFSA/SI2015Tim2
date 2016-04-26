@@ -1,17 +1,25 @@
 package tim12.si.app.godisnji_odmori.Model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Zahtjev implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int zahtjev_id;
 	private int podnosilac_id;
 	private Date pocetak_odsustva;
 	private Date zavrsetak_odsustva;
-	private int tip_odsustva;
+	private String tip_odsustva;
 	private Boolean obradjen;
 	private Boolean odluka;
 	private String opis;
 	private int sektor_id;
+	
+	public static List<Zahtjev> listaZahtjeva = new ArrayList<Zahtjev>();
 
 	public int getZahtjev_id()
 	{
@@ -69,7 +77,7 @@ public class Zahtjev implements java.io.Serializable {
 		this.zavrsetak_odsustva = zavrsetak_odsustva;
 	}
 
-	public int getTip_odsustva()
+	public String getTip_odsustva()
 	{
 		return this.tip_odsustva;
 	}
@@ -78,7 +86,7 @@ public class Zahtjev implements java.io.Serializable {
 	 * 
 	 * @param tip_odsustva
 	 */
-	public void setTip_odsustva(int tip_odsustva)
+	public void setTip_odsustva(String tip_odsustva)
 	{
 		this.tip_odsustva = tip_odsustva;
 	}

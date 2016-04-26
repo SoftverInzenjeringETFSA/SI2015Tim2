@@ -32,7 +32,12 @@ public class ZahtjevControllerTest extends TestCase {
 		ZahtjevVM zvm = kreirajZahtjevVM();
 		
 		Zahtjev z = new Zahtjev();
-		z.setZahtjev_id(zc.kreirajZahtjev(zvm));
+		try {
+			z.setZahtjev_id(zc.kreirajZahtjev(zvm));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertEquals(zc.dajSveZahtjeve().size(), brojZPrije+1);
 		
@@ -45,8 +50,14 @@ public class ZahtjevControllerTest extends TestCase {
 		
 		Zahtjev z1 = new Zahtjev();
 		Zahtjev z2 = new Zahtjev();
-		z1.setZahtjev_id(zc.kreirajZahtjev(zvm));
-		z2.setZahtjev_id(zc.kreirajZahtjev(zvm));
+		try {
+			z1.setZahtjev_id(zc.kreirajZahtjev(zvm));
+			z2.setZahtjev_id(zc.kreirajZahtjev(zvm));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		zc.obradiZahtjev(z1.getZahtjev_id());
 		ArrayList<Zahtjev> neobradjeni = zc.dajNeobradjeneZahtjeve();
@@ -59,9 +70,19 @@ public class ZahtjevControllerTest extends TestCase {
 		
 		ZahtjevVM zvm = kreirajZahtjevVM();
 		Zahtjev z1 = new Zahtjev();
-		z1.setZahtjev_id(zc.kreirajZahtjev(zvm));
+		try {
+			z1.setZahtjev_id(zc.kreirajZahtjev(zvm));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		zc.odobriZahtjev(z1.getZahtjev_id(), true);
+		try {
+			zc.odobriZahtjev(z1.getZahtjev_id(), true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertTrue(z1.getOdluka());
 	}
 	@Test
@@ -71,8 +92,14 @@ public class ZahtjevControllerTest extends TestCase {
 		
 		Zahtjev z1 = new Zahtjev();
 		Zahtjev z2 = new Zahtjev();
-		z1.setZahtjev_id(zc.kreirajZahtjev(zvm));
-		z2.setZahtjev_id(zc.kreirajZahtjev(zvm));
+		try {
+			z1.setZahtjev_id(zc.kreirajZahtjev(zvm));
+			z2.setZahtjev_id(zc.kreirajZahtjev(zvm));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		assertEquals(zc.dajNeobradjeneZahtjeve().size(), 2);
 	}
@@ -83,8 +110,14 @@ public class ZahtjevControllerTest extends TestCase {
 		
 		Zahtjev z1 = new Zahtjev();
 		Zahtjev z2 = new Zahtjev();
-		z1.setZahtjev_id(zc.kreirajZahtjev(zvm));
-		z2.setZahtjev_id(zc.kreirajZahtjev(zvm));
+		try {
+			z1.setZahtjev_id(zc.kreirajZahtjev(zvm));
+			z2.setZahtjev_id(zc.kreirajZahtjev(zvm));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		zc.obradiZahtjev(z1.getZahtjev_id());
 		
