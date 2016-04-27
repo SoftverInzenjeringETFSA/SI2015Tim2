@@ -1,73 +1,131 @@
 package tim12.si.app.godisnji_odmori.Controller;
 
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import tim12.si.app.godisnji_odmori.ViewModel.*;
 import tim12.si.app.godisnji_odmori.Model.*;
 
-public class ZaposlenikController {
+public class ZaposlenikController 
+{
 	
+	private ZaposlenikVM zvm;
 	/**
 	 * 
 	 * @param zaposlenik
 	 */	
 
-	public static int brojZaposlenih=0;
 	public ZaposlenikController(){};
-	public void DodajZaposlenika(Zaposlenik zaposlenik) 
+	//dodaje zaposlenika u listu
+	public void DodajZaposlenika() 
 	{
-		brojZaposlenih+=1;
-		// TODO - implement ZaposlenikController.dodajZaposlenika
-		//throw new UnsupportedOperationException();
+		try
+			{
+				//zvm = null;
+				String ime= zvm.ime;
+				String prezime= zvm.prezime;
+				int sectorID=zvm.sektor_id;;
+				Date datumRodjenja=zvm.datumRodjenja;
+				String email=zvm.email;
+				String adresaStanovanja=zvm.adresaStanovanja;
+				String telefon= zvm.telefon;
+				int brojDanaGodisnje= zvm.brojDanaGodisnje;
+				Boolean privilegija=zvm.privilegija;
+				Zaposlenik z= new Zaposlenik(ime,prezime,sectorID,datumRodjenja,email,adresaStanovanja,telefon,brojDanaGodisnje,privilegija);
+				Zaposlenik.listaZaposlenika.add(z);
+		}
+		catch (Exception e)
+			{
+				System.err.println("Dodavanje zaposlenika nije uspjelo: " + e.getMessage());
+			}
 	}
-	public int BrojZapolsenih()
+	public int BrojZaposlenih()
 	{
-		return brojZaposlenih;
+		return Zaposlenik.listaZaposlenika.size();
 	}
-	/**
-	 * 
-	 * @param zaposlenik
-	 */
-	public void ModificirajZaposlenika(Zaposlenik zaposlenik) {
+
+	public void ModificirajZaposlenika(Zaposlenik zaposlenik)
+	{
+		try
+		{	
+			int index=PronadjiIndexZaposlenika(zaposlenik.getZaposlenik_id());
+			Zaposlenik.listaZaposlenika.remove(index);
+			//modificiramo sve elemente
+			zvm = null;
+			String ime= zvm.ime;
+			String prezime= zvm.prezime;
+			int sectorID=zvm.sektor_id;;
+			Date datumRodjenja=zvm.datumRodjenja;
+			String email=zvm.email;
+			String adresaStanovanja=zvm.adresaStanovanja;
+			String telefon= zvm.telefon;
+			int brojDanaGodisnje= zvm.brojDanaGodisnje;
+			Boolean privilegija=zvm.privilegija;
+			Zaposlenik z= new Zaposlenik(ime,prezime,sectorID,datumRodjenja,email,adresaStanovanja,telefon,brojDanaGodisnje,privilegija);
+			//dodaj ga na isti broj indexa
+			Zaposlenik.listaZaposlenika.add(index, z);
+	}
+	catch (Exception e)
+		{
+			System.err.println("Modificiranje zaposlenika nije uspjelo: " + e.getMessage());
+		}
+	}
+
+	public int PronadjiIndexZaposlenika(int zaposlenik_id)
+	{
+		int brojac=0;
+		int index=0;
+		for(Zaposlenik zaposlenik: Zaposlenik.listaZaposlenika)
+		{
+			if(zaposlenik.getZaposlenik_id()==zaposlenik_id)
+			{
+				index=brojac;
+				break;
+			}
+			brojac++;
+		}
+		return index;
+	}
+	public void ObrisiZaposlenika(int zaposlenikID)
+	{
+		try
+		{
+			Zaposlenik.listaZaposlenika.remove(zaposlenikID);
+		}
+		catch (Exception e)
+		{
+			System.err.println("Brisanje zaposlenika nije uspjelo: " + e.getMessage());
+		}
 		
-		//treba da pronadje zaposlenika u bazi ili listi
-		// TODO - implement ZaposlenikController.modificirajZaposlenika
-		throw new UnsupportedOperationException();
-	}
-	
-	/**
-	 * 
-	 * @param zaposlenikID
-	 */
-	public void ObrisiZaposlenika(int zaposlenikID) {
-		// TODO - implement ZaposlenikController.obrisiZaposlenika
-		throw new UnsupportedOperationException();
 	}
 
+	public void AutentifikujKorisnika(Zaposlenik zaposlenik)
+	{
+		
+	}
 	/**
 	 * 
 	 * @param zaposlenik
 	 */
-	public void AutentifikujKorisnika(Zaposlenik zaposlenik) {
-		// TODO - implement ZaposlenikController.autentifikujKorisnika
-		throw new UnsupportedOperationException();
-	}
+	public void OdjaviKorisnika(Zaposlenik zaposlenik)
+	{
 
-	/**
-	 * 
-	 * @param zaposlenik
-	 */
-	public void OdjaviKorisnika(Zaposlenik zaposlenik) {
-		// TODO - implement ZaposlenikController.odjaviKorisnika
-		throw new UnsupportedOperationException();
 	}
-
 	/**
 	 * 
 	 * @param sektorID
 	 */
-	public List<ZaposlenikVM> DajZaposlenikePoSektoru(int sektorID) {
-		// TODO - implement ZaposlenikController.dajZaposlenikePoSektoru
-		throw new UnsupportedOperationException();
-	}
-
+	public List<Zaposlenik> DajZaposlenikePoSektoru(int sektorID)
+	{
+		List<Zaposlenik> listaZ=new ArrayList<Zaposlenik>();
+		for(Zaposlenik z:Zaposlenik.listaZaposlenika)
+		{
+			if(z.getSektor_id()==sektorID)
+			{
+				listaZ.add(z);
+			}
+		}
+		return listaZ;
+		}
 }

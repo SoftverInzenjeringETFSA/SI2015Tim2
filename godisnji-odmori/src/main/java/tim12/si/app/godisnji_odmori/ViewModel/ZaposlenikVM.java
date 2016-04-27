@@ -8,7 +8,7 @@ public class ZaposlenikVM {
 	public String prezime;
 	public Date datumRodjenja;
 	public String email;
-	public String sektor;
+	public int sektor_id;
 	public String adresaStanovanja;
 	public int brojDanaGodisnje;
 	public Boolean privilegija;

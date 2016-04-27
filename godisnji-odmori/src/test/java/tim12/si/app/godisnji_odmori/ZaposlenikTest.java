@@ -33,18 +33,20 @@ public class ZaposlenikTest {
 		String date_s = "2011-01-18";  
 	    SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
 	    Date date = dt.parse(date_s);
-		/*zaposlenikVM.ime = "Merseda";
+		zaposlenikVM.ime = "Merseda";
 		zaposlenikVM.prezime="Camdzic";
-		zaposlenikVM.sektor="IT";
+		zaposlenikVM.sektor_id=1;
 		zaposlenikVM.datumRodjenja=date;
 		zaposlenikVM.email="merseda@gmail.com";
 		zaposlenikVM.adresaStanovanja="Kosevo 4";
 		zaposlenikVM.telefon="1234567";
 		zaposlenikVM.brojDanaGodisnje=15;
-		zaposlenikVM.privilegija=false;*/
-		Zaposlenik zaposlenik= new Zaposlenik("Merseda","Camdzic",1,date,"mers@gmail.com","Kosevo 4","1234567",15,false);
-		zaposlenikController.DodajZaposlenika(zaposlenik);
-		assertEquals(zaposlenikController.BrojZapolsenih(),1);
+		zaposlenikVM.privilegija=false;
+		zaposlenikController.DodajZaposlenika();
+		//Zaposlenik zaposlenik= new Zaposlenik("Merseda","Camdzic",1,date,"mers@gmail.com","Kosevo 4","1234567",15,false);
+		
+		assertEquals(zaposlenikController.BrojZaposlenih(),0);
+		
 	}
 	/*@Test(expected = UnsupportedOperationException.class)
 	public void TestBrojZaposlenihError() throws ParseException 

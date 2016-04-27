@@ -1,9 +1,15 @@
 package tim12.si.app.godisnji_odmori.Model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Zaposlenik implements java.io.Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int zaposlenik_id;
 	private String ime;
 	private String prezime;
@@ -16,23 +22,19 @@ public class Zaposlenik implements java.io.Serializable {
 	private String telefon;
 	private int broj_dana_godisnjeg;
 	private Boolean privilegija;
-	
+	public static List<Zaposlenik> listaZaposlenika= new ArrayList<Zaposlenik>();
 	public Zaposlenik(){};
-	public Zaposlenik(String ime, String prezime,int sektorID,Date datumRodjenja, String email,String adresaStanovanja,String telefon,int brojDanaGodisnjeg, Boolean privilegija)
-	{
-		this.ime=ime;
-		this.prezime=prezime;
-		this.sektor_id=sektorID;
+	public Zaposlenik(String ime2, String prezime2, int sectorID, Date datumRodjenja, String email2,String adresaStanovanja, String telefon2,
+			int brojDanaGodisnje, Boolean privilegija2) {
+		this.ime=ime2;
+		this.prezime=prezime2;
+		this.sektor_id=sectorID;
 		this.datum_rodjenja=datumRodjenja;
-		this.email=email;
+		this.email=email2;
+		this.telefon=telefon2;
+		this.broj_dana_godisnjeg=brojDanaGodisnje;
+		this.privilegija=privilegija2;
 		this.adresa_stanovanja=adresaStanovanja;
-		this.telefon=telefon;
-		this.broj_dana_godisnjeg=brojDanaGodisnjeg;
-		this.privilegija=privilegija;			
-	}
-	public Zaposlenik(String ime2, String prezime2, String string, Date date, String email2, String adresaStanovanja,
-			String telefon2, int brojDanaGodisnjeg, boolean privilegija2) {
-		// TODO Auto-generated constructor stub
 	}
 	public int getZaposlenik_id()
 	{
