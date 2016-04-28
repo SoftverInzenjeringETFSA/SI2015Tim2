@@ -28,12 +28,19 @@ public class ZaposlenikTest {
 		
 	}
 	@Test
-	public void TestDodajZaposlenika() throws ParseException 
+	//(expected = Exception.class)
+	public void ProvjeraSeteraTest() 
+	{ 
+			Zaposlenik z= new Zaposlenik();
+			z.setIme("M123ersed");
+	}
+	/*@Test
+	public void TestDodajZaposlenika() throws Exception 
 	{
 		String date_s = "2011-01-18";  
 	    SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
 	    Date date = dt.parse(date_s);
-		zaposlenikVM.ime = "Merseda";
+		zaposlenikVM.setIme("Merseda");
 		zaposlenikVM.prezime="Camdzic";
 		zaposlenikVM.sektor_id=1;
 		zaposlenikVM.datumRodjenja=date;
@@ -47,7 +54,7 @@ public class ZaposlenikTest {
 		
 		assertEquals(zaposlenikController.BrojZaposlenih(),0);
 		
-	}
+	}*/
 	/*@Test(expected = UnsupportedOperationException.class)
 	public void TestBrojZaposlenihError() throws ParseException 
 	{
@@ -60,7 +67,7 @@ public class ZaposlenikTest {
 		assertEquals(zaposlenikController.BrojZapolsenih(),1);
 	}*/
 	
-	@Test
+	/*@Test
 	public void TestModificirajZaposlenika() throws ParseException
 	{
 		String date_s = "2011-01-18";  
@@ -71,7 +78,7 @@ public class ZaposlenikTest {
 		listaZaposlenika.add(zaposlenik);
 		zaposlenikController.ModificirajZaposlenika(zaposlenik);
 		assertEquals("Merseda",zaposlenik.getIme());
-	}
+	}*/
 	
 	
 

@@ -23,7 +23,7 @@ public class ZaposlenikController
 		try
 			{
 				//zvm = null;
-				String ime= zvm.ime;
+				String ime= zvm.getIme();
 				String prezime= zvm.prezime;
 				int sectorID=zvm.sektor_id;;
 				Date datumRodjenja=zvm.datumRodjenja;
@@ -53,7 +53,7 @@ public class ZaposlenikController
 			Zaposlenik.listaZaposlenika.remove(index);
 			//modificiramo sve elemente
 			zvm = null;
-			String ime= zvm.ime;
+			String ime= zvm.getIme();
 			String prezime= zvm.prezime;
 			int sectorID=zvm.sektor_id;;
 			Date datumRodjenja=zvm.datumRodjenja;
