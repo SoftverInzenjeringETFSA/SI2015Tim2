@@ -6,6 +6,7 @@ import tim12.si.app.godisnji_odmori.Model.*;
 
 public class SektorController {
 	
+	private int brojsektora;
 	/**
 	 * 
 	 * @param sektor
@@ -19,7 +20,7 @@ public class SektorController {
 	 * 
 	 * @param sektorID
 	 */
-	public void obrisiSektro(int sektorID) {
+	public void obrisiSektor(int sektorID) {
 		// TODO - implement SektorController.obrisiSektro
 		throw new UnsupportedOperationException();
 	}
@@ -50,6 +51,11 @@ public class SektorController {
 	public String dajNazivSektora(int sektorID) {
 		// TODO - implement SektorController.dajNazivSektora
 		throw new UnsupportedOperationException();
+	}
+
+	public int dajBrojSektora() {
+		// TODO Auto-generated method stub
+		return brojsektora;
 	}
 
 
