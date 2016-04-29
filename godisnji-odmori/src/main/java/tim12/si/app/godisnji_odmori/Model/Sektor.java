@@ -7,6 +7,8 @@ public class Sektor implements java.io.Serializable {
 	private int broj_uposlenih;
 	private int max_broj_odsutnih;
 	private String opis;
+	
+	public Sektor() {}
 
 	public int getSektor_id()
 	{

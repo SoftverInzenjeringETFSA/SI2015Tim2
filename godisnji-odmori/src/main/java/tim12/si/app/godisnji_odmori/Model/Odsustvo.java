@@ -10,9 +10,8 @@ public class Odsustvo implements java.io.Serializable {
 
 	
 	public Odsustvo ()
-	{
-		
-	}
+	{}
+	
 	public int getZaposlenik_id()
 	{
 		return this.zaposlenik_id;

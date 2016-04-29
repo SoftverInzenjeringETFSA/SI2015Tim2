@@ -19,6 +19,8 @@ public class Zahtjev implements java.io.Serializable {
 	private String opis;
 	private int sektor_id;
 	
+	public Zahtjev() {}
+	
 	public static List<Zahtjev> listaZahtjeva = new ArrayList<Zahtjev>();
 
 	public int getZahtjev_id()

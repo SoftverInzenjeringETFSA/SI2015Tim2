@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 24, 2016 5:41:18 PM by Hibernate Tools 3.5.0.Final -->
+<!-- Generated Apr 29, 2016 2:55:14 PM by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="tim12.si.app.godisnji_odmori.Model.Zahtjev" table="ZAHTJEV">
         <id name="zahtjev_id" type="int">
@@ -17,7 +17,7 @@
         <property name="zavrsetak_odsustva" type="java.util.Date">
             <column name="ZAVRSETAK_ODSUSTVA" />
         </property>
-        <property name="tip_odsustva" type="int">
+        <property name="tip_odsustva" type="java.lang.String">
             <column name="TIP_ODSUSTVA" />
         </property>
         <property name="obradjen" type="java.lang.Boolean">

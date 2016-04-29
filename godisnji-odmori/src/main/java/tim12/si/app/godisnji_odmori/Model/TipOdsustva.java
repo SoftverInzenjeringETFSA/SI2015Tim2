@@ -6,6 +6,8 @@ public class TipOdsustva implements java.io.Serializable {
 	private String naziv;
 	private String opis;
 
+	public TipOdsustva() {}
+	
 	public int getId_odsustva()
 	{
 		return this.id_odsustva;

@@ -6,6 +6,8 @@ public class Prisustvo implements java.io.Serializable {
 	
 	private int zaposlenik_id;
 	private Date datum;
+	
+	public Prisustvo() {}
 
 	public int getZaposlenik_id()
 	{

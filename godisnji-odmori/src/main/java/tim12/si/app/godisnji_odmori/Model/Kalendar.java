@@ -11,6 +11,8 @@ public class Kalendar implements java.io.Serializable {
 	private Boolean vikend;
 	private Boolean praznik;
 	private String opis_praznika;
+	
+	public Kalendar() {}
 
 	public int getkalendar_id()
 	{

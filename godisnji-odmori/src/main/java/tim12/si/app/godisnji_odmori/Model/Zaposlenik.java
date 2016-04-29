@@ -36,6 +36,7 @@ public class Zaposlenik implements java.io.Serializable {
 		this.privilegija=privilegija2;
 		this.adresa_stanovanja=adresaStanovanja;
 	}
+	
 	public int getZaposlenik_id()
 	{
 		return this.zaposlenik_id;
