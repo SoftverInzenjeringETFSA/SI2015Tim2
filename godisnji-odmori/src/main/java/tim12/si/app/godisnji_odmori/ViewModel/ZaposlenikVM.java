@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class ZaposlenikVM {
 	
-	private String ime;
+	public String ime;
 	public String getIme() {
 		return ime;
 	}
@@ -53,7 +53,7 @@ public class ZaposlenikVM {
 	}
 	public Date datumRodjenja;
 	public String email;
-	public int sektor_id;
+	public String sektor;
 	public String adresaStanovanja;
 	public int brojDanaGodisnje;
 	public Boolean privilegija;

@@ -25,15 +25,16 @@ public class ZaposlenikController
 				//zvm = null;
 				String ime= zvm.getIme();
 				String prezime= zvm.prezime;
-				int sectorID=zvm.sektor_id;;
+				//na osnovu imena sektora iz baze dobiti nejgov ID
+				//int sectorID=zvm.sektor_id;;
 				Date datumRodjenja=zvm.datumRodjenja;
 				String email=zvm.email;
 				String adresaStanovanja=zvm.adresaStanovanja;
 				String telefon= zvm.telefon;
 				int brojDanaGodisnje= zvm.brojDanaGodisnje;
 				Boolean privilegija=zvm.privilegija;
-				Zaposlenik z= new Zaposlenik(ime,prezime,sectorID,datumRodjenja,email,adresaStanovanja,telefon,brojDanaGodisnje,privilegija);
-				Zaposlenik.listaZaposlenika.add(z);
+				//Zaposlenik z= new Zaposlenik(ime,prezime,sectorID,datumRodjenja,email,adresaStanovanja,telefon,brojDanaGodisnje,privilegija);
+				//Zaposlenik.listaZaposlenika.add(z);
 		}
 		catch (Exception e)
 			{
@@ -55,16 +56,17 @@ public class ZaposlenikController
 			zvm = null;
 			String ime= zvm.getIme();
 			String prezime= zvm.prezime;
-			int sectorID=zvm.sektor_id;;
+			//isto kao i gore
+			//int sectorID=zvm.sektor_id;;
 			Date datumRodjenja=zvm.datumRodjenja;
 			String email=zvm.email;
 			String adresaStanovanja=zvm.adresaStanovanja;
 			String telefon= zvm.telefon;
 			int brojDanaGodisnje= zvm.brojDanaGodisnje;
 			Boolean privilegija=zvm.privilegija;
-			Zaposlenik z= new Zaposlenik(ime,prezime,sectorID,datumRodjenja,email,adresaStanovanja,telefon,brojDanaGodisnje,privilegija);
+			//Zaposlenik z= new Zaposlenik(ime,prezime,sectorID,datumRodjenja,email,adresaStanovanja,telefon,brojDanaGodisnje,privilegija);
 			//dodaj ga na isti broj indexa
-			Zaposlenik.listaZaposlenika.add(index, z);
+			//Zaposlenik.listaZaposlenika.add(index, z);
 	}
 	catch (Exception e)
 		{
