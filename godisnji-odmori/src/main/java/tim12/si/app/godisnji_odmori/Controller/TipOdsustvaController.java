@@ -22,7 +22,7 @@ public class TipOdsustvaController {
 	 * 
 	 * @param tipOdsustvaID
 	 */
-	public void obrisiTipOdsustva(int tipOdsustvaID) {
+	public void obrisiTipOdsustva(long tipOdsustvaID) {
 		// TODO - implement TipOdsustvaController.obrisiTipOdsustva
 		throw new UnsupportedOperationException();
 	}
@@ -31,7 +31,7 @@ public class TipOdsustvaController {
 	 * 
 	 * @param tipOdsustva
 	 */
-	public void modificirajTipOdsustva(int IDTipa, String noviNaziv, String noviOpis) {
+	public void modificirajTipOdsustva(long IDTipa, String noviNaziv, String noviOpis) {
 		// TODO - implement TipOdsustvaController.modificirajTipOdsustva
 		throw new UnsupportedOperationException();
 	}

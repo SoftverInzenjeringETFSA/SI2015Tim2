@@ -44,7 +44,7 @@ public class ZahtjevController {
 	 * 
 	 * @param zahtjevID
 	 */
-	public void obradiZahtjev(int zahtjevID) {
+	public void obradiZahtjev(long zahtjevID) {
 		// ne kontam koja je razlika izmedju ove metode i odobriZahtjev ?
 		throw new UnsupportedOperationException();
 	}
@@ -54,7 +54,7 @@ public class ZahtjevController {
 	 * @param zahtjevID
 	 * @param odobren
 	 */
-	public void odobriZahtjev(int zahtjevID, Boolean odobren) throws Exception{
+	public void odobriZahtjev(long zahtjevID, Boolean odobren) throws Exception{
 		Boolean flag = false;
 		int temp = -1;
 		for(int i = 0; i<Zahtjev.listaZahtjeva.size(); i++)

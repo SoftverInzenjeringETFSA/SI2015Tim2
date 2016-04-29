@@ -20,7 +20,7 @@ public class SektorController {
 	 * 
 	 * @param sektorID
 	 */
-	public void obrisiSektor(int sektorID) {
+	public void obrisiSektor(long sektorID) {
 		// TODO - implement SektorController.obrisiSektro
 		throw new UnsupportedOperationException();
 	}
@@ -39,7 +39,7 @@ public class SektorController {
 	 * @param sektorID
 	 * @param listaZaposlenika
 	 */
-	public void dodajZaposlenikeUSektor(int sektorID, List<ZaposlenikVM> listaZaposlenika) {
+	public void dodajZaposlenikeUSektor(long sektorID, List<ZaposlenikVM> listaZaposlenika) {
 		// TODO - implement SektorController.dodajZaposlenikeUSektor
 		throw new UnsupportedOperationException();
 	}
