@@ -2,13 +2,13 @@ package tim12.si.app.godisnji_odmori.Model;
 
 public class TipOdsustva implements java.io.Serializable {
 	
-	private int id_odsustva;
+	private long id_odsustva;
 	private String naziv;
 	private String opis;
 
 	public TipOdsustva() {}
 	
-	public int getId_odsustva()
+	public long getId_odsustva()
 	{
 		return this.id_odsustva;
 	}
@@ -17,7 +17,7 @@ public class TipOdsustva implements java.io.Serializable {
 	 * 
 	 * @param id_odsustva
 	 */
-	public void setId_odsustva(int id_odsustva)
+	public void setId_odsustva(long id_odsustva)
 	{
 		this.id_odsustva = id_odsustva;
 	}

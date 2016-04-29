@@ -3,7 +3,7 @@ package tim12.si.app.godisnji_odmori.Model;
 import java.util.Date;
 
 public class Odsustvo implements java.io.Serializable {
-	private int zaposlenik_id;
+	private long zaposlenik_id;
 	private Date datum;
 	private int tip;
 	private String opis;
@@ -12,7 +12,7 @@ public class Odsustvo implements java.io.Serializable {
 	public Odsustvo ()
 	{}
 	
-	public int getZaposlenik_id()
+	public long getZaposlenik_id()
 	{
 		return this.zaposlenik_id;
 	}
@@ -21,7 +21,7 @@ public class Odsustvo implements java.io.Serializable {
 	 * 
 	 * @param zaposlenik_id
 	 */
-	public void setZaposlenik_id(int zaposlenik_id)
+	public void setZaposlenik_id(long zaposlenik_id)
 	{
 		this.zaposlenik_id = zaposlenik_id;
 	}

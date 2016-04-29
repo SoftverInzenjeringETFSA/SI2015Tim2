@@ -9,21 +9,21 @@ public class Zahtjev implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int zahtjev_id;
-	private int podnosilac_id;
+	private long zahtjev_id;
+	private long podnosilac_id;
 	private Date pocetak_odsustva;
 	private Date zavrsetak_odsustva;
 	private String tip_odsustva;
 	private Boolean obradjen;
 	private Boolean odluka;
 	private String opis;
-	private int sektor_id;
+	private long sektor_id;
 	
 	public Zahtjev() {}
 	
 	public static List<Zahtjev> listaZahtjeva = new ArrayList<Zahtjev>();
 
-	public int getZahtjev_id()
+	public long getZahtjev_id()
 	{
 		return this.zahtjev_id;
 	}
@@ -32,12 +32,12 @@ public class Zahtjev implements java.io.Serializable {
 	 * 
 	 * @param zahtjev_id
 	 */
-	public void setZahtjev_id(int zahtjev_id)
+	public void setZahtjev_id(long zahtjev_id)
 	{
 		this.zahtjev_id = zahtjev_id;
 	}
 
-	public int getPodnosilac_id()
+	public long getPodnosilac_id()
 	{
 		return this.podnosilac_id;
 	}
@@ -46,7 +46,7 @@ public class Zahtjev implements java.io.Serializable {
 	 * 
 	 * @param podnosilac_id
 	 */
-	public void setPodnosilac_id(int podnosilac_id)
+	public void setPodnosilac_id(long podnosilac_id)
 	{
 		this.podnosilac_id = podnosilac_id;
 	}
@@ -151,7 +151,7 @@ public class Zahtjev implements java.io.Serializable {
 		throw new UnsupportedOperationException();
 	}
 
-	public int getSektor_id()
+	public long getSektor_id()
 	{
 		return this.sektor_id;
 	}
@@ -160,7 +160,7 @@ public class Zahtjev implements java.io.Serializable {
 	 * 
 	 * @param sektor_id
 	 */
-	public void setSektor_id(int sektor_id)
+	public void setSektor_id(long sektor_id)
 	{
 		this.sektor_id = sektor_id;
 	}

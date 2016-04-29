@@ -50,7 +50,7 @@ public class ZaposlenikController
 	{
 		try
 		{	
-			int index=PronadjiIndexZaposlenika(zaposlenik.getZaposlenik_id());
+			long index=PronadjiIndexZaposlenika(zaposlenik.getZaposlenik_id());
 			Zaposlenik.listaZaposlenika.remove(index);
 			//modificiramo sve elemente
 			zvm = null;
@@ -74,7 +74,7 @@ public class ZaposlenikController
 		}
 	}
 
-	public int PronadjiIndexZaposlenika(int zaposlenik_id)
+	public long PronadjiIndexZaposlenika(long zaposlenik_id)
 	{
 		int brojac=0;
 		int index=0;

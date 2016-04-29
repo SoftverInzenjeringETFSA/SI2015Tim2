@@ -12,7 +12,7 @@ public class ZahtjevController {
 	 * 
 	 * @param zahtjev
 	 */
-	public int kreirajZahtjev(ZahtjevVM zahtjev) throws Exception{
+	public long kreirajZahtjev(ZahtjevVM zahtjev) throws Exception{
 		Boolean flag = false;
 		Zaposlenik zp = null;
 		for(int i = 0; i<Zaposlenik.listaZaposlenika.size(); i++)

@@ -4,7 +4,7 @@
 <!-- Generated Apr 29, 2016 2:55:14 PM by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="tim12.si.app.godisnji_odmori.Model.Zahtjev" table="ZAHTJEV">
-        <id name="zahtjev_id" type="int">
+        <id name="zahtjev_id" type="long">
             <column name="ZAHTJEV_ID" />
             <generator class="native" />
         </id>

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Kalendar implements java.io.Serializable {
 
-	private int kalendar_id;
+	private long kalendar_id;
 	private Date datum;
 	private String mjesec;
 	private String dan;
@@ -14,12 +14,12 @@ public class Kalendar implements java.io.Serializable {
 	
 	public Kalendar() {}
 
-	public int getkalendar_id()
+	public long getkalendar_id()
 	{
 		return this.kalendar_id;
 	}
 	
-	public void setKalendar_id(int kalendar_id)
+	public void setKalendar_id(long kalendar_id)
 	{
 		this.kalendar_id = kalendar_id;
 	}

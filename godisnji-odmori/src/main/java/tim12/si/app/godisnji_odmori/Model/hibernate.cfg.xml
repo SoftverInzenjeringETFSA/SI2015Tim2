@@ -4,11 +4,11 @@
 <hibernate-configuration>
  <session-factory name="">
   <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-  <property name="hibernate.connection.password">2015SIEtf</property>
-  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/tim2test?createDatabaseIfNotExist=true</property>
-  <property name="hibernate.connection.username">EtfSI2015</property>
+  <property name="hibernate.connection.password"></property>
+  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/tim2</property>
+  <property name="hibernate.connection.username">root</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-  <property name="hibernate.hbm2ddl.auto">update</property>
+  <property name="hibernate.hbm2ddl.auto">create</property>
   <mapping resource="tim12/si/app/godisnji_odmori/Model/Kalendar.hbm.xml"/>
   <mapping resource="tim12/si/app/godisnji_odmori/Model/Odsustvo.hbm.xml"/>
   <mapping resource="tim12/si/app/godisnji_odmori/Model/Prisustvo.hbm.xml"/>

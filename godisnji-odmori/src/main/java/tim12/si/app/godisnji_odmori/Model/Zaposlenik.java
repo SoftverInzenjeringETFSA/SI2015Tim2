@@ -10,12 +10,12 @@ public class Zaposlenik implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int zaposlenik_id;
+	private long zaposlenik_id;
 	private String ime;
 	private String prezime;
 	private String username;
 	private String password;
-	private int sektor_id;
+	private long sektor_id;
 	private Date datum_rodjenja;
 	private String email;
 	private String adresa_stanovanja;
@@ -37,7 +37,7 @@ public class Zaposlenik implements java.io.Serializable {
 		this.adresa_stanovanja=adresaStanovanja;
 	}
 	
-	public int getZaposlenik_id()
+	public long getZaposlenik_id()
 	{
 		return this.zaposlenik_id;
 	}
@@ -46,7 +46,7 @@ public class Zaposlenik implements java.io.Serializable {
 	 * 
 	 * @param zaposlenik_id
 	 */
-	public void setZaposlenik_id(int zaposlenik_id)
+	public void setZaposlenik_id(long zaposlenik_id)
 	{
 		this.zaposlenik_id = zaposlenik_id;
 	}
@@ -107,7 +107,7 @@ public class Zaposlenik implements java.io.Serializable {
 		this.password = password;
 	}
 
-	public int getSektor_id()
+	public long getSektor_id()
 	{
 		return this.sektor_id;
 	}
@@ -116,7 +116,7 @@ public class Zaposlenik implements java.io.Serializable {
 	 * 
 	 * @param sektor_id
 	 */
-	public void setSektor_id(int sektor_id)
+	public void setSektor_id(long sektor_id)
 	{
 		this.sektor_id = sektor_id;
 	}

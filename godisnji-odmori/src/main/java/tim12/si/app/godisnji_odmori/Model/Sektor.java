@@ -1,7 +1,7 @@
 package tim12.si.app.godisnji_odmori.Model;
 
 public class Sektor implements java.io.Serializable {
-	private int sektor_id;
+	private long sektor_id;
 	private String naziv;
 	private int godina_osnivanja;
 	private int broj_uposlenih;
@@ -10,7 +10,7 @@ public class Sektor implements java.io.Serializable {
 	
 	public Sektor() {}
 
-	public int getSektor_id()
+	public long getSektor_id()
 	{
 		return this.sektor_id;
 	}
@@ -19,7 +19,7 @@ public class Sektor implements java.io.Serializable {
 	 * 
 	 * @param sektor_id
 	 */
-	public void setSektor_id(int sektor_id)
+	public void setSektor_id(long sektor_id)
 	{
 		this.sektor_id = sektor_id;
 	}

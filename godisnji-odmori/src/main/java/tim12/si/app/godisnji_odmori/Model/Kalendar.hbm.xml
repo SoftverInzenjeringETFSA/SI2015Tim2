@@ -4,7 +4,7 @@
 <!-- Generated Apr 29, 2016 2:55:14 PM by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="tim12.si.app.godisnji_odmori.Model.Kalendar" table="KALENDAR">
-        <id name="kalendar_id" type="int" access="field">
+        <id name="kalendar_id" type="long" access="field">
             <column name="KALENDAR_ID" />
             <generator class="native" />
         </id>
