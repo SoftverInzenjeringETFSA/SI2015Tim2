@@ -10,6 +10,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import com.toedter.calendar.JMonthChooser;
 
 public class MjesecniIzvjestaj {
 
@@ -70,9 +72,21 @@ public class MjesecniIzvjestaj {
 		table.getColumnModel().getColumn(6).setPreferredWidth(167);
 		scrollPane.setViewportView(table);
 		
-		JComboBox mjesecCB = new JComboBox();
-		mjesecCB.setBounds(10, 11, 91, 20);
-		frmSolutionsiMjesecni.getContentPane().add(mjesecCB);
+		JLabel label = new JLabel("Sektor:");
+		label.setBounds(10, 11, 59, 22);
+		frmSolutionsiMjesecni.getContentPane().add(label);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(57, 12, 106, 20);
+		frmSolutionsiMjesecni.getContentPane().add(comboBox);
+		
+		JLabel lblMjesec = new JLabel("Mjesec:");
+		lblMjesec.setBounds(206, 12, 59, 20);
+		frmSolutionsiMjesecni.getContentPane().add(lblMjesec);
+		
+		JMonthChooser monthChooser = new JMonthChooser();
+		monthChooser.setBounds(261, 11, 106, 22);
+		frmSolutionsiMjesecni.getContentPane().add(monthChooser);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmSolutionsiMjesecni.setJMenuBar(menuBar);

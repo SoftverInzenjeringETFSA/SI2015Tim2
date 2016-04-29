@@ -9,6 +9,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import javax.swing.JComboBox;
+import com.toedter.calendar.JYearChooser;
 
 public class GodisnjiIzvjestaj {
 
@@ -49,7 +52,7 @@ public class GodisnjiIzvjestaj {
 		frmSolutionsiGodisnji.getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 639, 102);
+		scrollPane.setBounds(10, 70, 639, 159);
 		frmSolutionsiGodisnji.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -64,6 +67,22 @@ public class GodisnjiIzvjestaj {
 				"Sektor", "Ime", "Prezime", "Radni dani", "Neradni dani", "Ukupno radni", "Ukupno neradni"
 			}
 		));
+		
+		JLabel lblSektor = new JLabel("Sektor:");
+		lblSektor.setBounds(10, 11, 59, 22);
+		frmSolutionsiGodisnji.getContentPane().add(lblSektor);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(57, 12, 106, 20);
+		frmSolutionsiGodisnji.getContentPane().add(comboBox);
+		
+		JLabel lblGodina = new JLabel("Godina:");
+		lblGodina.setBounds(205, 11, 67, 22);
+		frmSolutionsiGodisnji.getContentPane().add(lblGodina);
+		
+		JYearChooser yearChooser = new JYearChooser();
+		yearChooser.setBounds(268, 13, 67, 20);
+		frmSolutionsiGodisnji.getContentPane().add(yearChooser);
 		table.getColumnModel().getColumn(6).setPreferredWidth(99);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -81,5 +100,4 @@ public class GodisnjiIzvjestaj {
 		JMenuItem mntmLogout = new JMenuItem("Odjavi se");
 		mnOdjava.add(mntmLogout);
 	}
-
 }

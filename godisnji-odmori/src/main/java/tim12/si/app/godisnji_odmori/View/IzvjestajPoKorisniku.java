@@ -9,6 +9,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import javax.swing.JComboBox;
 
 public class IzvjestajPoKorisniku {
 
@@ -49,7 +51,7 @@ public class IzvjestajPoKorisniku {
 		frmSolutionsiIzvjetaj.getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 644, 80);
+		scrollPane.setBounds(10, 74, 644, 155);
 		frmSolutionsiIzvjetaj.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -65,6 +67,14 @@ public class IzvjestajPoKorisniku {
 				"Sektor", "Ime", "Prezime", "Radni dani", "Neradni dani", "Preostalo slobodno"
 			}
 		));
+		
+		JLabel label = new JLabel("Sektor:");
+		label.setBounds(10, 11, 59, 22);
+		frmSolutionsiIzvjetaj.getContentPane().add(label);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(57, 12, 106, 20);
+		frmSolutionsiIzvjetaj.getContentPane().add(comboBox);
 		table.getColumnModel().getColumn(5).setPreferredWidth(122);
 		
 		JMenuBar menuBar = new JMenuBar();
