@@ -49,7 +49,7 @@ public class KalendarPregledManagement {
 		frmZauzetiTerminiPo.getContentPane().add(calendar);
 		
 		JLabel lblZauzetiTerminiPo = new JLabel("Zauzeti termini po sektorima:");
-		lblZauzetiTerminiPo.setBounds(43, 25, 144, 32);
+		lblZauzetiTerminiPo.setBounds(43, 25, 181, 32);
 		frmZauzetiTerminiPo.getContentPane().add(lblZauzetiTerminiPo);
 		
 		JLabel label = new JLabel("Sektor:");

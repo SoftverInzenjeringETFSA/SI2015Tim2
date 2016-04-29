@@ -106,7 +106,7 @@ public class ZahtjevPregledManagement {
 		panel.add(lblHamo);
 		
 		JLabel lblPrezime = new JLabel("Prezime:");
-		lblPrezime.setBounds(10, 52, 46, 14);
+		lblPrezime.setBounds(10, 52, 70, 14);
 		panel.add(lblPrezime);
 		
 		JLabel lblPipa = new JLabel("Pipa");
@@ -140,7 +140,7 @@ public class ZahtjevPregledManagement {
 		panel_1.add(lblTip);
 		
 		JCheckBox chckbxPosjedujeDokumente = new JCheckBox("Posjeduje dokumente");
-		chckbxPosjedujeDokumente.setBounds(10, 184, 139, 23);
+		chckbxPosjedujeDokumente.setBounds(10, 184, 162, 23);
 		panel_1.add(chckbxPosjedujeDokumente);
 		
 		JLabel lblRazlog = new JLabel("Razlog:");
@@ -165,7 +165,7 @@ public class ZahtjevPregledManagement {
 		panel_1.add(lblGodisnjiOdmor);
 		
 		JCalendar calendar = new JCalendar();
-		calendar.setBounds(581, 33, 233, 220);
+		calendar.setBounds(581, 33, 233, 261);
 		frmSolutionsiZahtjev.getContentPane().add(calendar);
 		
 		JButton btnOdobri = new JButton("Odobri");
