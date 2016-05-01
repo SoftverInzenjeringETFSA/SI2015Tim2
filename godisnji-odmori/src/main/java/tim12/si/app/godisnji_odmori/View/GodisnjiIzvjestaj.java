@@ -46,7 +46,7 @@ public class GodisnjiIzvjestaj {
 	 */
 	private void initialize() {
 		frmSolutionsiGodisnji = new JFrame();
-		frmSolutionsiGodisnji.setTitle("SolutionSI - Godisnji izvjestaj");
+		frmSolutionsiGodisnji.setTitle("SolutionSI - Godišnji izvjestaj");
 		frmSolutionsiGodisnji.setBounds(100, 100, 675, 300);
 		frmSolutionsiGodisnji.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSolutionsiGodisnji.getContentPane().setLayout(null);

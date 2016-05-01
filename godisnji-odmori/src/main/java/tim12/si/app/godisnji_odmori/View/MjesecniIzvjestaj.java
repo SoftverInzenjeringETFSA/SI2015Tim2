@@ -46,7 +46,7 @@ public class MjesecniIzvjestaj {
 	 */
 	private void initialize() {
 		frmSolutionsiMjesecni = new JFrame();
-		frmSolutionsiMjesecni.setTitle("SolutionSI - Mjesecni izvjestaj");
+		frmSolutionsiMjesecni.setTitle("SolutionSI - Mjesečni izvjestaj");
 		frmSolutionsiMjesecni.setBounds(100, 100, 748, 306);
 		frmSolutionsiMjesecni.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSolutionsiMjesecni.getContentPane().setLayout(null);
@@ -59,8 +59,8 @@ public class MjesecniIzvjestaj {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
+				{"", null, "", "", "", null, null},
+				{null, null, null, null, null, "", null},
 				{null, null, null, null, null, null, null},
 				{null, null, null, null, "Ukupno:", null, null},
 			},
@@ -68,7 +68,13 @@ public class MjesecniIzvjestaj {
 				"Sektor", "Ime", "Prezime", "Radni dani", "Neradni dani", "Ukupno radni", "Ukupno neradni"
 			}
 		));
+		table.getColumnModel().getColumn(0).setPreferredWidth(85);
+		table.getColumnModel().getColumn(1).setPreferredWidth(87);
+		table.getColumnModel().getColumn(2).setPreferredWidth(90);
+		table.getColumnModel().getColumn(3).setPreferredWidth(89);
 		table.getColumnModel().getColumn(3).setMinWidth(60);
+		table.getColumnModel().getColumn(4).setPreferredWidth(94);
+		table.getColumnModel().getColumn(5).setPreferredWidth(96);
 		table.getColumnModel().getColumn(6).setPreferredWidth(167);
 		scrollPane.setViewportView(table);
 		
