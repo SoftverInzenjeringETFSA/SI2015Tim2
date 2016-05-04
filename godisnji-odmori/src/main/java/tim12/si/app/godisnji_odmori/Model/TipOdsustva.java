@@ -2,6 +2,10 @@ package tim12.si.app.godisnji_odmori.Model;
 
 public class TipOdsustva implements java.io.Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1912925604141037437L;
 	private long id_odsustva;
 	private String naziv;
 	private String opis;

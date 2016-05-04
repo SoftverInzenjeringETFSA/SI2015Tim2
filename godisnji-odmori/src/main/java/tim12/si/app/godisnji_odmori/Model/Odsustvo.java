@@ -3,6 +3,10 @@ package tim12.si.app.godisnji_odmori.Model;
 import java.util.Date;
 
 public class Odsustvo implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4093850039178622334L;
 	private long zaposlenik_id;
 	private Date datum;
 	private int tip;

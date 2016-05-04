@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 public class Zahtjev implements java.io.Serializable {
+
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1469825203111884070L;
 	private long zahtjev_id;
 	private long podnosilac_id;
 	private Date pocetak_odsustva;

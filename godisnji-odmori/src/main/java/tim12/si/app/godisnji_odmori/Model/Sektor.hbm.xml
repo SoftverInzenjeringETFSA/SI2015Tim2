@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 4, 2016 5:15:57 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="tim12.si.app.godisnji_odmori.Model.Sektor" table="SEKTOR">
+        <id name="sektor_id" type="long">
+            <column name="SEKTOR_ID" />
+            <generator class="native" />
+        </id>
+        <property name="naziv" type="java.lang.String">
+            <column name="NAZIV" />
+        </property>
+        <property name="godina_osnivanja" type="int">
+            <column name="GODINA_OSNIVANJA" />
+        </property>
+        <property name="broj_uposlenih" type="int">
+            <column name="BROJ_UPOSLENIH" />
+        </property>
+        <property name="max_broj_odsutnih" type="int">
+            <column name="MAX_BROJ_ODSUTNIH" />
+        </property>
+        <property name="opis" type="java.lang.String">
+            <column name="OPIS" />
+        </property>
+    </class>
+</hibernate-mapping>

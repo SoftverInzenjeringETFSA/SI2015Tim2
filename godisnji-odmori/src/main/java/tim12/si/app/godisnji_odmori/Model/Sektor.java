@@ -1,6 +1,11 @@
 package tim12.si.app.godisnji_odmori.Model;
 
 public class Sektor implements java.io.Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4118978542621900566L;
 	private long sektor_id;
 	private String naziv;
 	private int godina_osnivanja;

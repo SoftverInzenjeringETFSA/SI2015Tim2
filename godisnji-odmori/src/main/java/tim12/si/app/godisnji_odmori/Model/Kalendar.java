@@ -4,6 +4,10 @@ import java.util.Date;
 
 public class Kalendar implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8243371382031140039L;
 	private long kalendar_id;
 	private Date datum;
 	private String mjesec;

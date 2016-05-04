@@ -6,10 +6,11 @@ import java.util.List;
 
 public class Zaposlenik implements java.io.Serializable {
 	
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -4853422246107139780L;
 	private long zaposlenik_id;
 	private String ime;
 	private String prezime;

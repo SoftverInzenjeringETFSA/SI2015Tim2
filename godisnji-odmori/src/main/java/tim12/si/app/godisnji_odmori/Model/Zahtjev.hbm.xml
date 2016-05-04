@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 4, 2016 5:15:57 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="tim12.si.app.godisnji_odmori.Model.Zahtjev" table="ZAHTJEV">
+        <id name="zahtjev_id" type="long">
+            <column name="ZAHTJEV_ID" />
+            <generator class="native" />
+        </id>
+        <property name="podnosilac_id" type="long">
+            <column name="PODNOSILAC_ID" />
+        </property>
+        <property name="pocetak_odsustva" type="java.util.Date">
+            <column name="POCETAK_ODSUSTVA" />
+        </property>
+        <property name="zavrsetak_odsustva" type="java.util.Date">
+            <column name="ZAVRSETAK_ODSUSTVA" />
+        </property>
+        <property name="tip_odsustva" type="java.lang.String">
+            <column name="TIP_ODSUSTVA" />
+        </property>
+        <property name="obradjen" type="java.lang.Boolean">
+            <column name="OBRADJEN" />
+        </property>
+        <property name="odluka" type="java.lang.Boolean">
+            <column name="ODLUKA" />
+        </property>
+        <property name="opis" type="java.lang.String">
+            <column name="OPIS" />
+        </property>
+        <property name="sektor_id" type="long">
+            <column name="SEKTOR_ID" />
+        </property>
+    </class>
+</hibernate-mapping>
