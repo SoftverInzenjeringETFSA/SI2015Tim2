@@ -19,7 +19,7 @@ public class HibernateUtil {
 
 		try {
 			java.util.Properties properties = new Properties();
-			properties.load(new FileInputStream("db.properties"));
+			properties.load(new FileInputStream("src/main/resources/db.properties"));
 		    Configuration configuration = new Configuration();
 		    configuration.configure().addProperties(properties);
 		    serviceRegistry = new StandardServiceRegistryBuilder().applySettings(

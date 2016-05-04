@@ -19,7 +19,7 @@ public class App
         
         Session session = HibernateUtil.getSessionFactory().openSession();
         System.out.println( "Hello World! Merseda " );
-        dodajZaposlenika(session);
+        //dodajZaposlenika(session);
         
         
         session.close();
