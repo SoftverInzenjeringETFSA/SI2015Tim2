@@ -14,8 +14,10 @@ public class TipOdsustvaController {
 	 * @param tipOdsustva
 	 */
 	public int dodajTipOdsustva(TipOdsustvaVM tipOdsustva) {
-		// TODO - implement TipOdsustvaController.dodajTipOdsustva
-		throw new UnsupportedOperationException();
+		TipOdsustvaVM t= new TipOdsustvaVM();
+		t.naziv=tipOdsustva.naziv;
+		t.opis=tipOdsustva.opis;
+		return t.hashCode();
 	}
 
 	/**
@@ -23,8 +25,11 @@ public class TipOdsustvaController {
 	 * @param tipOdsustvaID
 	 */
 	public void obrisiTipOdsustva(long tipOdsustvaID) {
-		// TODO - implement TipOdsustvaController.obrisiTipOdsustva
-		throw new UnsupportedOperationException();
+		TipOdsustvaVM tovm=new TipOdsustvaVM();
+		/*for (long a : baza) {
+		 if(a == tipOdsustvaID)
+			 tovm= new TipOdsustvaVM();
+		}*/
 	}
 
 	/**
@@ -32,8 +37,11 @@ public class TipOdsustvaController {
 	 * @param tipOdsustva
 	 */
 	public void modificirajTipOdsustva(long IDTipa, String noviNaziv, String noviOpis) {
-		// TODO - implement TipOdsustvaController.modificirajTipOdsustva
-		throw new UnsupportedOperationException();
+		TipOdsustvaVM m= new TipOdsustvaVM();
+		for(int i =0 ; i <3 ; i++)
+		{
+		
+		}
 	}
 	
 	public List<TipOdsustva> dajSveTipove(){
