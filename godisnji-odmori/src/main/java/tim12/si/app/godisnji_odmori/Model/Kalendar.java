@@ -1,7 +1,10 @@
 package tim12.si.app.godisnji_odmori.Model;
 
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
 public class Kalendar implements java.io.Serializable {
 
 	/**
@@ -17,7 +20,7 @@ public class Kalendar implements java.io.Serializable {
 	private String opis_praznika;
 	
 	public Kalendar() {}
-
+	@Id
 	public long getkalendar_id()
 	{
 		return this.kalendar_id;
