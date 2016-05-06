@@ -67,6 +67,7 @@ public class IzvjestajPoKorisniku {
 				"Sektor", "Ime", "Prezime", "Radni dani", "Neradni dani", "Preostalo slobodno"
 			}
 		));
+		table.getColumnModel().getColumn(5).setPreferredWidth(122);
 		
 		JLabel label = new JLabel("Sektor:");
 		label.setBounds(10, 11, 59, 22);
@@ -75,7 +76,6 @@ public class IzvjestajPoKorisniku {
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(57, 12, 106, 20);
 		frmSolutionsiIzvjetaj.getContentPane().add(comboBox);
-		table.getColumnModel().getColumn(5).setPreferredWidth(122);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmSolutionsiIzvjetaj.setJMenuBar(menuBar);

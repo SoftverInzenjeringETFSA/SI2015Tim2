@@ -397,11 +397,6 @@ public class ManagementMainWindow {
 		panel_9.add(txtEkonomskiSektor);
 		txtEkonomskiSektor.setColumns(10);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
-		spinner.setBounds(192, 103, 147, 20);
-		panel_9.add(spinner);
-		
 		JSpinner spinner_1 = new JSpinner();
 		spinner_1.setModel(new SpinnerDateModel(new Date(946681200000L), null, null, Calendar.YEAR));
 		spinner_1.setBounds(192, 68, 147, 20);
@@ -422,6 +417,10 @@ public class ManagementMainWindow {
 		txtrEkonomskiSektorSe.setFont(new Font("Monospaced", Font.PLAIN, 12));
 		txtrEkonomskiSektorSe.setRows(10);
 		txtrEkonomskiSektorSe.setText("Ekonomski sektor se bavi ekonomskim \r\nposlovima kompanije");
+		
+		JLabel label_9 = new JLabel("5");
+		label_9.setBounds(192, 114, 147, 14);
+		panel_9.add(label_9);
 		
 		JButton btnDodajNoviSektor = new JButton("Dodaj sektor");
 		btnDodajNoviSektor.setBounds(59, 356, 124, 23);

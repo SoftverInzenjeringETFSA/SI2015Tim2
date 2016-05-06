@@ -31,8 +31,6 @@ import javax.swing.ScrollPaneConstants;
 public class UserMainWindow {
 
 	private JFrame frmSolutionsi;
-	private JTextField textField;
-	private JTextField textField_1;
 	private JTextField txtHhasicgmailcom;
 	private JTextField textField_3;
 	private JPasswordField passwordField;
@@ -399,81 +397,47 @@ public class UserMainWindow {
 		tabbedPane.addTab("Neplanirano odsustvo", null, panel_3, null);
 		panel_3.setLayout(null);
 		
+		JButton btnKreirajZahtjev = new JButton("Kreiraj zahtjev");
+		btnKreirajZahtjev.setBounds(401, 368, 140, 23);
+		panel_3.add(btnKreirajZahtjev);
+		
 		JPanel panel_4 = new JPanel();
-		panel_4.setBorder(new TitledBorder(null, "Lični podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_4.setBounds(43, 52, 498, 123);
-		panel_3.add(panel_4);
 		panel_4.setLayout(null);
+		panel_4.setBorder(new TitledBorder(null, "Vremenski interval", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_4.setBounds(41, 34, 492, 130);
+		panel_3.add(panel_4);
 		
-		JLabel lblIme = new JLabel("Ime:");
-		lblIme.setBounds(22, 37, 68, 14);
-		panel_4.add(lblIme);
+		JLabel label_6 = new JLabel("Od:");
+		label_6.setBounds(32, 31, 128, 14);
+		panel_4.add(label_6);
 		
-		JLabel lblPrezime = new JLabel("Prezime:");
-		lblPrezime.setBounds(22, 75, 68, 14);
-		panel_4.add(lblPrezime);
+		JLabel label_7 = new JLabel("Do:");
+		label_7.setBounds(290, 31, 114, 14);
+		panel_4.add(label_7);
 		
-		JLabel lblSektor = new JLabel("Sektor:");
-		lblSektor.setBounds(299, 58, 46, 14);
-		panel_4.add(lblSektor);
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setDateFormatString("yyyy-MM-dd");
+		dateChooser.setBounds(52, 56, 114, 20);
+		panel_4.add(dateChooser);
 		
-		textField = new JTextField();
-		textField.setBounds(100, 34, 112, 20);
-		panel_4.add(textField);
-		textField.setColumns(10);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(100, 72, 112, 20);
-		panel_4.add(textField_1);
-		textField_1.setColumns(10);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(376, 55, 112, 20);
-		panel_4.add(comboBox);
+		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1.setDateFormatString("yyyy-MM-dd");
+		dateChooser_1.setBounds(300, 56, 114, 20);
+		panel_4.add(dateChooser_1);
 		
 		JPanel panel_5 = new JPanel();
-		panel_5.setBorder(new TitledBorder(null, "Razlog odsustva", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_5.setBounds(43, 257, 498, 100);
-		panel_3.add(panel_5);
 		panel_5.setLayout(null);
+		panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Razlog odsustva", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_5.setBounds(41, 181, 492, 171);
+		panel_3.add(panel_5);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(10, 23, 478, 66);
+		scrollPane.setBounds(10, 20, 472, 140);
 		panel_5.add(scrollPane);
 		
 		JTextArea textArea_1 = new JTextArea();
 		textArea_1.setLineWrap(true);
 		scrollPane.setViewportView(textArea_1);
-		textArea_1.setFont(new Font("Monospaced", Font.PLAIN, 11));
-		
-		JButton btnKreirajZahtjev = new JButton("Kreiraj zahtjev");
-		btnKreirajZahtjev.setBounds(401, 368, 140, 23);
-		panel_3.add(btnKreirajZahtjev);
-		
-		JPanel panel_14 = new JPanel();
-		panel_14.setBorder(new TitledBorder(null, "Vrijeme odsustva", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_14.setBounds(43, 186, 498, 58);
-		panel_3.add(panel_14);
-		panel_14.setLayout(null);
-		
-		JLabel lblOd = new JLabel("Od:");
-		lblOd.setBounds(24, 22, 46, 14);
-		panel_14.add(lblOd);
-		
-		JLabel lblDo = new JLabel("Do:");
-		lblDo.setBounds(330, 22, 46, 14);
-		panel_14.add(lblDo);
-		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setDateFormatString("yyyy-MM-dd");
-		dateChooser.setBounds(98, 22, 112, 20);
-		panel_14.add(dateChooser);
-		
-		JDateChooser dateChooser_1 = new JDateChooser();
-		dateChooser_1.setDateFormatString("yyyy-MM-dd");
-		dateChooser_1.setBounds(376, 22, 112, 20);
-		panel_14.add(dateChooser_1);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmSolutionsi.setJMenuBar(menuBar);

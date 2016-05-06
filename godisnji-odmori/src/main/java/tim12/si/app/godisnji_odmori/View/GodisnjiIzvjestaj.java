@@ -59,12 +59,12 @@ public class GodisnjiIzvjestaj {
 		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"IT", "Haso", "Hasi\u0107", "125", "10", "125", "10"},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, "Ukupno:", "125", "10"},
+				{"IT", "Haso", "Hasi\u0107", "125", "10"},
+				{null, null, null, null, null},
+				{null, null, "Ukupno:", "125", "10"},
 			},
 			new String[] {
-				"Sektor", "Ime", "Prezime", "Radni dani", "Neradni dani", "Ukupno radni", "Ukupno neradni"
+				"Sektor", "Ime", "Prezime", "Radni dani", "Neradni dani"
 			}
 		));
 		
@@ -83,7 +83,6 @@ public class GodisnjiIzvjestaj {
 		JYearChooser yearChooser = new JYearChooser();
 		yearChooser.setBounds(268, 13, 67, 20);
 		frmSolutionsiGodisnji.getContentPane().add(yearChooser);
-		table.getColumnModel().getColumn(6).setPreferredWidth(99);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmSolutionsiGodisnji.setJMenuBar(menuBar);
