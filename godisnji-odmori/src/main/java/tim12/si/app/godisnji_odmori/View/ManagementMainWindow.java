@@ -60,6 +60,7 @@ public class ManagementMainWindow {
 	private JLabel lblMujoMuji;
 	private JLabel lblMenadmentLjudskihResursa;
 	private JLabel label_6;
+	private JLabel label_7;
 	private JDialog frame;
 	//static final Logger logger = Logger.getLogger(ManagementMainWindow.class);
 
@@ -94,6 +95,7 @@ public class ManagementMainWindow {
 			lblMujoMuji.setText(zbd.getZaposlenikIme() + " " + zbd.getZaposlenikPrezime());
 			lblMenadmentLjudskihResursa.setText(zbd.getSektor());
 			label_6.setText(zbd.getRadniDani().toString());
+			label_7.setText(zbd.getPreostaloSlobodnih().toString());
 			
 		}
 		catch (Exception er) {
@@ -218,7 +220,7 @@ public class ManagementMainWindow {
 		btnPregledKalendara.setBounds(54, 245, 111, 23);
 		panel_1.add(btnPregledKalendara);
 		
-		JLabel label_7 = new JLabel("20");
+		label_7 = new JLabel("20");
 		label_7.setForeground(new Color(128, 0, 0));
 		label_7.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
 		label_7.setBounds(302, 347, 30, 25);

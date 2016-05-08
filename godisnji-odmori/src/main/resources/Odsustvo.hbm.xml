@@ -4,10 +4,13 @@
 <!-- Generated May 4, 2016 5:15:57 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="tim12.si.app.godisnji_odmori.Model.Odsustvo" table="ODSUSTVO">
-        <id name="zaposlenik_id" type="long">
-            <column name="ZAPOSLENIK_ID" />
+    	<id name="odsustvo_id" type="long">
+            <column name="ODSUSTVO_ID" />
             <generator class="native" />
         </id>
+        <property name="zaposlenik_id" type="long">
+            <column name="ZAPOSLENIK_ID" />
+        </property>
         <property name="datum" type="java.util.Date">
             <column name="DATUM" />
         </property>

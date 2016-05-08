@@ -7,16 +7,16 @@ public class ZaposlenikBrDana {
 	private String zaposlenikPrezime;
 	private Long radniDani;
 	private int neradniDani;
-	private int preostaloSlobodnih;
+	private Long preostaloSlobodnih;
 	
-	public ZaposlenikBrDana(String sektor,String zaposlenikIme, String zaposlenikPrezime, Long radniDani/*, int neradniDani, int preostaloSlobodnih*/)
+	public ZaposlenikBrDana(String sektor,String zaposlenikIme, String zaposlenikPrezime, Long radniDani/*, int neradniDani*/, Long preostaloSlobodnih)
 	{
 		this.sektor = sektor;
 		this.zaposlenikIme = zaposlenikIme;
 		this.zaposlenikPrezime = zaposlenikPrezime;
 		this.radniDani = radniDani;
-		/*this.neradniDani = neradniDani;
-		this.preostaloSlobodnih = preostaloSlobodnih;*/
+		/*this.neradniDani = neradniDani;*/
+		this.preostaloSlobodnih = preostaloSlobodnih;
 	}
 	public String getSektor() {
 		return sektor;
@@ -48,10 +48,10 @@ public class ZaposlenikBrDana {
 	public void setNeradniDani(int neradniDani) {
 		this.neradniDani = neradniDani;
 	}
-	public int getPreostaloSlobodnih() {
+	public Long getPreostaloSlobodnih() {
 		return preostaloSlobodnih;
 	}
-	public void setPreostaloSlobodnih(int preostaloSlobodnih) {
+	public void setPreostaloSlobodnih(Long preostaloSlobodnih) {
 		this.preostaloSlobodnih = preostaloSlobodnih;
 	}
 

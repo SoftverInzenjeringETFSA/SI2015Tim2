@@ -7,6 +7,7 @@ public class Odsustvo implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -4093850039178622334L;
+	private long odsustvo_id;
 	private long zaposlenik_id;
 	private Date datum;
 	private int tip;
@@ -86,6 +87,14 @@ public class Odsustvo implements java.io.Serializable {
 	{
 		// TODO - implement Odsustvo.setAttribute
 		throw new UnsupportedOperationException();
+	}
+
+	public long getOdsustvo_id() {
+		return odsustvo_id;
+	}
+
+	public void setOdsustvo_id(long odsustvo_id) {
+		this.odsustvo_id = odsustvo_id;
 	}
 
 }
