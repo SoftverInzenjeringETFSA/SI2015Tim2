@@ -137,26 +137,29 @@ public class ManagementMainWindow {
 		panel.add(label);
 		
 		JLabel label_1 = new JLabel("Status:");
-		label_1.setBounds(10, 223, 68, 14);
+		label_1.setHorizontalAlignment(SwingConstants.LEFT);
+		label_1.setBounds(12, 223, 68, 14);
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(label_1);
 		
 		JLabel lblMenader = new JLabel("Menad\u017Eer");
-		lblMenader.setBounds(70, 220, 89, 21);
+		lblMenader.setBounds(148, 220, 89, 21);
 		lblMenader.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(lblMenader);
 		
 		JLabel label_3 = new JLabel("Sektor:");
+		label_3.setHorizontalAlignment(SwingConstants.LEFT);
 		label_3.setBounds(10, 255, 68, 26);
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(label_3);
 		
 		lblMenadmentLjudskihResursa = new JLabel("Menadžment ljudskih resursa");
-		lblMenadmentLjudskihResursa.setBounds(70, 258, 219, 20);
+		lblMenadmentLjudskihResursa.setBounds(148, 258, 219, 20);
 		lblMenadmentLjudskihResursa.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(lblMenadmentLjudskihResursa);
 		
 		JLabel label_5 = new JLabel("Ukupno radnih dana:");
+		label_5.setHorizontalAlignment(SwingConstants.LEFT);
 		label_5.setBounds(10, 301, 128, 14);
 		label_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(label_5);
