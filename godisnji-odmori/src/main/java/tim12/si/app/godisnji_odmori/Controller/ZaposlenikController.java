@@ -145,7 +145,7 @@ public class ZaposlenikController
 		Transaction t = session.beginTransaction();
 		
 		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana(s.naziv, z.ime, "+
-				"z.prezime) FROM Zaposlenik z, Sektor s WHERE z.username = :username AND s.sektor_id = z.sektor_id";
+				"z.prezime, count(p.prisustvo_id)) FROM Zaposlenik z, Sektor s, Prisustvo p WHERE z.username = :username AND s.sektor_id = z.sektor_id AND z.zaposlenik_id = p.zaposlenik_id";
 		Query q = session.createQuery(hql);
 		q.setString("username", username);
 		

@@ -59,6 +59,7 @@ public class ManagementMainWindow {
 	private JTextField txtEkonomskiSektor;
 	private JLabel lblMujoMuji;
 	private JLabel lblMenadmentLjudskihResursa;
+	private JLabel label_6;
 	private JDialog frame;
 	//static final Logger logger = Logger.getLogger(ManagementMainWindow.class);
 
@@ -86,12 +87,13 @@ public class ManagementMainWindow {
 		Session sess = null;
 		
 		try {
-			//UI.SetUsername("dbabahmeto1");
+			UI.SetUsername("dbabahmeto1");
 			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 			ZaposlenikController zc = new ZaposlenikController(sess);
 			ZaposlenikBrDana zbd = zc.DajZaposlenikViewModel(UI.DajUsername());
 			lblMujoMuji.setText(zbd.getZaposlenikIme() + " " + zbd.getZaposlenikPrezime());
 			lblMenadmentLjudskihResursa.setText(zbd.getSektor());
+			label_6.setText(zbd.getRadniDani().toString());
 			
 		}
 		catch (Exception er) {
@@ -164,7 +166,7 @@ public class ManagementMainWindow {
 		label_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(label_5);
 		
-		JLabel label_6 = new JLabel("251");
+		label_6 = new JLabel("251");
 		label_6.setBounds(148, 301, 46, 14);
 		label_6.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(label_6);
