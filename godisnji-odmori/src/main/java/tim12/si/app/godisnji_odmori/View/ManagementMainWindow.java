@@ -138,7 +138,7 @@ public class ManagementMainWindow {
 		
 		JLabel label_1 = new JLabel("Status:");
 		label_1.setHorizontalAlignment(SwingConstants.LEFT);
-		label_1.setBounds(12, 223, 68, 14);
+		label_1.setBounds(10, 223, 68, 14);
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(label_1);
 		
