@@ -39,6 +39,7 @@ import java.util.Calendar;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.event.ActionListener;
+import java.io.InputStream;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 
@@ -127,10 +128,12 @@ public class ManagementMainWindow {
 		tabbedPane.addTab("Početna", null, panel, null);
 		panel.setLayout(null);
 		
+		ImageIcon ii = new ImageIcon(getClass().getResource("/boss2.png"));
 		JLabel label = new JLabel("");
-		label.setBounds(10, 11, 160, 128);
-		label.setIcon(new ImageIcon("C:\\Users\\AyLLa\\workspace\\SolutionSI\\Slike\\Person.gif"));
 		label.setVerticalAlignment(SwingConstants.BOTTOM);
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setBounds(10, 11, 160, 128);
+		label.setIcon(ii);
 		panel.add(label);
 		
 		JLabel label_1 = new JLabel("Status:");
@@ -170,6 +173,7 @@ public class ManagementMainWindow {
 		panel.add(lblZaOvuGodinu);
 		
 		lblMujoMuji = new JLabel("Mujo Muji\u0107");
+		lblMujoMuji.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMujoMuji.setBounds(10, 152, 160, 26);
 		lblMujoMuji.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(lblMujoMuji);
