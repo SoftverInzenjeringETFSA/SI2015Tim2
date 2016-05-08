@@ -19,7 +19,14 @@ public class UI {
 	private JLabel lblSolutionsi;
 	private JPasswordField passwordField;
 	private JLabel lblSi;
-
+	//kako bi znali koji je user logovan
+	private static String username;
+	
+	
+	public static String DajUsername()
+	{
+		return username;
+	}
 	/**
 	 * Launch the application.
 	 */
