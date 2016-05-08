@@ -23,7 +23,7 @@ public class ZaposlenikTest {
 	@Before 
 	public void postavi()
 	{
-		zaposlenikController = new ZaposlenikController();
+		//zaposlenikController = new ZaposlenikController();
 		zaposlenikVM= new ZaposlenikVM();
 		
 	}

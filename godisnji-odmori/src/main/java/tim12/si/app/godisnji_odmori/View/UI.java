@@ -27,6 +27,11 @@ public class UI {
 	{
 		return username;
 	}
+	//samo privremeno
+	public static void SetUsername(String temp)
+	{
+		username = temp;
+	}
 	/**
 	 * Launch the application.
 	 */

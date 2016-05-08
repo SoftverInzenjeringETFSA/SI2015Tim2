@@ -4,19 +4,29 @@ package tim12.si.app.godisnji_odmori.Controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+
 import tim12.si.app.godisnji_odmori.ViewModel.*;
+import tim12.si.app.godisnji_odmori.ZaposlenikNotFound;
 import tim12.si.app.godisnji_odmori.Model.*;
 
 public class ZaposlenikController 
 {
-	
+	private Session session;
 	private ZaposlenikVM zvm;
 	/**
 	 * 
 	 * @param zaposlenik
 	 */	
 
-	public ZaposlenikController(){};
+	public ZaposlenikController(Session session)
+	{
+		this.session = session;
+	};
 	//dodaje zaposlenika u listu
 	public void DodajZaposlenika() 
 	{
@@ -129,5 +139,21 @@ public class ZaposlenikController
 			}
 		}
 		return listaZ;
-		}
+	}
+	public ZaposlenikBrDana DajZaposlenikViewModel(String username) throws ZaposlenikNotFound
+	{
+		Transaction t = session.beginTransaction();
+		
+		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana(s.naziv, z.ime, "+
+				"z.prezime) FROM Zaposlenik z, Sektor s WHERE z.username = :username AND s.sektor_id = z.sektor_id";
+		Query q = session.createQuery(hql);
+		q.setString("username", username);
+		
+		List l = q.list();
+		t.commit();
+		if(l.isEmpty())
+			throw new ZaposlenikNotFound("Zaposlenik s username-om: " + username + " nije pronadjen.");
+		ZaposlenikBrDana vm = (ZaposlenikBrDana) l.get(0);
+		return vm;
+	}
 }

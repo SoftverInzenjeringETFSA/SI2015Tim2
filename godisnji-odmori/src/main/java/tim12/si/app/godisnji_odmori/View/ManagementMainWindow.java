@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -21,10 +22,16 @@ import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JTextField;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+
+import org.hibernate.Session;
+
+
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
@@ -34,6 +41,10 @@ import javax.swing.ScrollPaneConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
+
+
+import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
+import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
 
 public class ManagementMainWindow {
 
@@ -45,6 +56,10 @@ public class ManagementMainWindow {
 	private JTextField textField_3;
 	private JTable table;
 	private JTextField txtEkonomskiSektor;
+	private JLabel lblMujoMuji;
+	private JLabel lblMenadmentLjudskihResursa;
+	private JDialog frame;
+	//static final Logger logger = Logger.getLogger(ManagementMainWindow.class);
 
 	/**
 	 * Launch the application.
@@ -67,6 +82,31 @@ public class ManagementMainWindow {
 	 */
 	public ManagementMainWindow() {
 		initialize();
+		Session sess = null;
+		
+		try {
+			//UI.SetUsername("dbabahmeto1");
+			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+			ZaposlenikController zc = new ZaposlenikController(sess);
+			ZaposlenikBrDana zbd = zc.DajZaposlenikViewModel(UI.DajUsername());
+			lblMujoMuji.setText(zbd.getZaposlenikIme() + " " + zbd.getZaposlenikPrezime());
+			lblMenadmentLjudskihResursa.setText(zbd.getSektor());
+			
+		}
+		catch (Exception er) {
+
+			
+			JOptionPane.showMessageDialog(frame, er.getMessage(),
+					"Greška", JOptionPane.INFORMATION_MESSAGE);
+
+		} finally {
+			if (sess != null)
+				sess.close();
+		}
+		
+		
+		
+		
 	}
 
 	/**
@@ -88,7 +128,7 @@ public class ManagementMainWindow {
 		panel.setLayout(null);
 		
 		JLabel label = new JLabel("");
-		label.setBounds(10, 11, 128, 128);
+		label.setBounds(10, 11, 160, 128);
 		label.setIcon(new ImageIcon("C:\\Users\\AyLLa\\workspace\\SolutionSI\\Slike\\Person.gif"));
 		label.setVerticalAlignment(SwingConstants.BOTTOM);
 		panel.add(label);
@@ -108,7 +148,7 @@ public class ManagementMainWindow {
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(label_3);
 		
-		JLabel lblMenadmentLjudskihResursa = new JLabel("Menadžment ljudskih resursa");
+		lblMenadmentLjudskihResursa = new JLabel("Menadžment ljudskih resursa");
 		lblMenadmentLjudskihResursa.setBounds(70, 258, 219, 20);
 		lblMenadmentLjudskihResursa.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(lblMenadmentLjudskihResursa);
@@ -129,8 +169,8 @@ public class ManagementMainWindow {
 		lblZaOvuGodinu.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
 		panel.add(lblZaOvuGodinu);
 		
-		JLabel lblMujoMuji = new JLabel("Mujo Muji\u0107");
-		lblMujoMuji.setBounds(30, 150, 89, 26);
+		lblMujoMuji = new JLabel("Mujo Muji\u0107");
+		lblMujoMuji.setBounds(10, 152, 160, 26);
 		lblMujoMuji.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(lblMujoMuji);
 		
