@@ -22,8 +22,10 @@ import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -39,6 +41,7 @@ import java.util.Calendar;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.InputStream;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
@@ -67,6 +70,8 @@ public class ManagementMainWindow {
 	private JList list;
 	private JScrollPane scrollPane_1;
 	private JDialog frame;
+	
+	private ArrayList<ZahtjevVM> zvm;
 	
 
 	/**
@@ -103,7 +108,7 @@ public class ManagementMainWindow {
 			label_7.setText(zbd.getPreostaloSlobodnih().toString());
 			
 			ZahtjevController zc2 = new ZahtjevController(sess);
-			ArrayList<ZahtjevVM> zvm = zc2.dajSveZahtjeveIzSektora(zbd.getSektor());
+			zvm = zc2.dajSveZahtjeveIzSektora(zbd.getSektor());
 			ArrayList<String> listaPodnosilaca = new ArrayList<String>();
 			for (int i=0; i<zvm.size(); i++) listaPodnosilaca.add("Zahtjev od " + zvm.get(i).getPodnosilacIme() + " " + zvm.get(i).getPodnosilacPrezime());
 			list = new JList(listaPodnosilaca.toArray());
@@ -131,6 +136,14 @@ public class ManagementMainWindow {
 		
 		
 	}
+	public void otvoriZahtjev (int selected)
+	{
+		if (selected == -1) {JOptionPane.showMessageDialog(frame, "Neophodno je prvo selektovati zahtjev",
+				"Info", JOptionPane.INFORMATION_MESSAGE); return;}
+		new ZahtjevPregledManagement();
+		
+	}
+	
 
 	/**
 	 * Initialize the contents of the frame.
@@ -233,6 +246,15 @@ public class ManagementMainWindow {
 		JButton btnPogledajDetalje = new JButton("Pogledaj zahtjev");
 		btnPogledajDetalje.setBounds(175, 245, 148, 23);
 		panel_1.add(btnPogledajDetalje);
+		
+		btnPogledajDetalje.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						int selected = list.getSelectedIndex();
+						otvoriZahtjev(selected);
+					}
+				});
 		
 		JButton btnPregledKalendara = new JButton("Kalendar");
 		btnPregledKalendara.setBounds(54, 245, 111, 23);
@@ -548,4 +570,18 @@ public class ManagementMainWindow {
 		JMenuItem mntmLogOut = new JMenuItem("Odjavi se");
 		mnOdjava.add(mntmLogOut);
 	}
+	/*public static void Prekini(final JDialog dialog) {
+		ActionListener escListener = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				dialog.setVisible(false);
+				dialog.dispose();
+			}
+		};
+
+		dialog.getRootPane().registerKeyboardAction(escListener,
+				KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+				JComponent.WHEN_IN_FOCUSED_WINDOW);
+
+	}*/
 }

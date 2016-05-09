@@ -38,7 +38,9 @@ public class ZahtjevPregledManagement {
 	 * Create the application.
 	 */
 	public ZahtjevPregledManagement() {
+		//ManagementMainWindow.Prekini(this);
 		initialize();
+		this.frmSolutionsiZahtjev.setVisible(true);
 	}
 
 	/**
@@ -48,7 +50,7 @@ public class ZahtjevPregledManagement {
 		frmSolutionsiZahtjev = new JFrame();
 		frmSolutionsiZahtjev.setTitle("SolutionSI - Zahtjev detalji");
 		frmSolutionsiZahtjev.setBounds(100, 100, 840, 407);
-		frmSolutionsiZahtjev.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSolutionsiZahtjev.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmSolutionsiZahtjev.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
