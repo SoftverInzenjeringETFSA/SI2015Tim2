@@ -6,6 +6,7 @@ public class ZaposlenikNotFound extends Exception {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	
 	public ZaposlenikNotFound() {
 		super();
@@ -32,5 +33,6 @@ public class ZaposlenikNotFound extends Exception {
 		super(cause);
 		
 	}
+
 
 }

@@ -40,7 +40,7 @@
 	<groupId>org.hibernate</groupId>
 	<artifactId>hibernate-core</artifactId>
 </dependency>
-
+	
   </dependencies>
   <build>
   <resources>

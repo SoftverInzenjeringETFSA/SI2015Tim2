@@ -2,23 +2,33 @@ package tim12.si.app.godisnji_odmori.Controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import tim12.si.app.godisnji_odmori.ViewModel.*;
+import tim12.si.app.godisnji_odmori.ZaposlenikNotFound;
 import tim12.si.app.godisnji_odmori.Model.*;
 
 public class ZahtjevController {
 	
-
+	private Session session;
 	/**
 	 * 
 	 * @param zahtjev
 	 */
+	public ZahtjevController(Session session)
+	{
+		this.session = session;
+	}
 	public long kreirajZahtjev(ZahtjevVM zahtjev) throws Exception{
 		Boolean flag = false;
 		Zaposlenik zp = null;
 		for(int i = 0; i<Zaposlenik.listaZaposlenika.size(); i++)
 		{
-			if (Zaposlenik.listaZaposlenika.get(i).getIme() == zahtjev.podnosilacIme &&
-					Zaposlenik.listaZaposlenika.get(i).getPrezime() == zahtjev.podnosilacPrezime)
+			if (Zaposlenik.listaZaposlenika.get(i).getIme() == zahtjev.getPodnosilacIme() &&
+					Zaposlenik.listaZaposlenika.get(i).getPrezime() == zahtjev.getPodnosilacPrezime())
 				{ 
 					flag = true;
 					zp = Zaposlenik.listaZaposlenika.get(i);
@@ -29,12 +39,12 @@ public class ZahtjevController {
 		
 		Zahtjev z = new Zahtjev();
 		z.setPodnosilac_id(zp.getZaposlenik_id());
-		z.setPocetak_odsustva(zahtjev.pocetakOdsustva);
-		z.setZavrsetak_odsustva(zahtjev.zavrsetakOdsustva);
-		z.setTip_odsustva(zahtjev.tipOdsustva);
+		z.setPocetak_odsustva(zahtjev.getPocetakOdsustva());
+		z.setZavrsetak_odsustva(zahtjev.getZavrsetakOdsustva());
+		z.setTip_odsustva(zahtjev.getTipOdsustva());
 		z.setObradjen(false);
 		z.setOdluka(null);
-		z.setOpis(zahtjev.opis);
+		z.setOpis(zahtjev.getOpis());
 		z.setSektor_id(zp.getSektor_id());
 		
 		return z.getZahtjev_id();
@@ -86,6 +96,26 @@ public class ZahtjevController {
 
 	public ArrayList<Zahtjev> dajSveZahtjeve() {
 		return (ArrayList<Zahtjev>) Zahtjev.listaZahtjeva;
+	}
+	
+	public ArrayList<ZahtjevVM> dajSveZahtjeveIzSektora(String sektor)
+	{
+		Transaction t = session.beginTransaction();
+		
+		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM(z.ime, z.prezime) "
+				+ "FROM Zaposlenik z, Sektor s, Zahtjev za "
+				+ "WHERE s.naziv = :sektor AND s.sektor_id = z.sektor_id AND z.zaposlenik_id = za.podnosilac_id";
+		Query q = session.createQuery(hql);
+		q.setString("sektor", sektor);
+		
+		List l = q.list();
+		t.commit();
+		/*if(l.isEmpty())
+			throw new ZaposlenikNotFound("Zaposlenik s username-om: " + username + " nije pronadjen.");*/
+		ArrayList<ZahtjevVM> zvm = new ArrayList<ZahtjevVM>();
+		for (int i=0; i<l.size(); i++)
+				zvm.add((ZahtjevVM) l.get(i));
+		return zvm;
 	}
 
 }

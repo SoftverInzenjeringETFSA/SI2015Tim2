@@ -28,13 +28,13 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-
 import org.hibernate.Session;
 
 
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -43,8 +43,10 @@ import java.io.InputStream;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 
-
+import tim12.si.app.godisnji_odmori.ZaposlenikNotFound;
+import tim12.si.app.godisnji_odmori.Controller.ZahtjevController;
 import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
+import tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
 
 public class ManagementMainWindow {
@@ -61,8 +63,11 @@ public class ManagementMainWindow {
 	private JLabel lblMenadmentLjudskihResursa;
 	private JLabel label_6;
 	private JLabel label_7;
+	private JLabel label_10;
+	private JList list;
+	private JScrollPane scrollPane_1;
 	private JDialog frame;
-	//static final Logger logger = Logger.getLogger(ManagementMainWindow.class);
+	
 
 	/**
 	 * Launch the application.
@@ -88,7 +93,7 @@ public class ManagementMainWindow {
 		Session sess = null;
 		
 		try {
-			UI.SetUsername("dbabahmeto1");
+			//UI.SetUsername("dbabahmeto1");
 			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 			ZaposlenikController zc = new ZaposlenikController(sess);
 			ZaposlenikBrDana zbd = zc.DajZaposlenikViewModel(UI.DajUsername());
@@ -97,11 +102,24 @@ public class ManagementMainWindow {
 			label_6.setText(zbd.getRadniDani().toString());
 			label_7.setText(zbd.getPreostaloSlobodnih().toString());
 			
+			ZahtjevController zc2 = new ZahtjevController(sess);
+			ArrayList<ZahtjevVM> zvm = zc2.dajSveZahtjeveIzSektora(zbd.getSektor());
+			ArrayList<String> listaPodnosilaca = new ArrayList<String>();
+			for (int i=0; i<zvm.size(); i++) listaPodnosilaca.add("Zahtjev od " + zvm.get(i).getPodnosilacIme() + " " + zvm.get(i).getPodnosilacPrezime());
+			list = new JList(listaPodnosilaca.toArray());
+			scrollPane_1.setViewportView(list);
+			label_10.setText(Integer.toString(zvm.size()));
+			
+			
+			
 		}
 		catch (Exception er) {
 
-			
+			//System.out.print(er.getMessage());
+			if (er.getMessage() != null )
 			JOptionPane.showMessageDialog(frame, er.getMessage(),
+					"Greška", JOptionPane.INFORMATION_MESSAGE);
+			else JOptionPane.showMessageDialog(frame, "Korisnik sa username: " + UI.DajUsername() + " ne postoji.",
 					"Greška", JOptionPane.INFORMATION_MESSAGE);
 
 		} finally {
@@ -191,18 +209,18 @@ public class ManagementMainWindow {
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblZahtjevaekaju = new JLabel("1 zahtjev čeka na obradu");
+		JLabel lblZahtjevaekaju = new JLabel("zahtjeva čekaju na obradu");
 		lblZahtjevaekaju.setHorizontalAlignment(SwingConstants.CENTER);
-		lblZahtjevaekaju.setBounds(54, 25, 207, 14);
+		lblZahtjevaekaju.setBounds(85, 25, 176, 14);
 		panel_1.add(lblZahtjevaekaju);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(54, 50, 269, 131);
 		panel_1.add(scrollPane_1);
 		
-		JList list = new JList();
+		list = new JList();
 		scrollPane_1.setViewportView(list);
-		list.setModel(new AbstractListModel() {
+		/*list.setModel(new AbstractListModel() {
 			String[] values = new String[] {"Zahtjev od Haso Hasić"};
 			public int getSize() {
 				return values.length;
@@ -210,7 +228,7 @@ public class ManagementMainWindow {
 			public Object getElementAt(int index) {
 				return values[index];
 			}
-		});
+		});*/
 		
 		JButton btnPogledajDetalje = new JButton("Pogledaj zahtjev");
 		btnPogledajDetalje.setBounds(175, 245, 148, 23);
@@ -219,6 +237,12 @@ public class ManagementMainWindow {
 		JButton btnPregledKalendara = new JButton("Kalendar");
 		btnPregledKalendara.setBounds(54, 245, 111, 23);
 		panel_1.add(btnPregledKalendara);
+		
+		label_10 = new JLabel("0");
+		label_10.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_10.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		label_10.setBounds(39, 25, 46, 14);
+		panel_1.add(label_10);
 		
 		label_7 = new JLabel("20");
 		label_7.setForeground(new Color(128, 0, 0));
