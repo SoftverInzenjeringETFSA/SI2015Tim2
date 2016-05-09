@@ -149,7 +149,7 @@ public class ManagementMainWindow {
 	{
 		if (selected == -1) {JOptionPane.showMessageDialog(frame, "Neophodno je prvo selektovati zahtjev",
 				"Info", JOptionPane.INFORMATION_MESSAGE); return;}
-		new ZahtjevPregledManagement();
+		new ZahtjevPregledManagement(zvm.get(selected).getIdZahtjeva());
 		
 	}
 	

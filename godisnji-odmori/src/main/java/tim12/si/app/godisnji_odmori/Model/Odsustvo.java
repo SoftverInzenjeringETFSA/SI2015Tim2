@@ -10,7 +10,7 @@ public class Odsustvo implements java.io.Serializable {
 	private long odsustvo_id;
 	private long zaposlenik_id;
 	private Date datum;
-	private int tip;
+	private long tip;
 	private String opis;
 
 	
@@ -45,7 +45,7 @@ public class Odsustvo implements java.io.Serializable {
 		this.datum = datum;
 	}
 
-	public int getTip()
+	public long getTip()
 	{
 		return this.tip;
 	}
@@ -54,7 +54,7 @@ public class Odsustvo implements java.io.Serializable {
 	 * 
 	 * @param tip
 	 */
-	public void setTip(int tip)
+	public void setTip(long tip)
 	{
 		this.tip = tip;
 	}

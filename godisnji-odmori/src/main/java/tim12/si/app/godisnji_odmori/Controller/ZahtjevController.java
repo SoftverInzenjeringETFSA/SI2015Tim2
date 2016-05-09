@@ -102,9 +102,9 @@ public class ZahtjevController {
 	{
 		Transaction t = session.beginTransaction();
 		
-		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM(z.ime, z.prezime) "
+		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM(z.ime, z.prezime, s.naziv, za.zahtjev_id) "
 				+ "FROM Zaposlenik z, Sektor s, Zahtjev za "
-				+ "WHERE s.naziv = :sektor AND s.sektor_id = z.sektor_id AND z.zaposlenik_id = za.podnosilac_id";
+				+ "WHERE s.naziv = :sektor AND s.sektor_id = z.sektor_id AND z.zaposlenik_id = za.podnosilac_id AND (za.obradjen = null OR za.obradjen = 0) ";
 		Query q = session.createQuery(hql);
 		q.setString("sektor", sektor);
 		

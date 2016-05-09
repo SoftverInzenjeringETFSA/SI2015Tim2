@@ -12,16 +12,23 @@ import javax.swing.JCheckBox;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import com.toedter.calendar.JCalendar;
+
+import tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM;
+
 import javax.swing.JButton;
 
 public class ZahtjevPregledManagement {
 
 	private JFrame frmSolutionsiZahtjev;
+	private JLabel lblHamo;
+	private JLabel lblPipa;
+	private JLabel lblNewLabel_1; 
+	private JLabel label_1;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -32,15 +39,19 @@ public class ZahtjevPregledManagement {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the application.
 	 */
-	public ZahtjevPregledManagement() {
+	public ZahtjevPregledManagement(Long id) {
 		//ManagementMainWindow.Prekini(this);
 		initialize();
 		this.frmSolutionsiZahtjev.setVisible(true);
+		//lblHamo.setText(zvm.getPodnosilacIme());
+		//lblPipa.setText(zvm.getPodnosilacPrezime());
+		//lblNewLabel_1.setText(zvm.getNazivSektora());
+		//label_1.setText(zvm.getBrojRadnihDana().toString());
 	}
 
 	/**
@@ -54,7 +65,7 @@ public class ZahtjevPregledManagement {
 		frmSolutionsiZahtjev.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 30, 264, 227);
+		panel.setBounds(10, 30, 310, 227);
 		panel.setLayout(null);
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Informacije o zaposleniku", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		frmSolutionsiZahtjev.getContentPane().add(panel);
@@ -63,8 +74,8 @@ public class ZahtjevPregledManagement {
 		label.setBounds(10, 102, 102, 14);
 		panel.add(label);
 		
-		JLabel label_1 = new JLabel("125");
-		label_1.setBounds(219, 102, 46, 14);
+		label_1 = new JLabel("125");
+		label_1.setBounds(219, 102, 79, 14);
 		panel.add(label_1);
 		
 		JLabel label_2 = new JLabel("Iskorišteno dana godišnjeg odmora:");
@@ -76,11 +87,11 @@ public class ZahtjevPregledManagement {
 		panel.add(label_3);
 		
 		JLabel label_4 = new JLabel("10");
-		label_4.setBounds(219, 177, 46, 14);
+		label_4.setBounds(219, 177, 79, 14);
 		panel.add(label_4);
 		
 		JLabel label_5 = new JLabel("20");
-		label_5.setBounds(219, 202, 46, 14);
+		label_5.setBounds(219, 202, 79, 14);
 		panel.add(label_5);
 		
 		JLabel label_6 = new JLabel("Broj dana bolovanja:");
@@ -92,40 +103,40 @@ public class ZahtjevPregledManagement {
 		panel.add(label_7);
 		
 		JLabel label_8 = new JLabel("0");
-		label_8.setBounds(219, 127, 46, 14);
+		label_8.setBounds(219, 127, 79, 14);
 		panel.add(label_8);
 		
 		JLabel label_9 = new JLabel("0");
-		label_9.setBounds(219, 152, 46, 14);
+		label_9.setBounds(219, 152, 79, 14);
 		panel.add(label_9);
 		
 		JLabel lblIme = new JLabel("Ime:");
 		lblIme.setBounds(10, 27, 46, 14);
 		panel.add(lblIme);
 		
-		JLabel lblHamo = new JLabel("Hamo");
-		lblHamo.setBounds(219, 27, 46, 14);
+		lblHamo = new JLabel("Hamo");
+		lblHamo.setBounds(219, 27, 79, 14);
 		panel.add(lblHamo);
 		
 		JLabel lblPrezime = new JLabel("Prezime:");
 		lblPrezime.setBounds(10, 52, 70, 14);
 		panel.add(lblPrezime);
 		
-		JLabel lblPipa = new JLabel("Pipa");
-		lblPipa.setBounds(219, 52, 46, 14);
+		lblPipa = new JLabel("Pipa");
+		lblPipa.setBounds(219, 52, 79, 14);
 		panel.add(lblPipa);
 		
 		JLabel lblSektor = new JLabel("Sektor:");
 		lblSektor.setBounds(10, 77, 46, 14);
 		panel.add(lblSektor);
 		
-		JLabel lblNewLabel_1 = new JLabel("IT");
-		lblNewLabel_1.setBounds(219, 77, 46, 14);
+		lblNewLabel_1 = new JLabel("IT");
+		lblNewLabel_1.setBounds(219, 77, 79, 14);
 		panel.add(lblNewLabel_1);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Zahtjev informacije", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(307, 30, 237, 227);
+		panel_1.setBounds(332, 30, 237, 227);
 		frmSolutionsiZahtjev.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		

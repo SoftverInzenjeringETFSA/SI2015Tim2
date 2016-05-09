@@ -14,7 +14,7 @@
         <property name="datum" type="java.util.Date">
             <column name="DATUM" />
         </property>
-        <property name="tip" type="int">
+        <property name="tip" type="long">
             <column name="TIP" />
         </property>
         <property name="opis" type="java.lang.String">
