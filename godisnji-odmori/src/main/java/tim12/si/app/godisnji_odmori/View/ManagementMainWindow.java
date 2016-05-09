@@ -1,6 +1,9 @@
 package tim12.si.app.godisnji_odmori.View;
 
 import java.awt.EventQueue;
+import tim12.si.app.godisnji_odmori.Controller.*;
+import tim12.si.app.godisnji_odmori.Model.Sektor;
+import tim12.si.app.godisnji_odmori.ViewModel.SektorVM;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -70,9 +73,15 @@ public class ManagementMainWindow {
 	private JList list;
 	private JScrollPane scrollPane_1;
 	private JDialog frame;
+  private JTextArea txtrEkonomskiSektorSe;
+	private JSpinner spinner_1;
+	private JSpinner spinner_2;
+	private JLabel label_9;
+	private JScrollPane scrollPane_3;
+	JList<String> list_1;
 	
 	private ArrayList<ZahtjevVM> zvm;
-	
+	public SektorController sC = new SektorController();
 
 	/**
 	 * Launch the application.
@@ -450,10 +459,11 @@ public class ManagementMainWindow {
 		scrollPane_2.setBounds(10, 25, 262, 269);
 		panel_8.add(scrollPane_2);
 		
-		JList list_1 = new JList();
+		list_1 = new JList<String>();
+		//list_1.setModel(sC.dajSveSektore());
 		scrollPane_2.setViewportView(list_1);
 		list_1.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Ekonomski sektor", "Tehnički sektor", "Pravni sektor", "IT sektor"};
+			String[] values = sC.dajSveSektore();
 			public int getSize() {
 				return values.length;
 			}
@@ -494,20 +504,20 @@ public class ManagementMainWindow {
 		panel_9.add(txtEkonomskiSektor);
 		txtEkonomskiSektor.setColumns(10);
 		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setModel(new SpinnerDateModel(new Date(946681200000L), null, null, Calendar.YEAR));
+		spinner_1 = new JSpinner();
+		spinner_1.setValue(0);
 		spinner_1.setBounds(192, 68, 147, 20);
 		panel_9.add(spinner_1);
 		
-		JSpinner spinner_2 = new JSpinner();
+		spinner_2 = new JSpinner();
 		spinner_2.setBounds(295, 144, 44, 20);
 		panel_9.add(spinner_2);
 		
-		JScrollPane scrollPane_3 = new JScrollPane();
+		scrollPane_3 = new JScrollPane();
 		scrollPane_3.setBounds(89, 185, 250, 89);
 		panel_9.add(scrollPane_3);
 		
-		JTextArea txtrEkonomskiSektorSe = new JTextArea();
+		txtrEkonomskiSektorSe = new JTextArea();
 		txtrEkonomskiSektorSe.setLineWrap(true);
 		scrollPane_3.setViewportView(txtrEkonomskiSektorSe);
 		txtrEkonomskiSektorSe.setToolTipText("");
@@ -515,21 +525,72 @@ public class ManagementMainWindow {
 		txtrEkonomskiSektorSe.setRows(10);
 		txtrEkonomskiSektorSe.setText("Ekonomski sektor se bavi ekonomskim \r\nposlovima kompanije");
 		
-		JLabel label_9 = new JLabel("5");
+		label_9 = new JLabel("5");
 		label_9.setBounds(192, 114, 147, 14);
 		panel_9.add(label_9);
 		
 		JButton btnDodajNoviSektor = new JButton("Dodaj sektor");
 		btnDodajNoviSektor.setBounds(59, 356, 124, 23);
 		panel_7.add(btnDodajNoviSektor);
+		btnDodajNoviSektor.addActionListener(new ActionListener() {
+			 
+            public void actionPerformed(ActionEvent e)
+            {
+            	txtEkonomskiSektor.setText("");
+            	txtrEkonomskiSektorSe.setText("");
+            	label_9.setText("0");
+            	spinner_1.setValue(0);
+            	spinner_2.setValue(0);
+            	
+        		
+            	
+            }
+        }); 
+
 		
 		JButton btnSpasiIzmjene = new JButton("Uredi sektor");
 		btnSpasiIzmjene.setBounds(496, 356, 124, 23);
 		panel_7.add(btnSpasiIzmjene);
+		btnSpasiIzmjene.addActionListener(new ActionListener() {
+			
+            public void actionPerformed(ActionEvent e)
+            {   
+            	String naziv = list_1.getSelectedValue();
+            	Sektor sektor = sC.dajSektorPoNazivu(naziv);
+            	txtEkonomskiSektor.setText(sektor.getNaziv());
+            	txtrEkonomskiSektorSe.setText(sektor.getOpis());     	
+            	spinner_1.setValue(sektor.getGodina_osnivanja());
+            	spinner_2.setValue(sektor.getMax_broj_odsutnih());
+            	StringBuilder sb = new StringBuilder();
+            	sb.append("");
+            	sb.append(sektor.getBroj_uposlenih());
+            	String strI = sb.toString();
+            	label_9.setText(strI);
+            	
+            }
+        });
+	
 		
 		JButton btnObriiSektor = new JButton("Obriši sektor");
 		btnObriiSektor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				Object[] options = { "Da", "Ne" };
+				int n = JOptionPane.showOptionDialog(null,
+                        "Da li ste sigurni da zelite obrisati?",
+                        "Upozorenje",
+                         JOptionPane.YES_NO_OPTION,
+                         JOptionPane.QUESTION_MESSAGE,
+                         null,     
+                         options,  
+                         options[0]);
+				
+				if (n == JOptionPane.YES_OPTION) {
+					String naziv = list_1.getSelectedValue();
+				    sC.obrisiSektor(naziv);
+				    osvjeziListuSektora();
+				}
+				
 			}
 		});
 		btnObriiSektor.setBounds(630, 356, 124, 23);
@@ -538,6 +599,14 @@ public class ManagementMainWindow {
 		JButton btnSpasiPromjene_1 = new JButton("Spasi promjene");
 		btnSpasiPromjene_1.setBounds(232, 356, 124, 23);
 		panel_7.add(btnSpasiPromjene_1);
+		btnSpasiPromjene_1.addActionListener(new ActionListener() {
+			
+            public void actionPerformed(ActionEvent e)
+            {          	
+            	sC.modificirajSektor(new SektorVM(txtEkonomskiSektor.getText(),spinner_1.getValue().toString(),0,spinner_2.getValue().toString(),txtrEkonomskiSektorSe.getText()));
+            	osvjeziListuSektora();
+            }
+        });
 		
 		JPanel panel_10 = new JPanel();
 		tabbedPane.addTab("Izvještaji", null, panel_10, null);
@@ -584,4 +653,16 @@ public class ManagementMainWindow {
 				JComponent.WHEN_IN_FOCUSED_WINDOW);
 
 	}*/
+
+  public void osvjeziListuSektora (){
+		list_1.setModel(new AbstractListModel() {
+			String[] values = sC.dajSveSektore();
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
+	}
 }
