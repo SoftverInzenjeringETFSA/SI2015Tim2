@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,6 +30,7 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import com.toedter.calendar.JCalendar;
 
+import tim12.si.app.godisnji_odmori.Controller.OdsustvoController;
 //import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import tim12.si.app.godisnji_odmori.Controller.ZahtjevController;
 import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
@@ -108,10 +110,43 @@ public class ZahtjevPregledManagement {
 			label_11.setText(strDate2);
 			lblGodisnjiOdmor.setText(zvm.getTipOdsustva()); 
 			
-			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(calendar.getDate());
+			int day = cal.get(Calendar.DAY_OF_MONTH);
+			int month = cal.get(Calendar.MONTH);
+			int year = cal.get(Calendar.YEAR);
+
 			JPanel jpanel = calendar.getDayChooser().getDayPanel();
 			Component component[] = jpanel.getComponents();
-			component[8].setBackground(Color.red);
+			
+			OdsustvoController oc = new OdsustvoController(sess);
+			ArrayList<Date> events = oc.dajSvaOdsustva();
+			//System.out.println(events.get(2).toString());
+			
+
+			//arraylist of events
+			for(int i = 0; i < events.size(); i++)
+			{
+				Date date= events.get(i);
+				Calendar call = Calendar.getInstance();
+				call.setTime(date);
+				int month1 = call.get(Calendar.MONTH);
+				int year1 = call.get(Calendar.YEAR);
+				int day1 = call.get(Calendar.DAY_OF_MONTH);
+				//selected month and year on JCalendar
+			    if(month == month1 && year == year1)
+			    {
+			         // Calculate the offset of the first day of the month
+			         cal.set(Calendar.DAY_OF_MONTH,1);
+			         int offset = cal.get(Calendar.DAY_OF_WEEK) - 1;
+
+			        //this value will differ from each month due to first days of each month
+			         component[ day1 + offset + 6].setBackground(Color.red); 
+			    }
+			}
+			/*JPanel jpanel = calendar.getDayChooser().getDayPanel();
+			Component component[] = jpanel.getComponents();
+			component[8].setBackground(Color.red);*/
 			
 			
 			
@@ -274,6 +309,9 @@ public class ZahtjevPregledManagement {
 		calendar = new JCalendar();
 		calendar.setBounds(581, 33, 233, 261);
 		frmSolutionsiZahtjev.getContentPane().add(calendar);
+		
+		
+		
 		
 		
 		

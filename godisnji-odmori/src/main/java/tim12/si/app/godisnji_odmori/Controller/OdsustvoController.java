@@ -1,11 +1,23 @@
 package tim12.si.app.godisnji_odmori.Controller;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import tim12.si.app.godisnji_odmori.ViewModel.*;
 import tim12.si.app.godisnji_odmori.Model.*;
 
 public class OdsustvoController {
+	private Session session;
+	public OdsustvoController(Session session)
+	{
+		this.session = session;
+	}
 	/**
 	 * 
 	 * @param odsustvo
@@ -52,10 +64,26 @@ public class OdsustvoController {
 		throw new UnsupportedOperationException();
 	}
 
-	public List<OdsustvoVM> dajSvaOdsustva() {
-		// TODO - implement OdsustvoController.dajSvaOdsustva
-		throw new UnsupportedOperationException();
+	public ArrayList<Date> dajSvaOdsustva() {
+		ArrayList<Date> ld = new ArrayList<Date>();
+		Transaction t = session.beginTransaction();
+		
+		String hql = "Select o.datum "
+				+ "FROM Odsustvo o ";
+				
+		Query q = session.createQuery(hql);
+		
+		
+		List l = q.list();
+		t.commit();
+		
+		for (int i=0; i<l.size(); i++)
+				ld.add((Date) l.get(i));
+		
+		return ld;
 	}
+	
+	
 
 
 }
