@@ -1,22 +1,35 @@
 package tim12.si.app.godisnji_odmori.View;
 
 import java.awt.EventQueue;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import org.hibernate.Session;
+
 import javax.swing.JScrollPane;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import com.toedter.calendar.JMonthChooser;
+
+import tim12.si.app.godisnji_odmori.HibernateUtil;
+import tim12.si.app.godisnji_odmori.Controller.IzvjestajController;
+import tim12.si.app.godisnji_odmori.ViewModel.IzvjestajZapVM;
 
 public class MjesecniIzvjestaj {
 
 	private JFrame frmSolutionsiMjesecni;
 	private JTable table;
+	private JComboBox comboBox;
+	private JDialog frame;
 
 	/**
 	 * Launch the application.
@@ -105,5 +118,41 @@ public class MjesecniIzvjestaj {
 		
 		JMenuItem mntmLogOut = new JMenuItem("Odjavi se");
 		mnOdjava.add(mntmLogOut);
+	}
+	
+	private void OsvjeziComboBox(boolean expand) {
+		Session sess = null;
+		
+		try {
+			if ( comboBox.getEditor().getItem() instanceof String){
+				
+				sess = HibernateUtil.getSessionFactory().openSession();
+				IzvjestajController icont= new IzvjestajController (sess);
+				
+				String ime = (String) comboBox.getEditor().getItem();
+				
+
+				ArrayList<IzvjestajZapVM> data = icont.nadjiPoImenu(ime);
+				Object[] array = new Object[data.size() + 1];
+				array[0] = ime;
+				
+				for(int i = 0; i < data.size(); i++){
+					array[i+1] = data.get(i);
+				}
+				
+				DefaultComboBoxModel model = new DefaultComboBoxModel(array);
+				comboBox.setModel(model);
+				
+				if(expand)
+					comboBox.getUI().setPopupVisible(comboBox, true);
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(frame, e.getMessage(), 
+					"Greška!", JOptionPane.ERROR_MESSAGE);
+		} finally {
+			if (sess != null)
+				sess.close();
+		}
+		
 	}
 }
