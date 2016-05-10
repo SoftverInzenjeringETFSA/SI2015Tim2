@@ -21,7 +21,7 @@ public class MjesecniIzvjestaj {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void mjesecniIzvjestaj() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

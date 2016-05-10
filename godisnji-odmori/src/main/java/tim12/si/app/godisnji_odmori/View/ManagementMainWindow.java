@@ -613,6 +613,14 @@ public class ManagementMainWindow {
 		panel_10.setLayout(null);
 		
 		JButton btnNewButton_1 = new JButton("Mjesečni izvještaj");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				MjesecniIzvjestaj mi= new MjesecniIzvjestaj();
+				mi.mjesecniIzvjestaj();
+				
+			}
+		});
 		btnNewButton_1.setBounds(269, 69, 251, 49);
 		panel_10.add(btnNewButton_1);
 		
