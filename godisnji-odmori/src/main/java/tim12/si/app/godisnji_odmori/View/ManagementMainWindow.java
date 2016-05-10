@@ -105,7 +105,7 @@ public class ManagementMainWindow {
 	public ManagementMainWindow() {
 		initialize();
 		Session sess = null;
-		
+		this.frmSolutionsi.setVisible(true);
 		try {
 			//UI.SetUsername("dbabahmeto1");
 			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
@@ -149,8 +149,8 @@ public class ManagementMainWindow {
 	{
 		if (selected == -1) {JOptionPane.showMessageDialog(frame, "Neophodno je prvo selektovati zahtjev",
 				"Info", JOptionPane.INFORMATION_MESSAGE); return;}
-		new ZahtjevPregledManagement(zvm.get(selected).getIdZahtjeva());
-		
+		new ZahtjevPregledManagement(zvm.get(selected).getIdZahtjeva(),zvm.get(selected).getNazivSektora(),zvm.get(selected).getUsernamePodnosioca());
+		frmSolutionsi.dispose();
 	}
 	
 
@@ -202,11 +202,11 @@ public class ManagementMainWindow {
 		lblMenadmentLjudskihResursa.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(lblMenadmentLjudskihResursa);
 		
-		JLabel label_5 = new JLabel("Ukupno radnih dana:");
-		label_5.setHorizontalAlignment(SwingConstants.LEFT);
-		label_5.setBounds(10, 301, 128, 14);
-		label_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel.add(label_5);
+		JLabel lblOdraeniRadniDani = new JLabel("Odrađeni radni dani:");
+		lblOdraeniRadniDani.setHorizontalAlignment(SwingConstants.LEFT);
+		lblOdraeniRadniDani.setBounds(10, 301, 128, 14);
+		lblOdraeniRadniDani.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel.add(lblOdraeniRadniDani);
 		
 		label_6 = new JLabel("251");
 		label_6.setBounds(148, 301, 46, 14);

@@ -15,13 +15,22 @@ public class ZahtjevVM {
 	private String nazivSektora;
 	private Long brojRadnihDana;
 	private Long idZahtjeva;
+	private String usernamePodnosioca;
 	
-	public ZahtjevVM(String podnosilacIme, String podnosilacPrezime, String nazivSektora, Long idZahtjeva /*Long brojRadnihDana*/ /*, Date pocetakOddsustva, Date zavrsetakOdsustva, String tipOdsustva, Boolean obradjen, Boolean odluka, String opis*/)
+	public ZahtjevVM(String podnosilacIme, String podnosilacPrezime, String nazivSektora, Long idZahtjeva, String username /*Long brojRadnihDana*/ /*, Date pocetakOddsustva, Date zavrsetakOdsustva, String tipOdsustva, Boolean obradjen, Boolean odluka, String opis*/)
 	{
 		this.podnosilacIme = podnosilacIme;
 		this.podnosilacPrezime = podnosilacPrezime;
 		this.nazivSektora = nazivSektora;
 		this.idZahtjeva = idZahtjeva;
+		this.usernamePodnosioca = username;
+	}
+	public ZahtjevVM(Date pocetakOdsustva, Date zavrsetakOdsustva, String tipOdsustva, String opis)
+	{
+		this.pocetakOdsustva = pocetakOdsustva;
+		this.zavrsetakOdsustva = zavrsetakOdsustva;
+		this.tipOdsustva = tipOdsustva;
+		this.opis = opis;
 	}
 	public String getPodnosilacIme() {
 		return podnosilacIme;
@@ -88,6 +97,12 @@ public class ZahtjevVM {
 	}
 	public void setIdZahtjeva(Long idZahtjeva) {
 		this.idZahtjeva = idZahtjeva;
+	}
+	public String getUsernamePodnosioca() {
+		return usernamePodnosioca;
+	}
+	public void setUsernamePodnosioca(String usernamePodnosioca) {
+		this.usernamePodnosioca = usernamePodnosioca;
 	}
 
 }

@@ -1,19 +1,39 @@
 package tim12.si.app.godisnji_odmori.View;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+
+import org.hibernate.Session;
+
 import javax.swing.UIManager;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JCheckBox;
+import javax.swing.JDialog;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import com.toedter.calendar.JCalendar;
 
+//import ba.unsa.etf.si.tim12.dal.HibernateUtil;
+import tim12.si.app.godisnji_odmori.Controller.ZahtjevController;
+import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
 import tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM;
+import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
 
 import javax.swing.JButton;
 
@@ -24,6 +44,20 @@ public class ZahtjevPregledManagement {
 	private JLabel lblPipa;
 	private JLabel lblNewLabel_1; 
 	private JLabel label_1;
+	private JLabel label_5;
+	private JLabel label_8; 
+	private JLabel label_9;
+	private JLabel label_4;
+	private JLabel label_10;
+	private JLabel label_11;
+	private JCalendar calendar;
+	private JLabel lblGodisnjiOdmor;
+	private JTextPane txtpnUmoranOdDosade;
+	private JDialog frame;
+	
+	private Long id_zahtjeva;
+	private ZaposlenikBrDana zbr;
+	private ZahtjevVM zvm;
 
 	/**
 	 * Launch the application.
@@ -44,15 +78,64 @@ public class ZahtjevPregledManagement {
 	/**
 	 * Create the application.
 	 */
-	public ZahtjevPregledManagement(Long id) {
+	public ZahtjevPregledManagement(Long id, String sektor, String username) {
 		//ManagementMainWindow.Prekini(this);
 		initialize();
+		Session sess = null;
 		this.frmSolutionsiZahtjev.setVisible(true);
-		//lblHamo.setText(zvm.getPodnosilacIme());
-		//lblPipa.setText(zvm.getPodnosilacPrezime());
-		//lblNewLabel_1.setText(zvm.getNazivSektora());
-		//label_1.setText(zvm.getBrojRadnihDana().toString());
+		id_zahtjeva = id;
+		
+		try {
+			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+			ZaposlenikController zc = new ZaposlenikController(sess);
+			zbr = zc.DajZaposlenikViewModelZaZahtjev(username);
+			lblHamo.setText(zbr.getZaposlenikIme());
+			lblPipa.setText(zbr.getZaposlenikPrezime());
+			lblNewLabel_1.setText(zbr.getSektor());
+			label_1.setText(zbr.getRadniDani().toString());
+			label_5.setText(zbr.getPreostaloSlobodnih().toString());
+			label_8.setText(zbr.getDaniBolovanja().toString());
+			label_9.setText(zbr.getDaniNeplaniranog().toString());
+			label_4.setText(zbr.getIskoristeniGodisnji().toString());
+			
+			ZahtjevController zcc = new ZahtjevController(sess);
+			zvm = zcc.dajZahtjev(id);
+			txtpnUmoranOdDosade.setText(zvm.getOpis());
+			DateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
+			String strDate = dateFormat.format(zvm.getPocetakOdsustva());
+			String strDate2 = dateFormat.format(zvm.getZavrsetakOdsustva());
+			label_10.setText(strDate);
+			label_11.setText(strDate2);
+			lblGodisnjiOdmor.setText(zvm.getTipOdsustva()); 
+			
+			
+			JPanel jpanel = calendar.getDayChooser().getDayPanel();
+			Component component[] = jpanel.getComponents();
+			component[8].setBackground(Color.red);
+			
+			
+			
+			
+			
+			
+		}
+		catch (Exception er) {
+
+			//System.out.print(er.getMessage());
+			if (er.getMessage() != null )
+			JOptionPane.showMessageDialog(frame, er.getMessage(),
+					"Greška", JOptionPane.INFORMATION_MESSAGE);
+			else JOptionPane.showMessageDialog(frame, "Korisnik sa username: " + username + " ne postoji ili zahtjev sa id-om" + id + " ne postoji",
+					"Greška", JOptionPane.INFORMATION_MESSAGE);
+
+		} finally {
+			if (sess != null)
+				sess.close();
+		}
+		
 	}
+	
+	
 
 	/**
 	 * Initialize the contents of the frame.
@@ -64,49 +147,59 @@ public class ZahtjevPregledManagement {
 		frmSolutionsiZahtjev.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmSolutionsiZahtjev.getContentPane().setLayout(null);
 		
+		frmSolutionsiZahtjev.addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		    	
+		    	new ManagementMainWindow();
+		    	frmSolutionsiZahtjev.dispose();
+		        }
+		    }
+		);
+		
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 30, 310, 227);
 		panel.setLayout(null);
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Informacije o zaposleniku", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		frmSolutionsiZahtjev.getContentPane().add(panel);
 		
-		JLabel label = new JLabel("Broj radnih dana:");
-		label.setBounds(10, 102, 102, 14);
-		panel.add(label);
+		JLabel lblOdraeniRadniDani = new JLabel("Odrađeni radni dani:");
+		lblOdraeniRadniDani.setBounds(10, 102, 129, 14);
+		panel.add(lblOdraeniRadniDani);
 		
 		label_1 = new JLabel("125");
 		label_1.setBounds(219, 102, 79, 14);
 		panel.add(label_1);
 		
-		JLabel label_2 = new JLabel("Iskorišteno dana godišnjeg odmora:");
-		label_2.setBounds(10, 177, 198, 14);
-		panel.add(label_2);
+		JLabel lblBrojDanaNa = new JLabel("Broj dana na godišnjem odmoru:");
+		lblBrojDanaNa.setBounds(10, 177, 198, 14);
+		panel.add(lblBrojDanaNa);
 		
 		JLabel label_3 = new JLabel("Ostalo dana godišnjeg odmora:");
 		label_3.setBounds(10, 202, 189, 14);
 		panel.add(label_3);
 		
-		JLabel label_4 = new JLabel("10");
+		label_4 = new JLabel("10");
 		label_4.setBounds(219, 177, 79, 14);
 		panel.add(label_4);
 		
-		JLabel label_5 = new JLabel("20");
+		label_5 = new JLabel("20");
 		label_5.setBounds(219, 202, 79, 14);
 		panel.add(label_5);
 		
-		JLabel label_6 = new JLabel("Broj dana bolovanja:");
-		label_6.setBounds(10, 127, 129, 14);
-		panel.add(label_6);
+		JLabel lblBrojDaniNa = new JLabel("Broj dana na bolovanju:");
+		lblBrojDaniNa.setBounds(10, 127, 153, 14);
+		panel.add(lblBrojDaniNa);
 		
 		JLabel label_7 = new JLabel("Broj dana neplaniranog odsustva:");
-		label_7.setBounds(10, 152, 189, 14);
+		label_7.setBounds(10, 152, 198, 14);
 		panel.add(label_7);
 		
-		JLabel label_8 = new JLabel("0");
+	    label_8 = new JLabel("0");
 		label_8.setBounds(219, 127, 79, 14);
 		panel.add(label_8);
 		
-		JLabel label_9 = new JLabel("0");
+		label_9 = new JLabel("0");
 		label_9.setBounds(219, 152, 79, 14);
 		panel.add(label_9);
 		
@@ -160,33 +253,103 @@ public class ZahtjevPregledManagement {
 		lblRazlog.setBounds(10, 97, 46, 14);
 		panel_1.add(lblRazlog);
 		
-		JTextPane txtpnUmoranOdDosade = new JTextPane();
-		txtpnUmoranOdDosade.setBounds(71, 101, 162, 75);
+		txtpnUmoranOdDosade = new JTextPane();
+		txtpnUmoranOdDosade.setEditable(false);
+		txtpnUmoranOdDosade.setBounds(71, 101, 154, 75);
 		panel_1.add(txtpnUmoranOdDosade);
 		txtpnUmoranOdDosade.setText("Umoran od dosade");
 		
-		JLabel label_10 = new JLabel("20-4-2016");
-		label_10.setBounds(66, 22, 68, 14);
+		label_10 = new JLabel("20-4-2016");
+		label_10.setBounds(68, 22, 157, 14);
 		panel_1.add(label_10);
 		
-		JLabel label_11 = new JLabel("30-4-2016");
-		label_11.setBounds(71, 46, 68, 14);
+		label_11 = new JLabel("30-4-2016");
+		label_11.setBounds(68, 47, 157, 14);
 		panel_1.add(label_11);
 		
-		JLabel lblGodisnjiOdmor = new JLabel("Godisnji odmor");
-		lblGodisnjiOdmor.setBounds(71, 71, 101, 14);
+		lblGodisnjiOdmor = new JLabel("Godisnji odmor");
+		lblGodisnjiOdmor.setBounds(71, 71, 154, 14);
 		panel_1.add(lblGodisnjiOdmor);
 		
-		JCalendar calendar = new JCalendar();
+		calendar = new JCalendar();
 		calendar.setBounds(581, 33, 233, 261);
 		frmSolutionsiZahtjev.getContentPane().add(calendar);
+		
+		
+		
 		
 		JButton btnOdobri = new JButton("Odobri");
 		btnOdobri.setBounds(589, 334, 89, 23);
 		frmSolutionsiZahtjev.getContentPane().add(btnOdobri);
+		btnOdobri.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{				
+				odobriZahtjev();
+			}
+		});
 		
 		JButton btnOdbij = new JButton("Odbij");
 		btnOdbij.setBounds(701, 334, 89, 23);
 		frmSolutionsiZahtjev.getContentPane().add(btnOdbij);
+		btnOdbij.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{				
+				odbijZahtjev();
+			}
+		});
+	}
+	private void odobriZahtjev()
+	{
+		Session sess = null;
+		try{
+			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+			ZahtjevController zc = new ZahtjevController(sess);
+			int i = zc.odobriZahtjev(id_zahtjeva, zbr, zvm);
+			if (i==0) JOptionPane.showMessageDialog(frame,
+					"Ne postoji zahjtev sa datim id-om!", "Greška", JOptionPane.ERROR_MESSAGE);
+			else {
+				JOptionPane.showMessageDialog(frame,
+						"Zahtjev uspješno odobren!", "Odobravanje zahtjeva!", JOptionPane.INFORMATION_MESSAGE);
+				//mee.dispatchEvent(new WindowEvent(mee, WindowEvent.WINDOW_CLOSING));
+				
+			}
+			
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(frame, e.getMessage(),
+					"Greška", JOptionPane.INFORMATION_MESSAGE);
+			
+		} finally {
+			if (sess != null)
+				sess.close();
+		}
+	}
+	private void odbijZahtjev()
+	{
+		Session sess = null;
+		try{
+			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+			ZahtjevController zc = new ZahtjevController(sess);
+			int i = zc.odbijZahtjev(id_zahtjeva, zbr, zvm);
+			if (i==0) JOptionPane.showMessageDialog(frame,
+					"Ne postoji zahjtev sa datim id-om!", "Greška", JOptionPane.ERROR_MESSAGE);
+			else {
+				JOptionPane.showMessageDialog(frame,
+						"Zahtjev uspješno odbijen!", "Odbijanje zahtjeva!", JOptionPane.INFORMATION_MESSAGE);
+				//mee.dispatchEvent(new WindowEvent(mee, WindowEvent.WINDOW_CLOSING));
+				
+			}
+			
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(frame, e.getMessage(),
+					"Greška", JOptionPane.INFORMATION_MESSAGE);
+			
+		} finally {
+			if (sess != null)
+				sess.close();
+		}
 	}
 }

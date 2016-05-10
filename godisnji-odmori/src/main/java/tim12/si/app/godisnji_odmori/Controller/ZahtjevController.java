@@ -1,13 +1,17 @@
 package tim12.si.app.godisnji_odmori.Controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+//import ba.unsa.etf.si.tim12.dal.domainmodel.Korisnik;
 import tim12.si.app.godisnji_odmori.ViewModel.*;
+import tim12.si.app.godisnji_odmori.ZahtjevNotFound;
 import tim12.si.app.godisnji_odmori.ZaposlenikNotFound;
 import tim12.si.app.godisnji_odmori.Model.*;
 
@@ -81,6 +85,85 @@ public class ZahtjevController {
 		Zahtjev.listaZahtjeva.get(temp).setObradjen(true);
 		Zahtjev.listaZahtjeva.get(temp).setOdluka(true);
 	}
+	public int odobriZahtjev(long zahtjevID, ZaposlenikBrDana zbr, ZahtjevVM zvm)
+	{
+		Transaction t = session.beginTransaction();
+		String hql = "FROM Zahtjev za " +
+				"WHERE za.zahtjev_id = :zahtjevID";
+		Query q = session.createQuery(hql);
+		q.setParameter("zahtjevID", zahtjevID);
+		Zahtjev z = (Zahtjev) q.uniqueResult();
+		if(z == null){ //Nije pronadjen zahjtev s ovim id-om
+			t.rollback();
+			return 0;
+		}
+		else {
+			
+			z.setObradjen(true);
+			z.setOdluka(true);
+			session.update(z);
+			t.commit();
+			
+			Transaction t2 = session.beginTransaction();
+			String tipO = zvm.getTipOdsustva();
+			String hql2 = "Select to1.id_odsustva "
+					+ "FROM TipOdsustva to1 "
+					+ "WHERE to1.naziv = :tipO ";
+			Query q2 = session.createQuery(hql2);
+			q2.setString("tipO", tipO);
+			List l = q2.list();
+			t2.commit();
+			Long tip = (Long) l.get(0);
+			
+			Date fromDate = zvm.getPocetakOdsustva();
+			Date toDate = zvm.getZavrsetakOdsustva();
+			List<Date> dates = new ArrayList<Date>();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(fromDate);
+			dates.add(fromDate);
+			while (cal.getTime().before(toDate)) {
+			    cal.add(Calendar.DATE, 1);
+			    dates.add(cal.getTime());
+			}
+			
+			
+			for (int i = 0; i<dates.size(); i++){
+			Transaction t1 = session.beginTransaction(); 
+			Odsustvo odsustvo = new Odsustvo();
+			odsustvo.setZaposlenik_id(zbr.getZaposlenik_id());
+			odsustvo.setTip(1);
+			odsustvo.setOpis(zvm.getOpis());
+			odsustvo.setTip(tip);
+			odsustvo.setDatum(dates.get(i));
+			session.save(odsustvo);
+	   	    t1.commit();
+			}
+	   	    
+	   	    
+			return 1;
+		}
+	}
+	public int odbijZahtjev(long zahtjevID, ZaposlenikBrDana zbr, ZahtjevVM zvm)
+	{
+		Transaction t = session.beginTransaction();
+		String hql = "FROM Zahtjev za " +
+				"WHERE za.zahtjev_id = :zahtjevID";
+		Query q = session.createQuery(hql);
+		q.setParameter("zahtjevID", zahtjevID);
+		Zahtjev z = (Zahtjev) q.uniqueResult();
+		if(z == null){ //Nije pronadjen zahjtev s ovim id-om
+			t.rollback();
+			return 0;
+		}
+		else {
+			z.setObradjen(true);
+			z.setOdluka(false);
+			session.update(z);
+			t.commit();
+			
+			return 1;
+		}
+	}
 
 	public ArrayList<Zahtjev> dajNeobradjeneZahtjeve() {
 		List<Zahtjev> neobradjeni = new ArrayList<Zahtjev>();
@@ -102,7 +185,7 @@ public class ZahtjevController {
 	{
 		Transaction t = session.beginTransaction();
 		
-		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM(z.ime, z.prezime, s.naziv, za.zahtjev_id) "
+		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM(z.ime, z.prezime, s.naziv, za.zahtjev_id, z.username) "
 				+ "FROM Zaposlenik z, Sektor s, Zahtjev za "
 				+ "WHERE s.naziv = :sektor AND s.sektor_id = z.sektor_id AND z.zaposlenik_id = za.podnosilac_id AND (za.obradjen = null OR za.obradjen = 0) ";
 		Query q = session.createQuery(hql);
@@ -116,6 +199,24 @@ public class ZahtjevController {
 		for (int i=0; i<l.size(); i++)
 				zvm.add((ZahtjevVM) l.get(i));
 		return zvm;
+	}
+	public ZahtjevVM dajZahtjev(Long id) throws ZahtjevNotFound
+	{
+		Transaction t = session.beginTransaction();
+		
+		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM(za.pocetak_odsustva, za.zavrsetak_odsustva, za.tip_odsustva, za.opis) "
+				+ "FROM Zahtjev za "
+				+ "WHERE za.zahtjev_id = :id ";
+		Query q = session.createQuery(hql);
+		q.setLong("id", id);
+		
+		List l = q.list();
+		t.commit();
+		if(l.isEmpty())
+			throw new ZahtjevNotFound("Zahtjev s id-om: " + id + " nije pronadjen.");
+			
+		ZahtjevVM vm = (ZahtjevVM) l.get(0);
+		return vm;
 	}
 
 }
