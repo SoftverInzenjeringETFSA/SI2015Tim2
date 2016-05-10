@@ -483,7 +483,7 @@ public class ManagementMainWindow {
 		panel_9.add(lblNazivSektora);
 		
 		JLabel lblGodinaOsnivanja = new JLabel("Godina osnivanja:");
-		lblGodinaOsnivanja.setBounds(10, 78, 88, 14);
+		lblGodinaOsnivanja.setBounds(10, 78, 119, 14);
 		panel_9.add(lblGodinaOsnivanja);
 		
 		JLabel lblTrenutniBrojZaposlenih = new JLabel("Trenutni broj zaposlenih:");
@@ -505,6 +505,7 @@ public class ManagementMainWindow {
 		txtEkonomskiSektor.setColumns(10);
 		
 		spinner_1 = new JSpinner();
+		spinner_1.setModel(new SpinnerNumberModel(new Integer(0), null, null, new Integer(1)));
 		spinner_1.setValue(0);
 		spinner_1.setBounds(192, 68, 147, 20);
 		panel_9.add(spinner_1);

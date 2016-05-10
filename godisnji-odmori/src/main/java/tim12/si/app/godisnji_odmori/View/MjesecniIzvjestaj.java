@@ -88,7 +88,7 @@ public class MjesecniIzvjestaj {
 		frmSolutionsiMjesecni.getContentPane().add(lblMjesec);
 		
 		JMonthChooser monthChooser = new JMonthChooser();
-		monthChooser.setBounds(261, 11, 106, 22);
+		monthChooser.setBounds(261, 11, 117, 22);
 		frmSolutionsiMjesecni.getContentPane().add(monthChooser);
 		
 		JMenuBar menuBar = new JMenuBar();
