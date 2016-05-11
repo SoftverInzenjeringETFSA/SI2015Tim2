@@ -8,7 +8,7 @@ public class ZahtjevVM {
 	private String podnosilacPrezime;
 	private Date pocetakOdsustva;
 	private Date zavrsetakOdsustva;
-	private String tipOdsustva;
+	private Long tipOdsustva;
 	private Boolean obraden;
 	private Boolean odluka;
 	private String opis;
@@ -25,7 +25,7 @@ public class ZahtjevVM {
 		this.idZahtjeva = idZahtjeva;
 		this.usernamePodnosioca = username;
 	}
-	public ZahtjevVM(Date pocetakOdsustva, Date zavrsetakOdsustva, String tipOdsustva, String opis)
+	public ZahtjevVM(Date pocetakOdsustva, Date zavrsetakOdsustva, Long tipOdsustva, String opis)
 	{
 		this.pocetakOdsustva = pocetakOdsustva;
 		this.zavrsetakOdsustva = zavrsetakOdsustva;
@@ -56,10 +56,10 @@ public class ZahtjevVM {
 	public void setZavrsetakOdsustva(Date zavrsetakOdsustva) {
 		this.zavrsetakOdsustva = zavrsetakOdsustva;
 	}
-	public String getTipOdsustva() {
+	public Long getTipOdsustva() {
 		return tipOdsustva;
 	}
-	public void setTipOdsustva(String tipOdsustva) {
+	public void setTipOdsustva(Long tipOdsustva) {
 		this.tipOdsustva = tipOdsustva;
 	}
 	public Boolean getObraden() {

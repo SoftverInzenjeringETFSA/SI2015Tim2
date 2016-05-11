@@ -17,7 +17,7 @@
         <property name="zavrsetak_odsustva" type="java.util.Date">
             <column name="ZAVRSETAK_ODSUSTVA" />
         </property>
-        <property name="tip_odsustva" type="java.lang.String">
+        <property name="tip_odsustva" type="long">
             <column name="TIP_ODSUSTVA" />
         </property>
         <property name="obradjen" type="java.lang.Boolean">

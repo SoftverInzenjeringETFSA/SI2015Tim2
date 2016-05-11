@@ -119,7 +119,7 @@ public class ZahtjevPregledManagement {
 			String strDate2 = dateFormat.format(zvm.getZavrsetakOdsustva());
 			label_10.setText(strDate);
 			label_11.setText(strDate2);
-			lblGodisnjiOdmor.setText(zvm.getTipOdsustva()); 
+			lblGodisnjiOdmor.setText(zvm.getTipOdsustva().toString()); 
 			
 			//za kalendar
 			OdsustvoController oc = new OdsustvoController(sess);

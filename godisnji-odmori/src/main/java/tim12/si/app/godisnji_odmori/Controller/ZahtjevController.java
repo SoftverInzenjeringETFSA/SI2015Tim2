@@ -105,12 +105,12 @@ public class ZahtjevController {
 			t.commit();
 			
 			Transaction t2 = session.beginTransaction();
-			String tipO = zvm.getTipOdsustva();
+			Long tipO = zvm.getTipOdsustva();
 			String hql2 = "Select to1.id_odsustva "
 					+ "FROM TipOdsustva to1 "
-					+ "WHERE to1.naziv = :tipO ";
+					+ "WHERE to1.id_odsustva = :tipO ";
 			Query q2 = session.createQuery(hql2);
-			q2.setString("tipO", tipO);
+			q2.setLong("tipO", tipO);
 			List l = q2.list();
 			t2.commit();
 			Long tip = (Long) l.get(0);

@@ -15,7 +15,7 @@ public class Zahtjev implements java.io.Serializable {
 	private long podnosilac_id;
 	private Date pocetak_odsustva;
 	private Date zavrsetak_odsustva;
-	private String tip_odsustva;
+	private long tip_odsustva;
 	private Boolean obradjen;
 	private Boolean odluka;
 	private String opis;
@@ -81,7 +81,7 @@ public class Zahtjev implements java.io.Serializable {
 		this.zavrsetak_odsustva = zavrsetak_odsustva;
 	}
 
-	public String getTip_odsustva()
+	public long getTip_odsustva()
 	{
 		return this.tip_odsustva;
 	}
@@ -90,7 +90,7 @@ public class Zahtjev implements java.io.Serializable {
 	 * 
 	 * @param tip_odsustva
 	 */
-	public void setTip_odsustva(String tip_odsustva)
+	public void setTip_odsustva(long tip_odsustva)
 	{
 		this.tip_odsustva = tip_odsustva;
 	}
