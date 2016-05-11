@@ -15,6 +15,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.JTextComponent;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import javax.swing.JScrollPane;
@@ -34,6 +35,7 @@ public class MjesecniIzvjestaj {
 	private JTable table;
 	private JComboBox comboBox;
 	private JDialog frame;
+	private static final Logger logger = Logger.getLogger(MjesecniIzvjestaj.class);
 
 	/**
 	 * Launch the application.
@@ -179,6 +181,7 @@ public class MjesecniIzvjestaj {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(frame, e.getMessage(), 
 					"Greška!", JOptionPane.ERROR_MESSAGE);
+			logger.debug(e.getMessage(), e);
 		} finally {
 			if (sess != null)
 				sess.close();
