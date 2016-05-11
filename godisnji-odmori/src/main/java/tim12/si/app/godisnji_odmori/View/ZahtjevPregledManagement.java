@@ -1,8 +1,10 @@
 package tim12.si.app.godisnji_odmori.View;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.DateFormat;
@@ -16,7 +18,12 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.hibernate.Session;
 
@@ -25,11 +32,13 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import com.toedter.calendar.JCalendar;
 
+import tim12.si.app.godisnji_odmori.Controller.KalendarController;
 import tim12.si.app.godisnji_odmori.Controller.OdsustvoController;
 //import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import tim12.si.app.godisnji_odmori.Controller.ZahtjevController;
@@ -56,10 +65,12 @@ public class ZahtjevPregledManagement {
 	private JLabel lblGodisnjiOdmor;
 	private JTextPane txtpnUmoranOdDosade;
 	private JDialog frame;
+	private JComboBox jcb;
 	
 	private Long id_zahtjeva;
 	private ZaposlenikBrDana zbr;
 	private ZahtjevVM zvm;
+	private ArrayList<Date> events;
 
 	/**
 	 * Launch the application.
@@ -110,43 +121,37 @@ public class ZahtjevPregledManagement {
 			label_11.setText(strDate2);
 			lblGodisnjiOdmor.setText(zvm.getTipOdsustva()); 
 			
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(calendar.getDate());
-			int day = cal.get(Calendar.DAY_OF_MONTH);
-			int month = cal.get(Calendar.MONTH);
-			int year = cal.get(Calendar.YEAR);
-
-			JPanel jpanel = calendar.getDayChooser().getDayPanel();
-			Component component[] = jpanel.getComponents();
-			
+			//za kalendar
 			OdsustvoController oc = new OdsustvoController(sess);
-			ArrayList<Date> events = oc.dajSvaOdsustva();
-			//System.out.println(events.get(2).toString());
+			events = oc.dajSvaOdsustva(sektor);
+			KalendarController kc = new KalendarController();
+            kc.postaviZauzete(events, calendar);
 			
-
-			//arraylist of events
-			for(int i = 0; i < events.size(); i++)
-			{
-				Date date= events.get(i);
-				Calendar call = Calendar.getInstance();
-				call.setTime(date);
-				int month1 = call.get(Calendar.MONTH);
-				int year1 = call.get(Calendar.YEAR);
-				int day1 = call.get(Calendar.DAY_OF_MONTH);
-				//selected month and year on JCalendar
-			    if(month == month1 && year == year1)
-			    {
-			         // Calculate the offset of the first day of the month
-			         cal.set(Calendar.DAY_OF_MONTH,1);
-			         int offset = cal.get(Calendar.DAY_OF_WEEK) - 1;
-
-			        //this value will differ from each month due to first days of each month
-			         component[ day1 + offset + 6].setBackground(Color.red); 
+			
+			
+			jcb = (JComboBox) calendar.getMonthChooser().getComboBox(); 
+			jcb.addActionListener (new ActionListener () {
+			    public void actionPerformed(ActionEvent e) {
+			    	KalendarController kc = new KalendarController();
+		            kc.postaviZauzete(events, calendar);
 			    }
-			}
-			/*JPanel jpanel = calendar.getDayChooser().getDayPanel();
-			Component component[] = jpanel.getComponents();
-			component[8].setBackground(Color.red);*/
+			});
+			
+			
+			
+			
+			JSpinner js = (JSpinner) calendar.getYearChooser().getSpinner();
+			
+			
+			js.addChangeListener(new ChangeListener() {
+
+		        public void stateChanged(ChangeEvent e) {
+		        	KalendarController kc = new KalendarController();
+		            kc.postaviZauzete(events, calendar);
+		        }
+		    });
+			
+			
 			
 			
 			
@@ -169,6 +174,8 @@ public class ZahtjevPregledManagement {
 		}
 		
 	}
+	
+	
 	
 	
 
@@ -229,6 +236,18 @@ public class ZahtjevPregledManagement {
 		JLabel label_7 = new JLabel("Broj dana neplaniranog odsustva:");
 		label_7.setBounds(10, 152, 198, 14);
 		panel.add(label_7);
+		
+		JLabel lblNewLabel = new JLabel("*ako promijenite godinu, ponovno selektujte");
+		lblNewLabel.setForeground(Color.GRAY);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblNewLabel.setBounds(581, 294, 233, 17);
+		frmSolutionsiZahtjev.getContentPane().add(lblNewLabel);
+		
+		JLabel lblNewLabel_2 = new JLabel("mjesec kako bi se učitali podaci");
+		lblNewLabel_2.setForeground(Color.GRAY);
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblNewLabel_2.setBounds(580, 307, 234, 16);
+		frmSolutionsiZahtjev.getContentPane().add(lblNewLabel_2);
 		
 	    label_8 = new JLabel("0");
 		label_8.setBounds(219, 127, 79, 14);
@@ -309,13 +328,14 @@ public class ZahtjevPregledManagement {
 		calendar = new JCalendar();
 		calendar.setBounds(581, 33, 233, 261);
 		frmSolutionsiZahtjev.getContentPane().add(calendar);
+		calendar.getMonthChooser().getSpinner().setEnabled(false);
+		calendar.getMonthChooser().getComboBox().setEnabled(true);
+		calendar.getDayChooser().setEnabled(false);
+
 		
 		
 		
-		
-		
-		
-		
+	
 		JButton btnOdobri = new JButton("Odobri");
 		btnOdobri.setBounds(589, 334, 89, 23);
 		frmSolutionsiZahtjev.getContentPane().add(btnOdobri);

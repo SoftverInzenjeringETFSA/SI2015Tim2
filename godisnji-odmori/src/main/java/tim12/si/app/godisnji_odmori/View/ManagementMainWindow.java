@@ -269,6 +269,15 @@ public class ManagementMainWindow {
 		btnPregledKalendara.setBounds(54, 245, 111, 23);
 		panel_1.add(btnPregledKalendara);
 		
+		btnPregledKalendara.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				//frmSolutionsi.setVisible(false);
+				new KalendarPregledManagement();
+				
+			}
+		});
+		
 		label_10 = new JLabel("0");
 		label_10.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_10.setFont(new Font("Tahoma", Font.PLAIN, 12));
