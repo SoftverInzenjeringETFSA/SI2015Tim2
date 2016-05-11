@@ -60,12 +60,13 @@ public class ManagementMainWindow {
 	private JLabel lblMujoMuji;
 	private JLabel lblMenadmentLjudskihResursa;
 	private JDialog frame;
+	Session sess = null;
 	//static final Logger logger = Logger.getLogger(ManagementMainWindow.class);
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void Management() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -83,13 +84,21 @@ public class ManagementMainWindow {
 	 */
 	public ManagementMainWindow() {
 		initialize();
-		Session sess = null;
+		provjeriUsera();
 		
+	}
+	
+	
+	public void provjeriUsera ()
+	{
 		try {
 			//UI.SetUsername("dbabahmeto1");
 			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 			ZaposlenikController zc = new ZaposlenikController(sess);
+			String varij = UI.DajUsername();
 			ZaposlenikBrDana zbd = zc.DajZaposlenikViewModel(UI.DajUsername());
+			System.out.println(zbd.getZaposlenikIme());
+			System.out.println(zbd.getZaposlenikPrezime());
 			lblMujoMuji.setText(zbd.getZaposlenikIme() + " " + zbd.getZaposlenikPrezime());
 			lblMenadmentLjudskihResursa.setText(zbd.getSektor());
 			
@@ -106,8 +115,6 @@ public class ManagementMainWindow {
 		}
 		
 		
-		
-		
 	}
 
 	/**
@@ -117,7 +124,7 @@ public class ManagementMainWindow {
 		frmSolutionsi = new JFrame();
 		frmSolutionsi.setTitle("SolutionSI");
 		frmSolutionsi.setBounds(100, 100, 840, 489);
-		frmSolutionsi.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSolutionsi.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmSolutionsi.getContentPane().setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -172,7 +179,7 @@ public class ManagementMainWindow {
 		lblZaOvuGodinu.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
 		panel.add(lblZaOvuGodinu);
 		
-		lblMujoMuji = new JLabel("Mujo Muji\u0107");
+		lblMujoMuji = new JLabel("");
 		lblMujoMuji.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMujoMuji.setBounds(10, 152, 160, 26);
 		lblMujoMuji.setFont(new Font("Tahoma", Font.PLAIN, 12));

@@ -19,7 +19,7 @@ public class App
         
         Session session = HibernateUtil.getSessionFactory().openSession();
         System.out.println( "Hello World! Merseda " );
-        dodajZaposlenika(session);
+        //dodajZaposlenika(session);
         
         
         session.close();
@@ -28,8 +28,12 @@ public class App
     private static void dodajZaposlenika(Session session) {
     	Transaction t = session.beginTransaction();
     	Zaposlenik s = new Zaposlenik();
-    	s.setIme("Meho");
-    	s.setPrezime("Mehic");
+    	s.setIme("Manager");
+    	s.setPrezime("User");
+    	s.setUsername("2");
+    	s.setPassword("2");
+    	s.setSektor_id(1);
+    	s.setPrivilegija(true);
     	Long id = (Long) session.save(s);
     	System.out.println("Dodan student sa IDom "+id);
     	t.commit();

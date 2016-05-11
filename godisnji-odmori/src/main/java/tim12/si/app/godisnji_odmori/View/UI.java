@@ -5,23 +5,36 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import org.hibernate.Session;
+
+import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
+import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikAccountVM;
+import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
+
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
 import java.awt.Font;
 import javax.swing.JPasswordField;
 import java.awt.SystemColor;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class UI {
 
 	private JFrame frmLogin;
-	private JTextField textField;
+	private JTextField usernameInput;
 	private JButton btnLogin;
 	private JLabel lblSolutionsi;
-	private JPasswordField passwordField;
+	private JPasswordField passwordInput;
 	private JLabel lblSi;
+	private JDialog frame;
 	//kako bi znali koji je user logovan
-	private static String username;
-	
+	public static String username;
+	Session sess = null;
 	
 	public static String DajUsername()
 	{
@@ -31,6 +44,7 @@ public class UI {
 	public static void SetUsername(String temp)
 	{
 		username = temp;
+		System.out.println(username);
 	}
 	/**
 	 * Launch the application.
@@ -47,6 +61,8 @@ public class UI {
 			}
 		});
 	}
+	
+	
 
 	/**
 	 * Create the application.
@@ -54,6 +70,46 @@ public class UI {
 	public UI() {
 		initialize();
 	}
+	
+	public void provjeriUserIPass(){
+		
+		
+		try {
+			//UI.SetUsername("dbabahmeto1");
+			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+			ZaposlenikController zc = new ZaposlenikController(sess);
+			SetUsername(usernameInput.getText());
+			 ZaposlenikAccountVM acc = zc.DajZaposlenikAccVM(UI.DajUsername(), passwordInput.getText());
+			 
+			 if(acc.getPrivilegija()==true)
+			 {
+				 //otvori manager formu
+				 ManagementMainWindow mw = new ManagementMainWindow();
+				 mw.Management();
+				 //mw.provjeriUsera();
+			 }
+			 else
+			 {
+				 //otvori user formu
+				 UserMainWindow uw = new UserMainWindow();
+				 //uw.User();
+				 
+			 }
+			
+			
+		}
+		catch (Exception er) {
+
+			
+			JOptionPane.showMessageDialog(frame, er.getMessage(),
+					"Greška", JOptionPane.INFORMATION_MESSAGE);
+
+		} finally {
+			if (sess != null)
+				sess.close();
+		}
+	}
+	
 
 	/**
 	 * Initialize the contents of the frame.
@@ -74,10 +130,10 @@ public class UI {
 		lblNewLabel.setBounds(55, 80, 59, 14);
 		frmLogin.getContentPane().add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(133, 77, 86, 20);
-		frmLogin.getContentPane().add(textField);
-		textField.setColumns(10);
+		usernameInput = new JTextField();
+		usernameInput.setBounds(133, 77, 86, 20);
+		frmLogin.getContentPane().add(usernameInput);
+		usernameInput.setColumns(10);
 		
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setForeground(Color.BLACK);
@@ -86,6 +142,11 @@ public class UI {
 		frmLogin.getContentPane().add(lblPassword);
 		
 		btnLogin = new JButton("Login");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				provjeriUserIPass();
+			}
+		});
 		btnLogin.setBounds(183, 170, 89, 23);
 		frmLogin.getContentPane().add(btnLogin);
 		
@@ -95,9 +156,9 @@ public class UI {
 		lblSolutionsi.setBounds(49, 11, 155, 50);
 		frmLogin.getContentPane().add(lblSolutionsi);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(133, 118, 86, 20);
-		frmLogin.getContentPane().add(passwordField);
+		passwordInput = new JPasswordField();
+		passwordInput.setBounds(133, 118, 86, 20);
+		frmLogin.getContentPane().add(passwordInput);
 		
 		lblSi = new JLabel("SI");
 		lblSi.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 40));
