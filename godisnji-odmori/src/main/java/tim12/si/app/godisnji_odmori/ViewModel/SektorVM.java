@@ -8,10 +8,10 @@ public class SektorVM {
 	public int maxBrojOdsutnih;
 	public String opis;
 	
-	public SektorVM (String Naziv, String godina,int brojUpo, String max,  String Opis) {
+	public SektorVM (String Naziv, int i,int brojUpo, String max,  String Opis) {
 		
 		this.naziv=Naziv;
-		this.godina_osnivanja=Integer.parseInt(godina);
+		this.godina_osnivanja=i;
 		this.brojUposlenih=brojUpo;
 		this.maxBrojOdsutnih=Integer.parseInt(max);
 		this.opis=Opis;

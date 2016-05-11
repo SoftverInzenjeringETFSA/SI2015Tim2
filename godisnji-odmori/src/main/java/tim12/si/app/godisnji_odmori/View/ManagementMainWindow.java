@@ -54,6 +54,7 @@ import tim12.si.app.godisnji_odmori.Controller.ZahtjevController;
 import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
 import tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
+import com.toedter.calendar.JYearChooser;
 
 public class ManagementMainWindow {
 
@@ -78,11 +79,12 @@ public class ManagementMainWindow {
 	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel_3;
 	private JTextArea txtrEkonomskiSektorSe;
-	private JSpinner spinner_1;
 	private JSpinner spinner_2;
 	private JLabel label_9;
 	private JScrollPane scrollPane_3;
 	JList<String> list_1;
+	
+	JYearChooser spinner_1;
 
 	//static final Logger logger = Logger.getLogger(ManagementMainWindow.class);
 
@@ -508,7 +510,7 @@ public class ManagementMainWindow {
 		panel_9.add(lblNazivSektora);
 		
 		JLabel lblGodinaOsnivanja = new JLabel("Godina osnivanja:");
-		lblGodinaOsnivanja.setBounds(10, 78, 88, 14);
+		lblGodinaOsnivanja.setBounds(10, 78, 108, 14);
 		panel_9.add(lblGodinaOsnivanja);
 		
 		JLabel lblTrenutniBrojZaposlenih = new JLabel("Trenutni broj zaposlenih:");
@@ -528,11 +530,6 @@ public class ManagementMainWindow {
 		txtEkonomskiSektor.setBounds(192, 37, 147, 20);
 		panel_9.add(txtEkonomskiSektor);
 		txtEkonomskiSektor.setColumns(10);
-		
-		spinner_1 = new JSpinner();
-		spinner_1.setValue(0);
-		spinner_1.setBounds(192, 68, 147, 20);
-		panel_9.add(spinner_1);
 		
 		spinner_2 = new JSpinner();
 		spinner_2.setBounds(295, 144, 44, 20);
@@ -555,24 +552,31 @@ public class ManagementMainWindow {
 		panel_9.add(label_9);
 		
 		lblNewLabel = new JLabel("");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setForeground(Color.RED);
 		lblNewLabel.setBounds(192, 55, 147, 14);
 		panel_9.add(lblNewLabel);
 		
 		lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_1.setForeground(Color.RED);
-		lblNewLabel_1.setBounds(192, 89, 147, 14);
+		lblNewLabel_1.setBounds(146, 89, 193, 14);
 		panel_9.add(lblNewLabel_1);
 		
 		lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_2.setForeground(Color.RED);
-		lblNewLabel_2.setBounds(192, 160, 147, 14);
+		lblNewLabel_2.setBounds(64, 160, 275, 14);
 		panel_9.add(lblNewLabel_2);
 		
 		lblNewLabel_3 = new JLabel("");
 		lblNewLabel_3.setForeground(Color.RED);
 		lblNewLabel_3.setBounds(192, 280, 147, 14);
 		panel_9.add(lblNewLabel_3);
+		
+		spinner_1 = new JYearChooser();
+		spinner_1.setBounds(192, 72, 147, 20);
+		panel_9.add(spinner_1);
 		
 		JButton btnDodajNoviSektor = new JButton("Dodaj sektor");
 		btnDodajNoviSektor.setBounds(59, 356, 124, 23);
@@ -651,7 +655,7 @@ public class ManagementMainWindow {
             	ocistiUnosSektora();
             	if(!validirajUnosSektora())
             		return;
-            	sC.modificirajSektor(new SektorVM(txtEkonomskiSektor.getText(),spinner_1.getValue().toString(),0,spinner_2.getValue().toString(),txtrEkonomskiSektorSe.getText()));
+            	sC.modificirajSektor(new SektorVM(txtEkonomskiSektor.getText(), spinner_1.getValue(),0,spinner_2.getValue().toString(),txtrEkonomskiSektorSe.getText()));
             	osvjeziListuSektora();
             }
         });
@@ -735,13 +739,8 @@ public Boolean validirajUnosSektora(){
 		  
 		  
 	  }
-	  if(txtrEkonomskiSektorSe.getText().isEmpty()){
-		  
-		  lblNewLabel_3.setText("Polje Opis je obavezno");
-		  validacija=false;
-		  
-	  }
-	  if(spinner_1.getValue().toString().equals("0")){
+	  
+	  if(spinner_1.getValue()== 0){
 		  
 		  lblNewLabel_1.setText("Polje Godina je obavezno");
 		  validacija=false;
