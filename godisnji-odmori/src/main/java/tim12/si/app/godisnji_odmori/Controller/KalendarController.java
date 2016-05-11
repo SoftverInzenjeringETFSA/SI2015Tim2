@@ -9,9 +9,11 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import com.toedter.calendar.IDateEvaluator;
 import com.toedter.calendar.JCalendar;
 
 public class KalendarController {
+	
 	public KalendarController(){}
 	
 	/**
@@ -68,5 +70,8 @@ public class KalendarController {
 		         component[ day1 + offset + 6].setBackground(Color.red); 
 		    }
 		}
-	}
+		
+		
+		
+		}
 }
