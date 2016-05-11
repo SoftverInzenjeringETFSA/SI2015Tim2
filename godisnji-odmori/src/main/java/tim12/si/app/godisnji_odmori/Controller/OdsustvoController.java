@@ -64,14 +64,16 @@ public class OdsustvoController {
 		throw new UnsupportedOperationException();
 	}
 
-	public ArrayList<Date> dajSvaOdsustva() {
+	public ArrayList<Date> dajSvaOdsustva(String sektor) {
 		ArrayList<Date> ld = new ArrayList<Date>();
 		Transaction t = session.beginTransaction();
 		
 		String hql = "Select o.datum "
-				+ "FROM Odsustvo o ";
+				+ "FROM Odsustvo o, Zaposlenik z, Sektor s "
+				+ "WHERE o.zaposlenik_id = z.zaposlenik_id AND z.sektor_id = s.sektor_id AND s.naziv = :sektor ";
 				
 		Query q = session.createQuery(hql);
+		q.setString("sektor", sektor);
 		
 		
 		List l = q.list();

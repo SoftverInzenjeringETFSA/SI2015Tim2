@@ -68,6 +68,7 @@ public class ZaposlenikController
 			String prezime= zvm.prezime;
 			//isto kao i gore
 			//int sectorID=zvm.sektor_id;;
+			//nesto
 			Date datumRodjenja=zvm.datumRodjenja;
 			String email=zvm.email;
 			String adresaStanovanja=zvm.adresaStanovanja;
@@ -183,6 +184,24 @@ public class ZaposlenikController
 			throw new ZaposlenikNotFound("Zaposlenik s username-om: " + username + " nije pronadjen.");
 			
 		ZaposlenikBrDana vm = (ZaposlenikBrDana) l.get(0);
+		return vm;
+	}
+	
+	public ZaposlenikAccountVM DajZaposlenikAccVM(String username, String password) throws ZaposlenikNotFound
+	{
+		Transaction t = session.beginTransaction();
+		
+		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikAccountVM(z.username, z.password, z.privilegija) "+
+				"FROM Zaposlenik z WHERE z.username = :username AND z.password = :password";
+		Query q = session.createQuery(hql);
+		q.setString("username", username);
+		q.setString("password", password);
+		
+		List l = q.list();
+		t.commit();
+		if(l.isEmpty())
+			throw new ZaposlenikNotFound("Zaposlenik s username-om: " + username + " nije pronadjen.");
+		ZaposlenikAccountVM vm = (ZaposlenikAccountVM) l.get(0);
 		return vm;
 	}
 }

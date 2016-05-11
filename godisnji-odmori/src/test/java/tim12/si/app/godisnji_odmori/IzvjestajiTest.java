@@ -37,7 +37,7 @@ public class IzvjestajiTest extends TestCase {
 		s=new Sektor();
 		s.setSektor_id(4);
 
-		ic = new IzvjestajController();
+	//	ic = new IzvjestajController();
 		
 		i = new IzvjestajVM();
 		i.ukupnoNeradni=30;
@@ -46,8 +46,8 @@ public class IzvjestajiTest extends TestCase {
 		iz = new IzvjestajZapVM();
 		iz.neradniDani= 2;
 		iz.radniDani=5;
-		iz.ukupnoNeradniDana=30;
-		iz.ukupnoRadniDana=1000;
+		//iz.ukupnoNeradniDana=30;
+		//iz.ukupnoRadniDana=1000;
 		iz.sektor= "Sektor1";
 		iz.zaposlenikIme="Fahrudin";
 		iz.zaposlenikPrezime="Brbutovic";

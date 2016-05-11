@@ -73,24 +73,28 @@ public class ManagementMainWindow {
 	private JList list;
 	private JScrollPane scrollPane_1;
 	private JDialog frame;
-  private JTextArea txtrEkonomskiSektorSe;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
+	private JLabel lblNewLabel_3;
+	private JTextArea txtrEkonomskiSektorSe;
 	private JSpinner spinner_1;
 	private JSpinner spinner_2;
 	private JLabel label_9;
 	private JScrollPane scrollPane_3;
 	JList<String> list_1;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
-	private JLabel lblNewLabel_2;
-	private JLabel lblNewLabel_3;
-	
+
+	//static final Logger logger = Logger.getLogger(ManagementMainWindow.class);
+
+	Session sess = null;
 	private ArrayList<ZahtjevVM> zvm;
 	public SektorController sC = new SektorController();
+
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void Management() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -108,13 +112,23 @@ public class ManagementMainWindow {
 	 */
 	public ManagementMainWindow() {
 		initialize();
-		Session sess = null;
-		this.frmSolutionsi.setVisible(true);
+		provjeriUsera();
+		
+	}
+	
+	
+	public void provjeriUsera ()
+	{
+		
+		//this.frmSolutionsi.setVisible(true);
 		try {
 			//UI.SetUsername("dbabahmeto1");
 			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 			ZaposlenikController zc = new ZaposlenikController(sess);
+			String varij = UI.DajUsername();
 			ZaposlenikBrDana zbd = zc.DajZaposlenikViewModel(UI.DajUsername());
+			System.out.println(zbd.getZaposlenikIme());
+			System.out.println(zbd.getZaposlenikPrezime());
 			lblMujoMuji.setText(zbd.getZaposlenikIme() + " " + zbd.getZaposlenikPrezime());
 			lblMenadmentLjudskihResursa.setText(zbd.getSektor());
 			label_6.setText(zbd.getRadniDani().toString());
@@ -146,8 +160,6 @@ public class ManagementMainWindow {
 		}
 		
 		
-		
-		
 	}
 	public void otvoriZahtjev (int selected)
 	{
@@ -165,7 +177,7 @@ public class ManagementMainWindow {
 		frmSolutionsi = new JFrame();
 		frmSolutionsi.setTitle("SolutionSI");
 		frmSolutionsi.setBounds(100, 100, 840, 489);
-		frmSolutionsi.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSolutionsi.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmSolutionsi.getContentPane().setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -223,7 +235,7 @@ public class ManagementMainWindow {
 		lblZaOvuGodinu.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
 		panel.add(lblZaOvuGodinu);
 		
-		lblMujoMuji = new JLabel("Mujo Muji\u0107");
+		lblMujoMuji = new JLabel("");
 		lblMujoMuji.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMujoMuji.setBounds(10, 152, 160, 26);
 		lblMujoMuji.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -272,6 +284,15 @@ public class ManagementMainWindow {
 		JButton btnPregledKalendara = new JButton("Kalendar");
 		btnPregledKalendara.setBounds(54, 245, 111, 23);
 		panel_1.add(btnPregledKalendara);
+		
+		btnPregledKalendara.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				//frmSolutionsi.setVisible(false);
+				new KalendarPregledManagement();
+				
+			}
+		});
 		
 		label_10 = new JLabel("0");
 		label_10.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -640,6 +661,14 @@ public class ManagementMainWindow {
 		panel_10.setLayout(null);
 		
 		JButton btnNewButton_1 = new JButton("Mjesečni izvještaj");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				MjesecniIzvjestaj mi= new MjesecniIzvjestaj();
+				mi.mjesecniIzvjestaj();
+				
+			}
+		});
 		btnNewButton_1.setBounds(269, 69, 251, 49);
 		panel_10.add(btnNewButton_1);
 		
@@ -681,6 +710,8 @@ public class ManagementMainWindow {
 
 	}*/
 
+ 
+  
   public void osvjeziListuSektora (){
 		list_1.setModel(new AbstractListModel() {
 			String[] values = sC.dajSveSektore();
@@ -692,10 +723,10 @@ public class ManagementMainWindow {
 			}
 		});
 	}
-  
-  public Boolean validirajUnosSektora(){
+
+public Boolean validirajUnosSektora(){
 	  Boolean validacija = true;
-  
+
 	  
 	  if(txtEkonomskiSektor.getText().isEmpty()){
 		  
@@ -725,14 +756,15 @@ public class ManagementMainWindow {
 	
 	  return validacija;
 	  
-  }
-  
-  public void ocistiUnosSektora(){
+}
+
+public void ocistiUnosSektora(){
 	  
 	  lblNewLabel.setText("");
 	  lblNewLabel_1.setText("");
 	  lblNewLabel_2.setText("");
 	  lblNewLabel_3.setText("");
 	  
-  }
 }
+}
+

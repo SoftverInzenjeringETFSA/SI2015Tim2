@@ -1,27 +1,44 @@
 package tim12.si.app.godisnji_odmori.View;
 
 import java.awt.EventQueue;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.JTextComponent;
+
+import org.hibernate.Session;
+
 import javax.swing.JScrollPane;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import com.toedter.calendar.JMonthChooser;
+
+import tim12.si.app.godisnji_odmori.HibernateUtil;
+import tim12.si.app.godisnji_odmori.Controller.IzvjestajController;
+import tim12.si.app.godisnji_odmori.ViewModel.IzvjestajZapVM;
 
 public class MjesecniIzvjestaj {
 
 	private JFrame frmSolutionsiMjesecni;
 	private JTable table;
+	private JComboBox comboBox;
+	private JDialog frame;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void mjesecniIzvjestaj() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -39,6 +56,8 @@ public class MjesecniIzvjestaj {
 	 */
 	public MjesecniIzvjestaj() {
 		initialize();
+		OsvjeziComboBox(false);
+		frame.setVisible(true);
 	}
 
 	/**
@@ -81,6 +100,30 @@ public class MjesecniIzvjestaj {
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(57, 12, 106, 20);
+		comboBox.setEditable(true);
+		JTextComponent jtc = (JTextComponent) comboBox.getEditor().getEditorComponent();
+		jtc.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void removeUpdate(DocumentEvent e) {
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						OsvjeziComboBox(true);
+					}
+				});
+			}
+			
+			public void insertUpdate(DocumentEvent e) {
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						OsvjeziComboBox(true);
+					}
+				});
+			}
+			
+			public void changedUpdate(DocumentEvent e) {
+				//This never happens
+			}
+		});
 		frmSolutionsiMjesecni.getContentPane().add(comboBox);
 		
 		JLabel lblMjesec = new JLabel("Mjesec:");
@@ -88,7 +131,7 @@ public class MjesecniIzvjestaj {
 		frmSolutionsiMjesecni.getContentPane().add(lblMjesec);
 		
 		JMonthChooser monthChooser = new JMonthChooser();
-		monthChooser.setBounds(261, 11, 106, 22);
+		monthChooser.setBounds(261, 11, 117, 22);
 		frmSolutionsiMjesecni.getContentPane().add(monthChooser);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -105,5 +148,41 @@ public class MjesecniIzvjestaj {
 		
 		JMenuItem mntmLogOut = new JMenuItem("Odjavi se");
 		mnOdjava.add(mntmLogOut);
+	}
+	
+	private void OsvjeziComboBox(boolean expand) {
+		Session sess = null;
+		
+		try {
+			if ( comboBox.getEditor().getItem() instanceof String){
+				
+				sess = HibernateUtil.getSessionFactory().openSession();
+				IzvjestajController icont= new IzvjestajController (sess);
+				
+				String ime = (String) comboBox.getEditor().getItem();
+				
+
+				ArrayList<IzvjestajZapVM> data = icont.nadjiPoImenu(ime);
+				Object[] array = new Object[data.size() + 1];
+				array[0] = ime;
+				
+				for(int i = 0; i < data.size(); i++){
+					array[i+1] = data.get(i);
+				}
+				
+				DefaultComboBoxModel model = new DefaultComboBoxModel(array);
+				comboBox.setModel(model);
+				
+				if(expand)
+					comboBox.getUI().setPopupVisible(comboBox, true);
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(frame, e.getMessage(), 
+					"Greška!", JOptionPane.ERROR_MESSAGE);
+		} finally {
+			if (sess != null)
+				sess.close();
+		}
+		
 	}
 }
