@@ -13,7 +13,7 @@ import org.junit.Test;
 
 public class OdsustvoTest extends TestCase {
 	
-	OdsustvoController oC = new OdsustvoController ();
+	/*OdsustvoController oC = new OdsustvoController ();
 	
 	 
 	@Test
@@ -114,7 +114,7 @@ public class OdsustvoTest extends TestCase {
 
 		}
 	
-
+*/
 	
 
 }

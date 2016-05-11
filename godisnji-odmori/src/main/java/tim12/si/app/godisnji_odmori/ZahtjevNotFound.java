@@ -1,35 +1,35 @@
 package tim12.si.app.godisnji_odmori;
 
-public class ZaposlenikNotFound extends Exception {
+public class ZahtjevNotFound extends Exception {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
 	
-	public ZaposlenikNotFound() {
+
+	public ZahtjevNotFound() {
 		super();
 		
 	}
 
-	public ZaposlenikNotFound(String message, Throwable cause,
+	public ZahtjevNotFound(String message, Throwable cause,
 			boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 		
 	}
 
-	public ZaposlenikNotFound(String message, Throwable cause) {
+	public ZahtjevNotFound(String message, Throwable cause) {
 		super(message, cause);
 		
 	}
 
-	public ZaposlenikNotFound(String message) {
+	public ZahtjevNotFound(String message) {
 		super(message);
 		
 	}
 
-	public ZaposlenikNotFound(Throwable cause) {
+	public ZahtjevNotFound(Throwable cause) {
 		super(cause);
 		
 	}

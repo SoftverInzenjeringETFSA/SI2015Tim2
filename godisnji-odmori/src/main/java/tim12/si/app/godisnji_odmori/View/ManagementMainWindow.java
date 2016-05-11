@@ -1,6 +1,9 @@
 package tim12.si.app.godisnji_odmori.View;
 
 import java.awt.EventQueue;
+import tim12.si.app.godisnji_odmori.Controller.*;
+import tim12.si.app.godisnji_odmori.Model.Sektor;
+import tim12.si.app.godisnji_odmori.ViewModel.SektorVM;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -22,12 +25,13 @@ import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
 
 import org.hibernate.Session;
 
@@ -35,16 +39,20 @@ import org.hibernate.Session;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.InputStream;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 
-
+import tim12.si.app.godisnji_odmori.ZaposlenikNotFound;
+import tim12.si.app.godisnji_odmori.Controller.ZahtjevController;
 import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
+import tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
 
 public class ManagementMainWindow {
@@ -59,9 +67,26 @@ public class ManagementMainWindow {
 	private JTextField txtEkonomskiSektor;
 	private JLabel lblMujoMuji;
 	private JLabel lblMenadmentLjudskihResursa;
+	private JLabel label_6;
+	private JLabel label_7;
+	private JLabel label_10;
+	private JList list;
+	private JScrollPane scrollPane_1;
 	private JDialog frame;
+
 	Session sess = null;
 	//static final Logger logger = Logger.getLogger(ManagementMainWindow.class);
+
+  private JTextArea txtrEkonomskiSektorSe;
+	private JSpinner spinner_1;
+	private JSpinner spinner_2;
+	private JLabel label_9;
+	private JScrollPane scrollPane_3;
+	JList<String> list_1;
+	
+	private ArrayList<ZahtjevVM> zvm;
+	public SektorController sC = new SektorController();
+
 
 	/**
 	 * Launch the application.
@@ -84,6 +109,7 @@ public class ManagementMainWindow {
 	 */
 	public ManagementMainWindow() {
 		initialize();
+
 		provjeriUsera();
 		
 	}
@@ -91,6 +117,8 @@ public class ManagementMainWindow {
 	
 	public void provjeriUsera ()
 	{
+		Session sess = null;
+		this.frmSolutionsi.setVisible(true);
 		try {
 			//UI.SetUsername("dbabahmeto1");
 			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
@@ -101,12 +129,27 @@ public class ManagementMainWindow {
 			System.out.println(zbd.getZaposlenikPrezime());
 			lblMujoMuji.setText(zbd.getZaposlenikIme() + " " + zbd.getZaposlenikPrezime());
 			lblMenadmentLjudskihResursa.setText(zbd.getSektor());
+			label_6.setText(zbd.getRadniDani().toString());
+			label_7.setText(zbd.getPreostaloSlobodnih().toString());
+			
+			ZahtjevController zc2 = new ZahtjevController(sess);
+			zvm = zc2.dajSveZahtjeveIzSektora(zbd.getSektor());
+			ArrayList<String> listaPodnosilaca = new ArrayList<String>();
+			for (int i=0; i<zvm.size(); i++) listaPodnosilaca.add("Zahtjev od " + zvm.get(i).getPodnosilacIme() + " " + zvm.get(i).getPodnosilacPrezime());
+			list = new JList(listaPodnosilaca.toArray());
+			scrollPane_1.setViewportView(list);
+			label_10.setText(Integer.toString(zvm.size()));
+			
+			
 			
 		}
 		catch (Exception er) {
 
-			
+			//System.out.print(er.getMessage());
+			if (er.getMessage() != null )
 			JOptionPane.showMessageDialog(frame, er.getMessage(),
+					"Greška", JOptionPane.INFORMATION_MESSAGE);
+			else JOptionPane.showMessageDialog(frame, "Korisnik sa username: " + UI.DajUsername() + " ne postoji.",
 					"Greška", JOptionPane.INFORMATION_MESSAGE);
 
 		} finally {
@@ -116,6 +159,14 @@ public class ManagementMainWindow {
 		
 		
 	}
+	public void otvoriZahtjev (int selected)
+	{
+		if (selected == -1) {JOptionPane.showMessageDialog(frame, "Neophodno je prvo selektovati zahtjev",
+				"Info", JOptionPane.INFORMATION_MESSAGE); return;}
+		new ZahtjevPregledManagement(zvm.get(selected).getIdZahtjeva(),zvm.get(selected).getNazivSektora(),zvm.get(selected).getUsernamePodnosioca());
+		frmSolutionsi.dispose();
+	}
+	
 
 	/**
 	 * Initialize the contents of the frame.
@@ -144,31 +195,34 @@ public class ManagementMainWindow {
 		panel.add(label);
 		
 		JLabel label_1 = new JLabel("Status:");
+		label_1.setHorizontalAlignment(SwingConstants.LEFT);
 		label_1.setBounds(10, 223, 68, 14);
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(label_1);
 		
 		JLabel lblMenader = new JLabel("Menad\u017Eer");
-		lblMenader.setBounds(70, 220, 89, 21);
+		lblMenader.setBounds(148, 220, 89, 21);
 		lblMenader.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(lblMenader);
 		
 		JLabel label_3 = new JLabel("Sektor:");
+		label_3.setHorizontalAlignment(SwingConstants.LEFT);
 		label_3.setBounds(10, 255, 68, 26);
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(label_3);
 		
 		lblMenadmentLjudskihResursa = new JLabel("Menadžment ljudskih resursa");
-		lblMenadmentLjudskihResursa.setBounds(70, 258, 219, 20);
+		lblMenadmentLjudskihResursa.setBounds(148, 258, 219, 20);
 		lblMenadmentLjudskihResursa.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(lblMenadmentLjudskihResursa);
 		
-		JLabel label_5 = new JLabel("Ukupno radnih dana:");
-		label_5.setBounds(10, 301, 128, 14);
-		label_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel.add(label_5);
+		JLabel lblOdraeniRadniDani = new JLabel("Odrađeni radni dani:");
+		lblOdraeniRadniDani.setHorizontalAlignment(SwingConstants.LEFT);
+		lblOdraeniRadniDani.setBounds(10, 301, 128, 14);
+		lblOdraeniRadniDani.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel.add(lblOdraeniRadniDani);
 		
-		JLabel label_6 = new JLabel("251");
+		label_6 = new JLabel("251");
 		label_6.setBounds(148, 301, 46, 14);
 		label_6.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(label_6);
@@ -191,18 +245,18 @@ public class ManagementMainWindow {
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblZahtjevaekaju = new JLabel("1 zahtjev čeka na obradu");
+		JLabel lblZahtjevaekaju = new JLabel("zahtjeva čekaju na obradu");
 		lblZahtjevaekaju.setHorizontalAlignment(SwingConstants.CENTER);
-		lblZahtjevaekaju.setBounds(54, 25, 207, 14);
+		lblZahtjevaekaju.setBounds(85, 25, 176, 14);
 		panel_1.add(lblZahtjevaekaju);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(54, 50, 269, 131);
 		panel_1.add(scrollPane_1);
 		
-		JList list = new JList();
+		list = new JList();
 		scrollPane_1.setViewportView(list);
-		list.setModel(new AbstractListModel() {
+		/*list.setModel(new AbstractListModel() {
 			String[] values = new String[] {"Zahtjev od Haso Hasić"};
 			public int getSize() {
 				return values.length;
@@ -210,17 +264,41 @@ public class ManagementMainWindow {
 			public Object getElementAt(int index) {
 				return values[index];
 			}
-		});
+		});*/
 		
 		JButton btnPogledajDetalje = new JButton("Pogledaj zahtjev");
 		btnPogledajDetalje.setBounds(175, 245, 148, 23);
 		panel_1.add(btnPogledajDetalje);
 		
+		btnPogledajDetalje.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						int selected = list.getSelectedIndex();
+						otvoriZahtjev(selected);
+					}
+				});
+		
 		JButton btnPregledKalendara = new JButton("Kalendar");
 		btnPregledKalendara.setBounds(54, 245, 111, 23);
 		panel_1.add(btnPregledKalendara);
 		
-		JLabel label_7 = new JLabel("20");
+		btnPregledKalendara.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				//frmSolutionsi.setVisible(false);
+				new KalendarPregledManagement();
+				
+			}
+		});
+		
+		label_10 = new JLabel("0");
+		label_10.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_10.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		label_10.setBounds(39, 25, 46, 14);
+		panel_1.add(label_10);
+		
+		label_7 = new JLabel("20");
 		label_7.setForeground(new Color(128, 0, 0));
 		label_7.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
 		label_7.setBounds(302, 347, 30, 25);
@@ -404,10 +482,11 @@ public class ManagementMainWindow {
 		scrollPane_2.setBounds(10, 25, 262, 269);
 		panel_8.add(scrollPane_2);
 		
-		JList list_1 = new JList();
+		list_1 = new JList<String>();
+		//list_1.setModel(sC.dajSveSektore());
 		scrollPane_2.setViewportView(list_1);
 		list_1.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Ekonomski sektor", "Tehnički sektor", "Pravni sektor", "IT sektor"};
+			String[] values = sC.dajSveSektore();
 			public int getSize() {
 				return values.length;
 			}
@@ -427,7 +506,7 @@ public class ManagementMainWindow {
 		panel_9.add(lblNazivSektora);
 		
 		JLabel lblGodinaOsnivanja = new JLabel("Godina osnivanja:");
-		lblGodinaOsnivanja.setBounds(10, 78, 88, 14);
+		lblGodinaOsnivanja.setBounds(10, 78, 119, 14);
 		panel_9.add(lblGodinaOsnivanja);
 		
 		JLabel lblTrenutniBrojZaposlenih = new JLabel("Trenutni broj zaposlenih:");
@@ -448,20 +527,21 @@ public class ManagementMainWindow {
 		panel_9.add(txtEkonomskiSektor);
 		txtEkonomskiSektor.setColumns(10);
 		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setModel(new SpinnerDateModel(new Date(946681200000L), null, null, Calendar.YEAR));
+		spinner_1 = new JSpinner();
+		spinner_1.setModel(new SpinnerNumberModel(new Integer(0), null, null, new Integer(1)));
+		spinner_1.setValue(0);
 		spinner_1.setBounds(192, 68, 147, 20);
 		panel_9.add(spinner_1);
 		
-		JSpinner spinner_2 = new JSpinner();
+		spinner_2 = new JSpinner();
 		spinner_2.setBounds(295, 144, 44, 20);
 		panel_9.add(spinner_2);
 		
-		JScrollPane scrollPane_3 = new JScrollPane();
+		scrollPane_3 = new JScrollPane();
 		scrollPane_3.setBounds(89, 185, 250, 89);
 		panel_9.add(scrollPane_3);
 		
-		JTextArea txtrEkonomskiSektorSe = new JTextArea();
+		txtrEkonomskiSektorSe = new JTextArea();
 		txtrEkonomskiSektorSe.setLineWrap(true);
 		scrollPane_3.setViewportView(txtrEkonomskiSektorSe);
 		txtrEkonomskiSektorSe.setToolTipText("");
@@ -469,21 +549,72 @@ public class ManagementMainWindow {
 		txtrEkonomskiSektorSe.setRows(10);
 		txtrEkonomskiSektorSe.setText("Ekonomski sektor se bavi ekonomskim \r\nposlovima kompanije");
 		
-		JLabel label_9 = new JLabel("5");
+		label_9 = new JLabel("5");
 		label_9.setBounds(192, 114, 147, 14);
 		panel_9.add(label_9);
 		
 		JButton btnDodajNoviSektor = new JButton("Dodaj sektor");
 		btnDodajNoviSektor.setBounds(59, 356, 124, 23);
 		panel_7.add(btnDodajNoviSektor);
+		btnDodajNoviSektor.addActionListener(new ActionListener() {
+			 
+            public void actionPerformed(ActionEvent e)
+            {
+            	txtEkonomskiSektor.setText("");
+            	txtrEkonomskiSektorSe.setText("");
+            	label_9.setText("0");
+            	spinner_1.setValue(0);
+            	spinner_2.setValue(0);
+            	
+        		
+            	
+            }
+        }); 
+
 		
 		JButton btnSpasiIzmjene = new JButton("Uredi sektor");
 		btnSpasiIzmjene.setBounds(496, 356, 124, 23);
 		panel_7.add(btnSpasiIzmjene);
+		btnSpasiIzmjene.addActionListener(new ActionListener() {
+			
+            public void actionPerformed(ActionEvent e)
+            {   
+            	String naziv = list_1.getSelectedValue();
+            	Sektor sektor = sC.dajSektorPoNazivu(naziv);
+            	txtEkonomskiSektor.setText(sektor.getNaziv());
+            	txtrEkonomskiSektorSe.setText(sektor.getOpis());     	
+            	spinner_1.setValue(sektor.getGodina_osnivanja());
+            	spinner_2.setValue(sektor.getMax_broj_odsutnih());
+            	StringBuilder sb = new StringBuilder();
+            	sb.append("");
+            	sb.append(sektor.getBroj_uposlenih());
+            	String strI = sb.toString();
+            	label_9.setText(strI);
+            	
+            }
+        });
+	
 		
 		JButton btnObriiSektor = new JButton("Obriši sektor");
 		btnObriiSektor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				Object[] options = { "Da", "Ne" };
+				int n = JOptionPane.showOptionDialog(null,
+                        "Da li ste sigurni da zelite obrisati?",
+                        "Upozorenje",
+                         JOptionPane.YES_NO_OPTION,
+                         JOptionPane.QUESTION_MESSAGE,
+                         null,     
+                         options,  
+                         options[0]);
+				
+				if (n == JOptionPane.YES_OPTION) {
+					String naziv = list_1.getSelectedValue();
+				    sC.obrisiSektor(naziv);
+				    osvjeziListuSektora();
+				}
+				
 			}
 		});
 		btnObriiSektor.setBounds(630, 356, 124, 23);
@@ -492,12 +623,28 @@ public class ManagementMainWindow {
 		JButton btnSpasiPromjene_1 = new JButton("Spasi promjene");
 		btnSpasiPromjene_1.setBounds(232, 356, 124, 23);
 		panel_7.add(btnSpasiPromjene_1);
+		btnSpasiPromjene_1.addActionListener(new ActionListener() {
+			
+            public void actionPerformed(ActionEvent e)
+            {          	
+            	sC.modificirajSektor(new SektorVM(txtEkonomskiSektor.getText(),spinner_1.getValue().toString(),0,spinner_2.getValue().toString(),txtrEkonomskiSektorSe.getText()));
+            	osvjeziListuSektora();
+            }
+        });
 		
 		JPanel panel_10 = new JPanel();
 		tabbedPane.addTab("Izvještaji", null, panel_10, null);
 		panel_10.setLayout(null);
 		
 		JButton btnNewButton_1 = new JButton("Mjesečni izvještaj");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				MjesecniIzvjestaj mi= new MjesecniIzvjestaj();
+				mi.mjesecniIzvjestaj();
+				
+			}
+		});
 		btnNewButton_1.setBounds(269, 69, 251, 49);
 		panel_10.add(btnNewButton_1);
 		
@@ -523,5 +670,31 @@ public class ManagementMainWindow {
 		
 		JMenuItem mntmLogOut = new JMenuItem("Odjavi se");
 		mnOdjava.add(mntmLogOut);
+	}
+	/*public static void Prekini(final JDialog dialog) {
+		ActionListener escListener = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				dialog.setVisible(false);
+				dialog.dispose();
+			}
+		};
+
+		dialog.getRootPane().registerKeyboardAction(escListener,
+				KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+				JComponent.WHEN_IN_FOCUSED_WINDOW);
+
+	}*/
+
+  public void osvjeziListuSektora (){
+		list_1.setModel(new AbstractListModel() {
+			String[] values = sC.dajSveSektore();
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
 	}
 }
