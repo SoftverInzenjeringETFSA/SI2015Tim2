@@ -68,6 +68,7 @@ public class ZaposlenikController
 			String prezime= zvm.prezime;
 			//isto kao i gore
 			//int sectorID=zvm.sektor_id;;
+			//nesto
 			Date datumRodjenja=zvm.datumRodjenja;
 			String email=zvm.email;
 			String adresaStanovanja=zvm.adresaStanovanja;
