@@ -20,7 +20,7 @@ public class IzvjestajZapVM {
 	
 	public IzvjestajZapVM() {}
 	
-	//Geteri i seteri
+	//Getteri i setteri
 	public String getSektor() {
 		return sektor;
 	}
