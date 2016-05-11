@@ -9,7 +9,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.JTextComponent;
 
 import org.hibernate.Session;
 
@@ -52,6 +56,8 @@ public class MjesecniIzvjestaj {
 	 */
 	public MjesecniIzvjestaj() {
 		initialize();
+		OsvjeziComboBox(false);
+		frame.setVisible(true);
 	}
 
 	/**
@@ -94,6 +100,30 @@ public class MjesecniIzvjestaj {
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(57, 12, 106, 20);
+		comboBox.setEditable(true);
+		JTextComponent jtc = (JTextComponent) comboBox.getEditor().getEditorComponent();
+		jtc.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void removeUpdate(DocumentEvent e) {
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						OsvjeziComboBox(true);
+					}
+				});
+			}
+			
+			public void insertUpdate(DocumentEvent e) {
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						OsvjeziComboBox(true);
+					}
+				});
+			}
+			
+			public void changedUpdate(DocumentEvent e) {
+				//This never happens
+			}
+		});
 		frmSolutionsiMjesecni.getContentPane().add(comboBox);
 		
 		JLabel lblMjesec = new JLabel("Mjesec:");
