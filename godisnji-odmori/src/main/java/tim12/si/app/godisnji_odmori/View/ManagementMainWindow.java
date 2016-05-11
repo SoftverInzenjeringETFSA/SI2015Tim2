@@ -74,7 +74,6 @@ public class ManagementMainWindow {
 	private JScrollPane scrollPane_1;
 	private JDialog frame;
 
-	Session sess = null;
 	//static final Logger logger = Logger.getLogger(ManagementMainWindow.class);
 
   private JTextArea txtrEkonomskiSektorSe;
@@ -83,7 +82,7 @@ public class ManagementMainWindow {
 	private JLabel label_9;
 	private JScrollPane scrollPane_3;
 	JList<String> list_1;
-	
+	Session sess = null;
 	private ArrayList<ZahtjevVM> zvm;
 	public SektorController sC = new SektorController();
 
@@ -109,7 +108,6 @@ public class ManagementMainWindow {
 	 */
 	public ManagementMainWindow() {
 		initialize();
-
 		provjeriUsera();
 		
 	}
@@ -117,8 +115,8 @@ public class ManagementMainWindow {
 	
 	public void provjeriUsera ()
 	{
-		Session sess = null;
-		this.frmSolutionsi.setVisible(true);
+		
+		//this.frmSolutionsi.setVisible(true);
 		try {
 			//UI.SetUsername("dbabahmeto1");
 			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
