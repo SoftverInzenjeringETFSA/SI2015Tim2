@@ -25,28 +25,15 @@ public class SektorController {
 	private int brojsektora;
 	public Session session = HibernateUtil.getSessionFactory().openSession();
 	public Transaction t;
-	/**
-	 * 
-	 * @param sektor
-	 */
+	
+	
+	
 	public void dodajSektor(Sektor sektor) {
-		// TODO - implement SektorController.dodajSektor
-		throw new UnsupportedOperationException();
+		
+		 upisiUBazuSektorBaza(sektor);
 	}
 
-	/**
-	 * 
-	 * @param sektorID
-	 */
-	public void obrisiSektor(long sektorID) {
-		// TODO - implement SektorController.obrisiSektro
-		throw new UnsupportedOperationException();
-	}
 
-	/**
-	 * 
-	 * @param sektor
-	 */
 	public void modificirajSektor(SektorVM sektorVM) {
 		
 	          
@@ -65,7 +52,8 @@ public class SektorController {
         {
        	
         	 Sektor sektor = pretvoriUSektor(sektorVM);
-        	 upisiUBazuSektorBaza(sektor);
+        	 dodajSektor(sektor);
+        	
 
          }
 
@@ -77,18 +65,16 @@ public class SektorController {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param sektorID
-	 */
+	
 	public String dajNazivSektora(int sektorID) {
 		// TODO - implement SektorController.dajNazivSektora
 		throw new UnsupportedOperationException();
 	}
 
 	public int dajBrojSektora() {
-		// TODO Auto-generated method stub
-		return brojsektora;
+		
+		return dajSveSektoreBaza().size();
+		
 	}
 	
 	

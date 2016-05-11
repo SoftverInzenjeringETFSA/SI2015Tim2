@@ -38,10 +38,13 @@ public class SektoriTest extends TestCase {
 	@Before
 	public void postavi() {
 		
+		System.out.println("doso");
+		
 		sm.brojUposlenih=2;
 		sm.maxBrojOdsutnih=1;
-		sm.naziv = "Sektor1";
+		sm.naziv = "Sektor";
 		sm.opis="Opis";
+		sm.godina_osnivanja=2005;
 		
 		z1 = new Zaposlenik();
 		z1.setIme("Mujo");
@@ -69,7 +72,6 @@ public class SektoriTest extends TestCase {
 		z2.setSektor_id(4);
 		
 		s=new Sektor();
-		s.setSektor_id(4);
 		s.setOpis("Opis");
 		s.setBroj_uposlenih(0);
 		s.setGodina_osnivanja(2012);
@@ -77,12 +79,13 @@ public class SektoriTest extends TestCase {
 		s.setNaziv("Sektor1");
 		
 		s2=new Sektor();
-		s2.setSektor_id(1);
 		s2.setOpis("Opis2");
 		s2.setBroj_uposlenih(0);
 		s2.setGodina_osnivanja(2012);
 		s2.setMax_broj_odsutnih(3);
 		s2.setNaziv("Sektor2");
+		
+		
 
 
 		
@@ -95,7 +98,65 @@ public class SektoriTest extends TestCase {
 		lista.add(z3);
 		lista.add(z4);
 	}
+	
+	@Test
+	public void testdodajSektor() {
 
+		int brojSektora = sc.dajBrojSektora();
+		System.out.println(brojSektora);
+		sc.dodajSektor(s);
+		sc.dodajSektor(s2);
+		System.out.println(brojSektora);
+
+		assertEquals(sc.dajBrojSektora(), brojSektora+2);
+
+          }
+	
+	@Test
+	public void testmodificirajSektorNovi(){
+		
+		int brojSektora = sc.dajBrojSektora();
+		sc.modificirajSektor(sm);
+		assertEquals(sc.dajBrojSektora(), brojSektora+1);
+		
+
+          }
+	
+	@Test
+	public void testmodificirajSektor(){
+		
+		sm.opis="Noviiii opiiiss TEST";
+		sc.modificirajSektor(sm);
+		assertEquals(sc.dajSektorPoNazivuBaza(sm.naziv).getOpis(),"Noviiii opiiiss TEST");
+		
+
+          }
+
+	@Test
+	public void testdajBrojSektora() {
+		
+		assertEquals(sc.dajBrojSektora(), 10);
+
+          }
+	
+	@Test
+	public void testdajSektorPoNazivu() {
+		
+		Sektor sektor = sc.dajSektorPoNazivu("Sektor1");
+		assertEquals(sektor, s);
+
+          }
+	
+	public void testobrisiSektor() {
+
+		int brojSektora = sc.dajBrojSektora();
+		sc.obrisiSektor(s.getNaziv());
+		sc.obrisiSektor(s2.getNaziv());
+		sc.obrisiSektor(sm.naziv);
+		
+		assertEquals(sc.dajBrojSektora(), brojSektora-3);
+
+          }
 	
 	@Test
 	public void testdajNazivSektora() {
@@ -113,32 +174,10 @@ public class SektoriTest extends TestCase {
           }
 
 
-	public void testmodificirajSektor(){
-		s.setOpis("AAA");
-		s2.setOpis("AAA");
-		s.setGodina_osnivanja(2000);
-		s2.setGodina_osnivanja(2000);
-		s.setNaziv("Sektor2");;
-		s.setSektor_id(1);
-		assertSame(s, s2);
+	
 
-          }
+	
 
-	public void testdodajSektor() {
-
-		sc.dodajSektor(s);
-		sc.dodajSektor(s2);
-
-		assertEquals(sc.dajBrojSektora(), 2);
-
-          }
-
-	public void testobrisiSektor() {
-
-		sc.obrisiSektor(s.getSektor_id());
-		sc.obrisiSektor(s2.getSektor_id());
-		assertEquals(sc.dajBrojSektora(), 0);
-
-          }
+	
 
 }

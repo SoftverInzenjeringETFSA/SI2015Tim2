@@ -79,6 +79,10 @@ public class ManagementMainWindow {
 	private JLabel label_9;
 	private JScrollPane scrollPane_3;
 	JList<String> list_1;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
+	private JLabel lblNewLabel_3;
 	
 	private ArrayList<ZahtjevVM> zvm;
 	public SektorController sC = new SektorController();
@@ -499,7 +503,7 @@ public class ManagementMainWindow {
 		panel_9.add(lblOpisSektora);
 		
 		txtEkonomskiSektor = new JTextField();
-		txtEkonomskiSektor.setText("Ekonomski sektor");
+		txtEkonomskiSektor.setText("");
 		txtEkonomskiSektor.setBounds(192, 37, 147, 20);
 		panel_9.add(txtEkonomskiSektor);
 		txtEkonomskiSektor.setColumns(10);
@@ -523,11 +527,31 @@ public class ManagementMainWindow {
 		txtrEkonomskiSektorSe.setToolTipText("");
 		txtrEkonomskiSektorSe.setFont(new Font("Monospaced", Font.PLAIN, 12));
 		txtrEkonomskiSektorSe.setRows(10);
-		txtrEkonomskiSektorSe.setText("Ekonomski sektor se bavi ekonomskim \r\nposlovima kompanije");
+		txtrEkonomskiSektorSe.setText("");
 		
-		label_9 = new JLabel("5");
+		label_9 = new JLabel("0");
 		label_9.setBounds(192, 114, 147, 14);
 		panel_9.add(label_9);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setForeground(Color.RED);
+		lblNewLabel.setBounds(192, 55, 147, 14);
+		panel_9.add(lblNewLabel);
+		
+		lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setForeground(Color.RED);
+		lblNewLabel_1.setBounds(192, 89, 147, 14);
+		panel_9.add(lblNewLabel_1);
+		
+		lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setForeground(Color.RED);
+		lblNewLabel_2.setBounds(192, 160, 147, 14);
+		panel_9.add(lblNewLabel_2);
+		
+		lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setForeground(Color.RED);
+		lblNewLabel_3.setBounds(192, 280, 147, 14);
+		panel_9.add(lblNewLabel_3);
 		
 		JButton btnDodajNoviSektor = new JButton("Dodaj sektor");
 		btnDodajNoviSektor.setBounds(59, 356, 124, 23);
@@ -602,7 +626,10 @@ public class ManagementMainWindow {
 		btnSpasiPromjene_1.addActionListener(new ActionListener() {
 			
             public void actionPerformed(ActionEvent e)
-            {          	
+            {   
+            	ocistiUnosSektora();
+            	if(!validirajUnosSektora())
+            		return;
             	sC.modificirajSektor(new SektorVM(txtEkonomskiSektor.getText(),spinner_1.getValue().toString(),0,spinner_2.getValue().toString(),txtrEkonomskiSektorSe.getText()));
             	osvjeziListuSektora();
             }
@@ -665,4 +692,47 @@ public class ManagementMainWindow {
 			}
 		});
 	}
+  
+  public Boolean validirajUnosSektora(){
+	  Boolean validacija = true;
+  
+	  
+	  if(txtEkonomskiSektor.getText().isEmpty()){
+		  
+		  lblNewLabel.setText("Polje Naziv je obavezno");
+		  validacija=false;
+		  
+		  
+	  }
+	  if(txtrEkonomskiSektorSe.getText().isEmpty()){
+		  
+		  lblNewLabel_3.setText("Polje Opis je obavezno");
+		  validacija=false;
+		  
+	  }
+	  if(spinner_1.getValue().toString().equals("0")){
+		  
+		  lblNewLabel_1.setText("Polje Godina je obavezno");
+		  validacija=false;
+		  
+	  }
+	  if(spinner_2.getValue().toString().equals("0")){
+		  
+		  lblNewLabel_2.setText("Polje Maximalan broj odsutnih je obavezno");
+		  validacija=false;
+		  
+	  }
+	
+	  return validacija;
+	  
+  }
+  
+  public void ocistiUnosSektora(){
+	  
+	  lblNewLabel.setText("");
+	  lblNewLabel_1.setText("");
+	  lblNewLabel_2.setText("");
+	  lblNewLabel_3.setText("");
+	  
+  }
 }
