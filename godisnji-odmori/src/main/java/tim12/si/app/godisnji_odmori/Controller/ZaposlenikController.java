@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
+import org.hibernate.criterion.Restrictions;
 
 import tim12.si.app.godisnji_odmori.ViewModel.*;
 import tim12.si.app.godisnji_odmori.ZaposlenikNotFound;
@@ -202,6 +203,27 @@ public class ZaposlenikController
 		if(l.isEmpty())
 			throw new ZaposlenikNotFound("Zaposlenik s username-om: " + username + " nije pronadjen.");
 		ZaposlenikAccountVM vm = (ZaposlenikAccountVM) l.get(0);
+		return vm;
+	}
+	
+	//Informacije o logovanom korisniku
+	public ZaposlenikVM DajZaposlenikoveInformacije(String username) throws ZaposlenikNotFound
+	{
+		Transaction t = session.beginTransaction();
+		//ime, prezime, datum rodjenja,broj telefona i adresa
+		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikVM(z.ime,z.prezime,z.email,z.datum_rodjenja,z.telefon,z.adresa_stanovanja)"+
+		"FROM Zaposlenik z WHERE z.username = :username";
+		
+		Query q = session.createQuery(hql);
+		q.setString("username", username);
+		
+		List l = q.list();
+		t.commit();
+		
+		if(l.isEmpty())
+			throw new ZaposlenikNotFound("Zaposlenik s username-om: " + username + " nije pronadjen.");
+			
+		ZaposlenikVM vm = (ZaposlenikVM) l.get(0);
 		return vm;
 	}
 }
