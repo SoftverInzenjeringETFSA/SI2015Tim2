@@ -3,7 +3,9 @@ package tim12.si.app.godisnji_odmori.Controller;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -72,6 +74,7 @@ public class OdsustvoController {
 		
 		int maxBrojDana = sc.dajSektorPoNazivuBaza(sektor).getMax_broj_odsutnih();
 		ArrayList<Date> ld = new ArrayList<Date>();
+		ArrayList<Date> listaDatuma = new ArrayList<Date>();
 		Transaction t = session.beginTransaction();
 		
 		String hql = "Select o.datum "
@@ -88,9 +91,41 @@ public class OdsustvoController {
 		for (int i=0; i<l.size(); i++)
 				ld.add((Date) l.get(i));
 		
+		Map<Date,Integer> datumi = new Hashtable<Date, Integer>();
+		
+		for(int i=0;i<ld.size();i++){
+			
+			if(!datumi.containsKey(ld.get(i))){
+				
+				datumi.put(ld.get(i), 1);
+				
+			}
+			else {
+				
+				datumi.put(ld.get(i), datumi.get(ld.get(i)) + 1);
+				
+			}
+			
+			
+		}
 		
 		
-		return ld;
+			
+		for(Date kljuc: datumi.keySet()){
+			
+			
+				if(datumi.get(kljuc)>=maxBrojDana)
+					listaDatuma.add(kljuc);
+				
+		}
+
+			
+		
+		
+
+		
+		
+		return listaDatuma;
 	}
 	
 	
