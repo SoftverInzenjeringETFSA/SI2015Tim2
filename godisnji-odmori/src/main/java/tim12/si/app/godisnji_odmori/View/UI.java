@@ -7,6 +7,7 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import org.hibernate.Session;
 
@@ -147,9 +148,11 @@ public class UI {
 				provjeriUserIPass();
 			}
 		});
+		
+		
 		btnLogin.setBounds(183, 170, 89, 23);
 		frmLogin.getContentPane().add(btnLogin);
-		
+		SwingUtilities.getRootPane(btnLogin).setDefaultButton(btnLogin);
 		lblSolutionsi = new JLabel("Solution");
 		lblSolutionsi.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 40));
 		lblSolutionsi.setForeground(new Color(128, 0, 0));

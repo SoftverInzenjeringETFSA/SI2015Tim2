@@ -14,6 +14,15 @@ public class Sektor implements java.io.Serializable {
 	private String opis;
 	
 	public Sektor() {}
+	
+	public Sektor(String naziv, int g_osnivanja, int br_uposlenih, int max_broj, String opis)
+	{
+		this.naziv = naziv;
+		this.godina_osnivanja= g_osnivanja;
+		this.broj_uposlenih= br_uposlenih;
+		this.max_broj_odsutnih= max_broj;
+		this.opis= opis;
+	}
 
 	public long getSektor_id()
 	{

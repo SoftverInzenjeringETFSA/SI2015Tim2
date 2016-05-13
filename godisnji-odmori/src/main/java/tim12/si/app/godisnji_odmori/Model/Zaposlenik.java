@@ -25,7 +25,7 @@ public class Zaposlenik implements java.io.Serializable {
 	private Boolean privilegija;
 	public static List<Zaposlenik> listaZaposlenika= new ArrayList<Zaposlenik>();
 	public Zaposlenik(){};
-	public Zaposlenik(String ime2, String prezime2, int sectorID, Date datumRodjenja, String email2,String adresaStanovanja, String telefon2,
+	public Zaposlenik(String ime2, String prezime2, long sectorID, Date datumRodjenja, String email2,String adresaStanovanja, String telefon2,
 			int brojDanaGodisnje, Boolean privilegija2) {
 		this.ime=ime2;
 		this.prezime=prezime2;
