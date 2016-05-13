@@ -49,6 +49,7 @@ import java.io.InputStream;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 
+import tim12.si.app.godisnji_odmori.Singleton;
 import tim12.si.app.godisnji_odmori.ZaposlenikNotFound;
 import tim12.si.app.godisnji_odmori.Controller.ZahtjevController;
 import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
@@ -127,8 +128,8 @@ public class ManagementMainWindow {
 			//UI.SetUsername("dbabahmeto1");
 			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 			ZaposlenikController zc = new ZaposlenikController(sess);
-			String varij = UI.DajUsername();
-			ZaposlenikBrDana zbd = zc.DajZaposlenikViewModel(UI.DajUsername());
+			String varij = Singleton.getInstance().getUsername();
+			ZaposlenikBrDana zbd = zc.DajZaposlenikViewModel(Singleton.getInstance().getUsername());
 			System.out.println(zbd.getZaposlenikIme());
 			System.out.println(zbd.getZaposlenikPrezime());
 			lblMujoMuji.setText(zbd.getZaposlenikIme() + " " + zbd.getZaposlenikPrezime());
@@ -153,7 +154,7 @@ public class ManagementMainWindow {
 			if (er.getMessage() != null )
 			JOptionPane.showMessageDialog(frame, er.getMessage(),
 					"Greška", JOptionPane.INFORMATION_MESSAGE);
-			else JOptionPane.showMessageDialog(frame, "Korisnik sa username: " + UI.DajUsername() + " ne postoji.",
+			else JOptionPane.showMessageDialog(frame, "Korisnik sa username: " + Singleton.getInstance().getUsername() + " ne postoji.",
 					"Greška", JOptionPane.INFORMATION_MESSAGE);
 
 		} finally {

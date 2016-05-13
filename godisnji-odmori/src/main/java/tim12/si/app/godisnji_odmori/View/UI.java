@@ -1,5 +1,5 @@
 package tim12.si.app.godisnji_odmori.View;
-
+import tim12.si.app.godisnji_odmori.*;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -11,6 +11,7 @@ import javax.swing.SwingUtilities;
 
 import org.hibernate.Session;
 
+import tim12.si.app.godisnji_odmori.Singleton;
 import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikAccountVM;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
@@ -35,19 +36,10 @@ public class UI {
 	private JLabel lblSi;
 	private JDialog frame;
 	//kako bi znali koji je user logovan
-	public static String username;
+	
 	Session sess = null;
 	
-	public static String DajUsername()
-	{
-		return username;
-	}
-	//samo privremeno
-	public static void SetUsername(String temp)
-	{
-		username = temp;
-		System.out.println(username);
-	}
+	
 	/**
 	 * Launch the application.
 	 */
@@ -80,15 +72,14 @@ public class UI {
 			//UI.SetUsername("dbabahmeto1");
 			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 			ZaposlenikController zc = new ZaposlenikController(sess);
-			SetUsername(usernameInput.getText());
-			 ZaposlenikAccountVM acc = zc.DajZaposlenikAccVM(UI.DajUsername(), passwordInput.getText());
+			Singleton.getInstance().setUsername(usernameInput.getText());
+			 ZaposlenikAccountVM acc = zc.DajZaposlenikAccVM(Singleton.getInstance().getUsername(), passwordInput.getText());
 			 
 			 if(acc.getPrivilegija()==true)
 			 {
 				 //otvori manager formu
 				 ManagementMainWindow mw = new ManagementMainWindow();
 				 mw.Management();
-				 //mw.provjeriUsera();
 			 }
 			 else
 			 {

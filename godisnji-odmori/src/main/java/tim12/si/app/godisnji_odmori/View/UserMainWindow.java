@@ -35,6 +35,7 @@ import javax.swing.JPasswordField;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
+import tim12.si.app.godisnji_odmori.Singleton;
 import tim12.si.app.godisnji_odmori.ZaposlenikNotFound;
 import tim12.si.app.godisnji_odmori.Controller.ZahtjevController;
 import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
@@ -95,7 +96,7 @@ public class UserMainWindow {
 		try{
 		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 		ZaposlenikController zc = new ZaposlenikController(sess);
-		ZaposlenikVM zvm = zc.DajZaposlenikoveInformacije(UI.DajUsername());
+		ZaposlenikVM zvm = zc.DajZaposlenikoveInformacije(Singleton.getInstance().getUsername());
 
 		//lblIDInfo.setText(zvm.getID());
 		lblIme.setText(zvm.getIme());
@@ -112,7 +113,7 @@ public class UserMainWindow {
 			if (er.getMessage() != null )
 			JOptionPane.showMessageDialog(frame, er.getMessage(),
 					"Greška", JOptionPane.INFORMATION_MESSAGE);
-			else JOptionPane.showMessageDialog(frame, "Korisnik sa username: " + UI.DajUsername() + " ne postoji.",
+			else JOptionPane.showMessageDialog(frame, "Korisnik sa username: " + Singleton.getInstance().getUsername() + " ne postoji.",
 					"Greška", JOptionPane.INFORMATION_MESSAGE);
 
 		} finally {
