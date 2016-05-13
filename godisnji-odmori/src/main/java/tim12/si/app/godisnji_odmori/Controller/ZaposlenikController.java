@@ -19,6 +19,7 @@ public class ZaposlenikController
 {
 	private Session session;
 	private ZaposlenikVM zvm;
+	private SektorController sc;
 	/**
 	 * 
 	 * @param zaposlenik
@@ -27,6 +28,7 @@ public class ZaposlenikController
 	public ZaposlenikController(Session session)
 	{
 		this.session = session;
+		sc = new SektorController();
 	};
 	//dodaje zaposlenika u listu
 	public void DodajZaposlenika() 
@@ -147,7 +149,7 @@ public class ZaposlenikController
 		Transaction t = session.beginTransaction();
 		
 		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana(s.naziv, z.ime, "+
-				"z.prezime, count(p.prisustvo_id), z.broj_dana_godisnjeg - (Select count(o1.odsustvo_id) FROM Zaposlenik z1, Odsustvo o1, TipOdsustva to WHERE z1.username = :username  AND z1.zaposlenik_id = o1.zaposlenik_id AND o1.tip = to.id_odsustva AND to.naziv = 'godišnji odmor')) "
+				"z.prezime, count(p.prisustvo_id), z.broj_dana_godisnjeg - (Select count(o1.odsustvo_id) FROM Zaposlenik z1, Odsustvo o1, TipOdsustva to WHERE z1.username = :username  AND z1.zaposlenik_id = o1.zaposlenik_id AND o1.tip = to.id_odsustva AND to.id_odsustva = 2)) "
 				+ "FROM Zaposlenik z, Sektor s, Prisustvo p "
 				+ "WHERE z.username = :username AND s.sektor_id = z.sektor_id AND z.zaposlenik_id = p.zaposlenik_id";
 		Query q = session.createQuery(hql);
@@ -209,6 +211,7 @@ public class ZaposlenikController
 	//Informacije o logovanom korisniku
 	public ZaposlenikVM DajZaposlenikoveInformacije(String username) throws ZaposlenikNotFound
 	{
+		
 		Transaction t = session.beginTransaction();
 		//ime, prezime, datum rodjenja,broj telefona i adresa
 		//,z.ime,z.prezime,z.email,z.datum_rodjenja,z.telefon,z.adresa_stanovanja
@@ -227,4 +230,23 @@ public class ZaposlenikController
 		ZaposlenikVM vm = (ZaposlenikVM) l.get(0);
 		return vm;
 	}
+	
+	// =======================================================================
+	// 									DAL
+	// =======================================================================
+	
+	
+	public String dajNazivSektoraZaposlenikaBaza(String username){
+			
+		int idSektora;
+		
+		Criteria criteria = session.createCriteria(Zaposlenik.class);
+		criteria.add(Restrictions.eq("username", username));
+		Zaposlenik z = (Zaposlenik) criteria.uniqueResult(); 
+		idSektora = (int)z.getSektor_id();
+		
+		return sc.dajNazivSektoraPoIdBaza(idSektora);
+		
+	}
+	
 }

@@ -3,20 +3,26 @@ package tim12.si.app.godisnji_odmori.Controller;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import tim12.si.app.godisnji_odmori.ViewModel.*;
 import tim12.si.app.godisnji_odmori.Model.*;
 
 public class OdsustvoController {
 	private Session session;
+	private SektorController sc;
 	public OdsustvoController(Session session)
 	{
 		this.session = session;
+		sc = new SektorController();
 	}
 	/**
 	 * 
@@ -65,7 +71,13 @@ public class OdsustvoController {
 	}
 
 	public ArrayList<Date> dajSvaOdsustva(String sektor) {
+		
+		System.out.println("Dosooo");
+		System.out.println(sektor);
+
+		int maxBrojDana = sc.dajSektorPoNazivuBaza(sektor).getMax_broj_odsutnih();
 		ArrayList<Date> ld = new ArrayList<Date>();
+		ArrayList<Date> listaDatuma = new ArrayList<Date>();
 		Transaction t = session.beginTransaction();
 		
 		String hql = "Select o.datum "
@@ -82,8 +94,50 @@ public class OdsustvoController {
 		for (int i=0; i<l.size(); i++)
 				ld.add((Date) l.get(i));
 		
-		return ld;
+		Map<Date,Integer> datumi = new Hashtable<Date, Integer>();
+		
+		for(int i=0;i<ld.size();i++){
+			
+			if(!datumi.containsKey(ld.get(i))){
+				
+				datumi.put(ld.get(i), 1);
+				
+			}
+			else {
+				
+				datumi.put(ld.get(i), datumi.get(ld.get(i)) + 1);
+				
+			}
+			
+			
+		}
+		
+		
+			
+		for(Date kljuc: datumi.keySet()){
+			
+			
+				if(datumi.get(kljuc)>=maxBrojDana)
+					listaDatuma.add(kljuc);
+				
+		}
+
+			
+		
+		
+
+		
+		
+		return listaDatuma;
 	}
+	
+	
+	// =======================================================================
+	// 									DAL
+	// =======================================================================
+	
+	
+	
 	
 	
 

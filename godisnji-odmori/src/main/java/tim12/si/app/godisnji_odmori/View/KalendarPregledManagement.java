@@ -76,12 +76,16 @@ public class KalendarPregledManagement {
 			    	try {
 			    	sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 			    	OdsustvoController oc = new OdsustvoController(sess);
+			    	KalendarController kc = new KalendarController();
+			    	
 			    	events = oc.dajSvaOdsustva((String)combobox.getSelectedItem());
-			    	calendar.getDayChooser().setEnabled(false);
+			    	calendar.getDayChooser().setEnabled(true);
+			    	
 			    	JPanel jpanel = calendar.getDayChooser().getDayPanel();
 					Component component[] = jpanel.getComponents();
+					
 					for(int i=0;i<component.length;i++)component[i].setBackground(c);
-			    	KalendarController kc = new KalendarController();
+			    	
 		            kc.postaviZauzete(events, calendar); 
 			    }
 			    	catch (Exception er) {

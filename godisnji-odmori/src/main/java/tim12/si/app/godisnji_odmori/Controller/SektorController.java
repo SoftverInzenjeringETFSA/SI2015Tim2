@@ -28,34 +28,23 @@ public class SektorController {
 	
 	
 	
-	public void dodajSektor(Sektor sektor) {
+	public void dodajSektor(SektorVM sektorVM) {
 		
+		 Sektor sektor = pretvoriUSektor(sektorVM);
 		 upisiUBazuSektorBaza(sektor);
 	}
 
 
-	public void modificirajSektor(SektorVM sektorVM) {
+	public void modificirajSektor(SektorVM sektorVM, int id) {
 		
 	          
-		Sektor sektorIzBaze = dajSektorPoNazivuBaza(sektorVM.naziv);
-        if (sektorIzBaze!=null) 
-        {
-        	
-        	
-	       	Sektor sektor = pretvoriUSektor(sektorVM);
-	       	sektor.setSektor_id(dajSektorPoNazivu(sektorVM.naziv).getSektor_id());
+			Sektor sektor = dajSektorPoIdBaza(id);
+	        sektor.setNaziv(sektorVM.naziv);
+	        sektor.setGodina_osnivanja(sektorVM.godina_osnivanja);
+	        sektor.setMax_broj_odsutnih(sektorVM.maxBrojOdsutnih);
+	        sektor.setOpis(sektorVM.opis);
 	       	modificirajSektorBaza(sektor);
-           
-        }
         
-        else
-        {
-       	
-        	 Sektor sektor = pretvoriUSektor(sektorVM);
-        	 dodajSektor(sektor);
-        	
-
-         }
 
 	}
 
@@ -134,7 +123,7 @@ public class SektorController {
 	public void modificirajSektorBaza (Sektor sektor){
 		
 		Transaction t = session.beginTransaction();
-	  	session.update(sektor);
+	  	session.saveOrUpdate(sektor);
 	  	t.commit();
 	}
 	
@@ -145,6 +134,24 @@ public class SektorController {
 		return  (Sektor) criteria.uniqueResult(); 
 	
 	}
+	
+	public Sektor dajSektorPoIdBaza (int id){
+		
+		Criteria criteria = session.createCriteria(Sektor.class);
+		criteria.add(Restrictions.eq("sektor_id", (long)id));
+		return  (Sektor) criteria.uniqueResult();
+		
+	}
+	
+	public String dajNazivSektoraPoIdBaza (int id){
+		
+		Criteria criteria = session.createCriteria(Sektor.class);
+		criteria.add(Restrictions.eq("sektor_id", (long)id));
+		Sektor s=  (Sektor) criteria.uniqueResult();
+		return s.getNaziv();
+		
+	}
+	
 	
 	public List<Sektor> dajSveSektoreBaza (){
 		
