@@ -42,7 +42,7 @@ public class KalendarController {
 		int year = cal.get(Calendar.YEAR);
 
 		JPanel jpanel = calendar.getDayChooser().getDayPanel();
-		calendar.getDayChooser().setEnabled(false);
+		calendar.getDayChooser().setEnabled(true);
 		Component component[] = jpanel.getComponents();
 		
 		

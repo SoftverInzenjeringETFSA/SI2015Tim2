@@ -12,9 +12,14 @@ import javax.swing.JList;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -37,6 +42,8 @@ import com.toedter.calendar.JDateChooser;
 
 import tim12.si.app.godisnji_odmori.Singleton;
 import tim12.si.app.godisnji_odmori.ZaposlenikNotFound;
+import tim12.si.app.godisnji_odmori.Controller.KalendarController;
+import tim12.si.app.godisnji_odmori.Controller.OdsustvoController;
 import tim12.si.app.godisnji_odmori.Controller.ZahtjevController;
 import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikAccountVM;
@@ -66,6 +73,9 @@ public class UserMainWindow {
 	private JPasswordField txtStaraSifra;
 	private JPasswordField txtNovaSifra;
 	private JPasswordField txtNovaSifraPotvrda;
+	private JCalendar calendar_1;
+	private JCalendar calendar_2;
+	private ArrayList<Date> events;
 	/**
 	 * Launch the application.
 	 */
@@ -140,7 +150,7 @@ public class UserMainWindow {
 		panel.setLayout(null);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("C:\\Users\\AyLLa\\workspace\\SolutionSI\\Slike\\Person.gif"));
+		label.setIcon(new ImageIcon("/boss2.png"));
 		label.setVerticalAlignment(SwingConstants.BOTTOM);
 		label.setBounds(10, 42, 128, 128);
 		panel.add(label);
@@ -386,6 +396,38 @@ public class UserMainWindow {
 		JButton btnRezervisiGodisnjiOdmor = new JButton("Rezerviši godišnji odmor");
 		btnRezervisiGodisnjiOdmor.setBounds(385, 367, 195, 23);
 		panel_1.add(btnRezervisiGodisnjiOdmor);
+		btnRezervisiGodisnjiOdmor.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				final Color c = calendar_1.getDayChooser().getDayPanel().getComponent(20).getBackground();
+		    	sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+
+				OdsustvoController oc = new OdsustvoController(sess);
+		    	KalendarController kc = new KalendarController();
+		    	ZaposlenikController zc = new ZaposlenikController(sess);
+		    	
+		    	events = oc.dajSvaOdsustva(zc.dajNazivSektoraZaposlenikaBaza(Singleton.getInstance().getUsername()));
+		    	calendar_1.getDayChooser().setEnabled(true);
+		    	
+		    	JPanel jpanel = calendar_1.getDayChooser().getDayPanel();
+				Component component[] = jpanel.getComponents();
+				
+				for(int i=0;i<component.length;i++)component[i].setBackground(c);
+				
+				calendar_2.getDayChooser().setEnabled(true);
+		    	
+		    	JPanel jpanel1 = calendar_2.getDayChooser().getDayPanel();
+				Component component1[] = jpanel1.getComponents();
+				
+				for(int i=0;i<component1.length;i++)component1[i].setBackground(c);
+				
+		    	kc.postaviZauzete(events, calendar_1);
+		    	kc.postaviZauzete(events, calendar_2);
+			
+			}
+		});
+		
 		
 		JPanel panel_8 = new JPanel();
 		panel_8.setBorder(new TitledBorder(null, "Vremenski interval", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -401,11 +443,11 @@ public class UserMainWindow {
 		label_21.setBounds(282, 39, 46, 14);
 		panel_8.add(label_21);
 		
-		JCalendar calendar_1 = new JCalendar();
+		calendar_1 = new JCalendar();
 		calendar_1.setBounds(30, 64, 198, 153);
 		panel_8.add(calendar_1);
 		
-		JCalendar calendar_2 = new JCalendar();
+		calendar_2 = new JCalendar();
 		calendar_2.setBounds(315, 64, 198, 153);
 		panel_8.add(calendar_2);
 		

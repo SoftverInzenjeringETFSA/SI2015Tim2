@@ -72,6 +72,9 @@ public class OdsustvoController {
 
 	public ArrayList<Date> dajSvaOdsustva(String sektor) {
 		
+		System.out.println("Dosooo");
+		System.out.println(sektor);
+
 		int maxBrojDana = sc.dajSektorPoNazivuBaza(sektor).getMax_broj_odsutnih();
 		ArrayList<Date> ld = new ArrayList<Date>();
 		ArrayList<Date> listaDatuma = new ArrayList<Date>();

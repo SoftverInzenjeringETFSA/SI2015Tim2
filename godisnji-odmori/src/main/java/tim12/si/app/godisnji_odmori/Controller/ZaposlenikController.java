@@ -19,6 +19,7 @@ public class ZaposlenikController
 {
 	private Session session;
 	private ZaposlenikVM zvm;
+	private SektorController sc;
 	/**
 	 * 
 	 * @param zaposlenik
@@ -27,6 +28,7 @@ public class ZaposlenikController
 	public ZaposlenikController(Session session)
 	{
 		this.session = session;
+		sc = new SektorController();
 	};
 	//dodaje zaposlenika u listu
 	public void DodajZaposlenika() 
@@ -209,6 +211,7 @@ public class ZaposlenikController
 	//Informacije o logovanom korisniku
 	public ZaposlenikVM DajZaposlenikoveInformacije(String username) throws ZaposlenikNotFound
 	{
+		
 		Transaction t = session.beginTransaction();
 		//ime, prezime, datum rodjenja,broj telefona i adresa
 		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikVM(z.ime,z.prezime,z.email,z.datum_rodjenja,z.telefon,z.adresa_stanovanja)"+
@@ -226,4 +229,23 @@ public class ZaposlenikController
 		ZaposlenikVM vm = (ZaposlenikVM) l.get(0);
 		return vm;
 	}
+	
+	// =======================================================================
+	// 									DAL
+	// =======================================================================
+	
+	
+	public String dajNazivSektoraZaposlenikaBaza(String username){
+			
+		int idSektora;
+		
+		Criteria criteria = session.createCriteria(Zaposlenik.class);
+		criteria.add(Restrictions.eq("username", username));
+		Zaposlenik z = (Zaposlenik) criteria.uniqueResult(); 
+		idSektora = (int)z.getSektor_id();
+		
+		return sc.dajNazivSektoraPoIdBaza(idSektora);
+		
+	}
+	
 }

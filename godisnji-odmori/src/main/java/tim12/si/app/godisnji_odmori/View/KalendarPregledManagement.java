@@ -79,7 +79,7 @@ public class KalendarPregledManagement {
 			    	KalendarController kc = new KalendarController();
 			    	
 			    	events = oc.dajSvaOdsustva((String)combobox.getSelectedItem());
-			    	calendar.getDayChooser().setEnabled(false);
+			    	calendar.getDayChooser().setEnabled(true);
 			    	
 			    	JPanel jpanel = calendar.getDayChooser().getDayPanel();
 					Component component[] = jpanel.getComponents();
