@@ -12,6 +12,7 @@ import javax.swing.JList;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.Color;
@@ -44,6 +45,8 @@ import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikVM;
 
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class UserMainWindow {
 
@@ -69,6 +72,7 @@ public class UserMainWindow {
 	 * Launch the application.
 	 */
 	Session sess = null;
+
 	public static void User() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -86,9 +90,10 @@ public class UserMainWindow {
 	 * Create the application.
 	 * @throws ZaposlenikNotFound 
 	 */
+
 	public UserMainWindow() throws ZaposlenikNotFound {
 		initialize();
-		PrikaziInfo();
+		//PrikaziInfo();
 	}
 	public void PrikaziInfo() throws ZaposlenikNotFound
 	{
@@ -100,7 +105,8 @@ public class UserMainWindow {
 		//lblIDInfo.setText(zvm.getID());
 		lblIme.setText(zvm.getIme());
 		lblPrezime.setText(zvm.getPrezime());
-		txtEmail.setText(zvm.getEmail());
+		//txtEmail.setText(zvm.getEmail());
+		txtEmail.setText("maerseda mail");
 		txtBrojTelefona.setText(zvm.getTelefon());
 		lblAdresaStanovanja.setText(zvm.getAdresaStanovanja());
 		//lblDatumRodjenja.setToolTipText(zvm.getDatumRodjenja());
@@ -123,8 +129,10 @@ public class UserMainWindow {
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws ZaposlenikNotFound 
 	 */
-	private void initialize() {
+	private void initialize() throws ZaposlenikNotFound {
+
 		frmSolutionsi = new JFrame();
 		frmSolutionsi.setTitle("SolutionSI");
 		frmSolutionsi.getContentPane().setLayout(null);
@@ -209,6 +217,10 @@ public class UserMainWindow {
 		//INFORMACIJE//
 		
 		//--osnovni podaci--
+		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+		ZaposlenikController zc = new ZaposlenikController(sess);
+		ZaposlenikVM zvm = zc.DajZaposlenikoveInformacije(UI.DajUsername());
+		
 		JPanel panel_10 = new JPanel();
 		panel_10.setBorder(new TitledBorder(null, "Osnovni podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_10.setBounds(10, 11, 285, 159);
@@ -231,19 +243,19 @@ public class UserMainWindow {
 		label_27.setBounds(10, 113, 120, 14);
 		panel_10.add(label_27);
 		
-		JLabel lblIDInfo = new JLabel("");
+		JLabel lblIDInfo = new JLabel();
 		lblIDInfo.setBounds(184, 40, 91, 14);
 		panel_10.add(lblIDInfo);
 		
-		JLabel lblIme = new JLabel();
+		JLabel lblIme = new JLabel(zvm.getIme());
 		lblIme.setBounds(184, 64, 91, 14);
 		panel_10.add(lblIme);
 		
-		JLabel lblPrezime = new JLabel("");
+		JLabel lblPrezime = new JLabel(zvm.prezime);
 		lblPrezime.setBounds(184, 88, 91, 14);
 		panel_10.add(lblPrezime);
-		
-		JLabel lblDatumRodjenja = new JLabel("");
+		//String strDate = DateFormat.getDateInstance().format(zvm.datumRodjenja);
+		JLabel lblDatumRodjenja = new JLabel();
 		lblDatumRodjenja.setBounds(184, 113, 91, 14);
 		panel_10.add(lblDatumRodjenja);
 		
@@ -263,12 +275,12 @@ public class UserMainWindow {
 		lblBrojTelefona.setBounds(10, 52, 98, 14);
 		panel_11.add(lblBrojTelefona);
 		
-		txtEmail = new JTextField();
+		txtEmail = new JTextField(zvm.getEmail());
 		txtEmail.setBounds(127, 21, 148, 20);
 		panel_11.add(txtEmail);
 		txtEmail.setColumns(10);
 		
-		txtBrojTelefona = new JTextField();
+		txtBrojTelefona = new JTextField(zvm.getTelefon());
 		txtBrojTelefona.setBounds(127, 46, 148, 20);
 		panel_11.add(txtBrojTelefona);
 		txtBrojTelefona.setColumns(10);
@@ -277,7 +289,7 @@ public class UserMainWindow {
 		lblAdresa.setBounds(10, 77, 46, 14);
 		panel_11.add(lblAdresa);
 		
-		JLabel lblAdresaStanovanja = new JLabel("");
+		JLabel lblAdresaStanovanja = new JLabel(zvm.getAdresaStanovanja());
 		lblAdresaStanovanja.setBounds(127, 77, 148, 14);
 		panel_11.add(lblAdresaStanovanja);
 		
@@ -362,6 +374,17 @@ public class UserMainWindow {
 		panel_9.add(btnSpasiPromjene);
 		
 		JButton btnOdbaciPromjene = new JButton("Odbaci promjene");
+		btnOdbaciPromjene.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					initialize();
+				} catch (ZaposlenikNotFound e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		});
 		btnOdbaciPromjene.setBounds(469, 380, 142, 23);
 		panel_9.add(btnOdbaciPromjene);
 		

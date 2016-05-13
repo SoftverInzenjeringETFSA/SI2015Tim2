@@ -211,6 +211,7 @@ public class ZaposlenikController
 	{
 		Transaction t = session.beginTransaction();
 		//ime, prezime, datum rodjenja,broj telefona i adresa
+		//,z.ime,z.prezime,z.email,z.datum_rodjenja,z.telefon,z.adresa_stanovanja
 		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikVM(z.ime,z.prezime,z.email,z.datum_rodjenja,z.telefon,z.adresa_stanovanja)"+
 		"FROM Zaposlenik z WHERE z.username = :username";
 		
