@@ -13,6 +13,7 @@ import org.hibernate.Session;
 import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikAccountVM;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
+import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikVM;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -92,7 +93,10 @@ public class UI {
 			 {
 				 //otvori user formu
 				 UserMainWindow uw = new UserMainWindow();
-				 //uw.User();
+				 ZaposlenikVM zvm= zc.DajZaposlenikoveInformacije(acc.getUsername());
+				 //uw.ProslijediInfo(zvm);
+				 //String korisnik=acc.getUsername();	 
+				 uw.User();
 				 
 			 }
 			

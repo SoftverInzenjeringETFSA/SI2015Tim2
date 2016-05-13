@@ -56,13 +56,13 @@ public class SektoriTest extends TestCase {
 		z3.ime = "Fahrudin";
 		z3.prezime= "Brbutovic";
 		z3.brojDanaGodisnje = 30;
-		z3.sektor = "Sektor1";
+		//z3.sektor = "Sektor1";
 		
 		z4 = new ZaposlenikVM();
 		z4.ime = "Dino";
 		z4.prezime= "Ahmetovic";
 		z4.brojDanaGodisnje = 30;
-		z4.sektor = "Sektor1";
+		//z4.sektor = "Sektor1";
 		
 		
 		z2 = new Zaposlenik();
