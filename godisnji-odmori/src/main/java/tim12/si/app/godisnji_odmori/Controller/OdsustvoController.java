@@ -5,18 +5,22 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import tim12.si.app.godisnji_odmori.ViewModel.*;
 import tim12.si.app.godisnji_odmori.Model.*;
 
 public class OdsustvoController {
 	private Session session;
+	private SektorController sc;
 	public OdsustvoController(Session session)
 	{
 		this.session = session;
+		sc = new SektorController();
 	}
 	/**
 	 * 
@@ -65,6 +69,8 @@ public class OdsustvoController {
 	}
 
 	public ArrayList<Date> dajSvaOdsustva(String sektor) {
+		
+		int maxBrojDana = sc.dajSektorPoNazivuBaza(sektor).getMax_broj_odsutnih();
 		ArrayList<Date> ld = new ArrayList<Date>();
 		Transaction t = session.beginTransaction();
 		
@@ -82,8 +88,18 @@ public class OdsustvoController {
 		for (int i=0; i<l.size(); i++)
 				ld.add((Date) l.get(i));
 		
+		
+		
 		return ld;
 	}
+	
+	
+	// =======================================================================
+	// 									DAL
+	// =======================================================================
+	
+	
+	
 	
 	
 

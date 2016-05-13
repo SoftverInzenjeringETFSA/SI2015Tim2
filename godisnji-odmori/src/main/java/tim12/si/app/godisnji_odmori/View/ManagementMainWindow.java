@@ -83,8 +83,8 @@ public class ManagementMainWindow {
 	private JLabel label_9;
 	private JScrollPane scrollPane_3;
 	JList<String> list_1;
-	
 	JYearChooser spinner_1;
+	JYearChooser spinner_3;
 
 	//static final Logger logger = Logger.getLogger(ManagementMainWindow.class);
 
@@ -578,6 +578,12 @@ public class ManagementMainWindow {
 		spinner_1.setBounds(192, 72, 147, 20);
 		panel_9.add(spinner_1);
 		
+		spinner_3 = new JYearChooser();
+		spinner_3.setBounds(192, 72, 147, 20);
+		spinner_3.setValue(0);
+		spinner_3.setVisible(false);
+		panel_9.add(spinner_3);
+		
 		JButton btnDodajNoviSektor = new JButton("Dodaj sektor");
 		btnDodajNoviSektor.setBounds(59, 356, 124, 23);
 		panel_7.add(btnDodajNoviSektor);
@@ -585,12 +591,14 @@ public class ManagementMainWindow {
 			 
             public void actionPerformed(ActionEvent e)
             {
-            	txtEkonomskiSektor.setText("");
-            	txtrEkonomskiSektorSe.setText("");
-            	label_9.setText("0");
-            	spinner_1.setValue(0);
-            	spinner_2.setValue(0);
             	
+            	ocistiUnosSektora();
+            	if(!validirajUnosSektora())
+            		return;
+            	sC.dodajSektor(new SektorVM(txtEkonomskiSektor.getText(), spinner_1.getValue(),0,spinner_2.getValue().toString(),txtrEkonomskiSektorSe.getText()));
+            	osvjeziListuSektora();
+            	ocistiPolja();
+            	        	
         		
             	
             }
@@ -610,6 +618,7 @@ public class ManagementMainWindow {
             	txtrEkonomskiSektorSe.setText(sektor.getOpis());     	
             	spinner_1.setValue(sektor.getGodina_osnivanja());
             	spinner_2.setValue(sektor.getMax_broj_odsutnih());
+            	spinner_3.setValue((int)sektor.getSektor_id());
             	StringBuilder sb = new StringBuilder();
             	sb.append("");
             	sb.append(sektor.getBroj_uposlenih());
@@ -638,6 +647,7 @@ public class ManagementMainWindow {
 					String naziv = list_1.getSelectedValue();
 				    sC.obrisiSektor(naziv);
 				    osvjeziListuSektora();
+				    ocistiPolja();
 				}
 				
 			}
@@ -652,11 +662,19 @@ public class ManagementMainWindow {
 			
             public void actionPerformed(ActionEvent e)
             {   
+            	
             	ocistiUnosSektora();
             	if(!validirajUnosSektora())
             		return;
-            	sC.modificirajSektor(new SektorVM(txtEkonomskiSektor.getText(), spinner_1.getValue(),0,spinner_2.getValue().toString(),txtrEkonomskiSektorSe.getText()));
+            	System.out.println(spinner_3.getValue());
+            	if(spinner_3.getValue()==1){
+            		
+            		JOptionPane.showMessageDialog (null, "Ako zelite dodati novi sektor pritisnite dugme Dodaj sektor", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
+            		return;
+            	}
+            	sC.modificirajSektor(new SektorVM(txtEkonomskiSektor.getText(), spinner_1.getValue(),0,spinner_2.getValue().toString(),txtrEkonomskiSektorSe.getText()), spinner_3.getValue());
             	osvjeziListuSektora();
+            	ocistiPolja();
             }
         });
 		
@@ -765,5 +783,15 @@ public void ocistiUnosSektora(){
 	  lblNewLabel_3.setText("");
 	  
 }
+
+	public void ocistiPolja (){
+		
+		txtEkonomskiSektor.setText("");
+    	txtrEkonomskiSektorSe.setText("");
+    	label_9.setText("0");
+    	spinner_1.setValue(2016);
+    	spinner_2.setValue(0);
+    	spinner_3.setValue(0);
+	}
 }
 

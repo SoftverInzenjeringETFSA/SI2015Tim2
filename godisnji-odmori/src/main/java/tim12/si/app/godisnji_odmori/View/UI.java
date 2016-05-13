@@ -81,10 +81,12 @@ public class UI {
 			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 			ZaposlenikController zc = new ZaposlenikController(sess);
 			SetUsername(usernameInput.getText());
+			
 			 ZaposlenikAccountVM acc = zc.DajZaposlenikAccVM(UI.DajUsername(), passwordInput.getText());
 			 
 			 if(acc.getPrivilegija()==true)
 			 {
+			
 				 //otvori manager formu
 				 ManagementMainWindow mw = new ManagementMainWindow();
 				 mw.Management();
