@@ -1,5 +1,5 @@
 package tim12.si.app.godisnji_odmori.View;
-import tim12.si.app.godisnji_odmori.*;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -73,13 +73,16 @@ public class UI {
 			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 			ZaposlenikController zc = new ZaposlenikController(sess);
 			Singleton.getInstance().setUsername(usernameInput.getText());
+			
 			 ZaposlenikAccountVM acc = zc.DajZaposlenikAccVM(Singleton.getInstance().getUsername(), passwordInput.getText());
 			 
 			 if(acc.getPrivilegija()==true)
 			 {
+			
 				 //otvori manager formu
 				 ManagementMainWindow mw = new ManagementMainWindow();
 				 mw.Management();
+				 //mw.provjeriUsera();
 			 }
 			 else
 			 {

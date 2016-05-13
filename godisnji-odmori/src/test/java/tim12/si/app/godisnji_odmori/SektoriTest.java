@@ -104,29 +104,20 @@ public class SektoriTest extends TestCase {
 
 		int brojSektora = sc.dajBrojSektora();
 		System.out.println(brojSektora);
-		sc.dodajSektor(s);
-		sc.dodajSektor(s2);
+		sc.dodajSektor(sm);
 		System.out.println(brojSektora);
 
-		assertEquals(sc.dajBrojSektora(), brojSektora+2);
+		assertEquals(sc.dajBrojSektora(), brojSektora+1);
 
           }
 	
-	@Test
-	public void testmodificirajSektorNovi(){
-		
-		int brojSektora = sc.dajBrojSektora();
-		sc.modificirajSektor(sm);
-		assertEquals(sc.dajBrojSektora(), brojSektora+1);
-		
-
-          }
+	
 	
 	@Test
 	public void testmodificirajSektor(){
 		
 		sm.opis="Noviiii opiiiss TEST";
-		sc.modificirajSektor(sm);
+		sc.modificirajSektor(sm,(int)sc.dajSektorPoNazivuBaza(sm.naziv).getSektor_id());
 		assertEquals(sc.dajSektorPoNazivuBaza(sm.naziv).getOpis(),"Noviiii opiiiss TEST");
 		
 
