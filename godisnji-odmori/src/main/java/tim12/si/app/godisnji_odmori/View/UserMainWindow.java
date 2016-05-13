@@ -92,6 +92,7 @@ public class UserMainWindow {
 			}
 		});
 	}
+	
 
 	/**
 	 * Create the application.
@@ -446,10 +447,14 @@ public class UserMainWindow {
 		calendar_1 = new JCalendar();
 		calendar_1.setBounds(30, 64, 198, 153);
 		panel_8.add(calendar_1);
+		calendar_1.getMonthChooser().getSpinner().setEnabled(false);
+		calendar_1.getMonthChooser().getComboBox().setEnabled(true);
 		
 		calendar_2 = new JCalendar();
 		calendar_2.setBounds(315, 64, 198, 153);
 		panel_8.add(calendar_2);
+		calendar_2.getMonthChooser().getSpinner().setEnabled(false);
+		calendar_2.getMonthChooser().getComboBox().setEnabled(true);
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Bolovanje", null, panel_2, null);
