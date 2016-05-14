@@ -96,7 +96,6 @@ public class KalendarController {
 		
 		year = Integer.parseInt(godina);
 		
-		System.out.println(year);
 
 		JPanel jpanel = calendar.getDayChooser().getDayPanel();
 		calendar.getDayChooser().setEnabled(true);
@@ -125,6 +124,8 @@ public class KalendarController {
 
 		        //this value will differ from each month due to first days of each month
 		         component[ day1 + offset + 6].setBackground(Color.red); 
+		       /*  component[ day1 + offset + 6].setEnabled(false);
+		         component[ day1 + offset + 6].enable(false);*/
 		    }
 		}
 		

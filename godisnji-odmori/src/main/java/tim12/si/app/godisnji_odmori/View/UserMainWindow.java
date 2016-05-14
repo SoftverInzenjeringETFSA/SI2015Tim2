@@ -158,6 +158,26 @@ public class UserMainWindow {
 		lblDatumRodjenja.setText(zvm.getDatumRodjenja().toString());
 		
 		
+		
+		
+		
+		
+		
+		final Color c = calendar_1.getDayChooser().getDayPanel().getComponent(20).getBackground();
+    	sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+
+		
+    	
+    	events = oc.dajSvaOdsustva(zc.dajNazivSektoraZaposlenikaBaza(Singleton.getInstance().getUsername()));
+    	
+    	
+    	
+    	kc.postaviZauzete(events, calendar_1);
+    	kc.postaviZauzete(events, calendar_2);
+        calendar_2.getDayChooser().setEnabled(true);
+		calendar_1.getDayChooser().setEnabled(true);
+		
+		
 		}
 		catch (Exception er) {
 			
@@ -516,30 +536,7 @@ public class UserMainWindow {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				final Color c = calendar_1.getDayChooser().getDayPanel().getComponent(20).getBackground();
-		    	sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
-
-				OdsustvoController oc = new OdsustvoController(sess);
-		    	KalendarController kc = new KalendarController();
-		    	ZaposlenikController zc = new ZaposlenikController(sess);
-		    	
-		    	events = oc.dajSvaOdsustva(zc.dajNazivSektoraZaposlenikaBaza(Singleton.getInstance().getUsername()));
-		    	calendar_1.getDayChooser().setEnabled(true);
-		    	
-		    	JPanel jpanel = calendar_1.getDayChooser().getDayPanel();
-				Component component[] = jpanel.getComponents();
 				
-				for(int i=0;i<component.length;i++)component[i].setBackground(c);
-				
-				calendar_2.getDayChooser().setEnabled(true);
-		    	
-		    	JPanel jpanel1 = calendar_2.getDayChooser().getDayPanel();
-				Component component1[] = jpanel1.getComponents();
-				
-				for(int i=0;i<component1.length;i++)component1[i].setBackground(c);
-				
-		    	kc.postaviZauzete(events, calendar_1);
-		    	kc.postaviZauzete(events, calendar_2);
 			
 			}
 		});
