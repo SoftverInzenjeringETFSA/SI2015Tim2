@@ -150,7 +150,7 @@ public class ZaposlenikController
 		Transaction t = session.beginTransaction();
 		
 		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana(s.naziv, z.ime, "+
-				"z.prezime, count(p.prisustvo_id), z.broj_dana_godisnjeg - (Select count(o1.odsustvo_id) FROM Zaposlenik z1, Odsustvo o1, TipOdsustva to WHERE z1.username = :username  AND z1.zaposlenik_id = o1.zaposlenik_id AND o1.tip = to.id_odsustva AND to.id_odsustva = 2)) "
+				"z.prezime, count(p.prisustvo_id), z.broj_dana_godisnjeg - (Select count(o1.odsustvo_id) FROM Zaposlenik z1, Odsustvo o1, TipOdsustva to WHERE z1.username = :username  AND z1.zaposlenik_id = o1.zaposlenik_id AND o1.tip = to.id_odsustva AND to.id_odsustva = 1)) "
 				+ "FROM Zaposlenik z, Sektor s, Prisustvo p "
 				+ "WHERE z.username = :username AND s.sektor_id = z.sektor_id AND z.zaposlenik_id = p.zaposlenik_id";
 		Query q = session.createQuery(hql);
@@ -188,6 +188,8 @@ public class ZaposlenikController
 			throw new ZaposlenikNotFound("Zaposlenik s username-om: " + username + " nije pronadjen.");
 			
 		ZaposlenikBrDana vm = (ZaposlenikBrDana) l.get(0);
+		
+		
 		return vm;
 	}
 	
@@ -271,6 +273,18 @@ public class ZaposlenikController
 		idSektora = (int)z.getSektor_id();
 		
 		return sc.dajNazivSektoraPoIdBaza(idSektora);
+		
+	}
+	
+	public Boolean uporediSifruBaza(String username,String sifra){
+		
+	
+		
+		Criteria criteria = session.createCriteria(Zaposlenik.class);
+		criteria.add(Restrictions.eq("username", username));
+		Zaposlenik z = (Zaposlenik) criteria.uniqueResult(); 
+		
+		return(z.getPassword().equals(sifra));
 		
 	}
 	
