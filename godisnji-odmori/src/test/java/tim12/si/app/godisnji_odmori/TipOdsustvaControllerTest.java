@@ -2,6 +2,7 @@ package tim12.si.app.godisnji_odmori;
 
 import static org.junit.Assert.*;
 
+import org.hibernate.Session;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,11 +14,12 @@ public class TipOdsustvaControllerTest {
 	
 	TipOdsustvaController tzc;
 	TipOdsustvaVM tovm;
+	Session sess = null;
 	
 	@Before 
 	public void postavi()
 	{
-		tzc = new TipOdsustvaController();
+		tzc = new TipOdsustvaController(sess);
 		tovm = new TipOdsustvaVM();
 	}
 

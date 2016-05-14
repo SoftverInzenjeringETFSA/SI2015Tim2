@@ -79,8 +79,8 @@ public class OdsustvoController {
 		Transaction t = session.beginTransaction();
 		
 		String hql = "Select o.datum "
-				+ "FROM Odsustvo o, Zaposlenik z, Sektor s "
-				+ "WHERE o.zaposlenik_id = z.zaposlenik_id AND z.sektor_id = s.sektor_id AND s.naziv = :sektor ";
+				+ "FROM Odsustvo o, Zaposlenik z, Sektor s, TipOdsustva to "
+				+ "WHERE o.zaposlenik_id = z.zaposlenik_id AND z.sektor_id = s.sektor_id AND s.naziv = :sektor AND o.tip = to.id_odsustva AND to.id_odsustva = 1 ";
 				
 		Query q = session.createQuery(hql);
 		q.setString("sektor", sektor);

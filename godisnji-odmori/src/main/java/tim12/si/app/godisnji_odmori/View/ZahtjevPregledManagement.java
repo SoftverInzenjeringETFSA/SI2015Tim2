@@ -40,9 +40,11 @@ import com.toedter.calendar.JCalendar;
 
 import tim12.si.app.godisnji_odmori.Controller.KalendarController;
 import tim12.si.app.godisnji_odmori.Controller.OdsustvoController;
+import tim12.si.app.godisnji_odmori.Controller.TipOdsustvaController;
 //import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import tim12.si.app.godisnji_odmori.Controller.ZahtjevController;
 import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
+import tim12.si.app.godisnji_odmori.Model.TipOdsustva;
 import tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
 
@@ -66,11 +68,11 @@ public class ZahtjevPregledManagement {
 	private JTextPane txtpnUmoranOdDosade;
 	private JDialog frame;
 	private JComboBox jcb;
-	
 	private Long id_zahtjeva;
 	private ZaposlenikBrDana zbr;
 	private ZahtjevVM zvm;
 	private ArrayList<Date> events;
+	private JLabel posjeduje_labela;
 
 	/**
 	 * Launch the application.
@@ -119,8 +121,11 @@ public class ZahtjevPregledManagement {
 			String strDate2 = dateFormat.format(zvm.getZavrsetakOdsustva());
 			label_10.setText(strDate);
 			label_11.setText(strDate2);
-			lblGodisnjiOdmor.setText(zvm.getTipOdsustva().toString()); 
+			TipOdsustvaController toc = new TipOdsustvaController(sess);
+			String nazivTipa = toc.dajImeTipaOdsustva(zvm.getTipOdsustva());
+			lblGodisnjiOdmor.setText(nazivTipa); 
 			
+			posjeduje_labela.setText(zvm.getNalaz()?"Da":"Ne");
 			//za kalendar
 			OdsustvoController oc = new OdsustvoController(sess);
 			events = oc.dajSvaOdsustva(sektor);
@@ -150,12 +155,6 @@ public class ZahtjevPregledManagement {
 		            kc.postaviZauzete(events, calendar);
 		        }
 		    });
-			
-			
-			
-			
-			
-			
 			
 			
 		}
@@ -299,10 +298,6 @@ public class ZahtjevPregledManagement {
 		lblTip.setBounds(10, 72, 46, 14);
 		panel_1.add(lblTip);
 		
-		JCheckBox chckbxPosjedujeDokumente = new JCheckBox("Posjeduje dokumente");
-		chckbxPosjedujeDokumente.setBounds(10, 184, 162, 23);
-		panel_1.add(chckbxPosjedujeDokumente);
-		
 		JLabel lblRazlog = new JLabel("Razlog:");
 		lblRazlog.setBounds(10, 97, 46, 14);
 		panel_1.add(lblRazlog);
@@ -324,6 +319,14 @@ public class ZahtjevPregledManagement {
 		lblGodisnjiOdmor = new JLabel("Godisnji odmor");
 		lblGodisnjiOdmor.setBounds(71, 71, 154, 14);
 		panel_1.add(lblGodisnjiOdmor);
+		
+		JLabel lblPosjedujeDokumente = new JLabel("Posjeduje dokumente: ");
+		lblPosjedujeDokumente.setBounds(10, 202, 132, 14);
+		panel_1.add(lblPosjedujeDokumente);
+		
+		 posjeduje_labela = new JLabel("");
+		posjeduje_labela.setBounds(162, 202, 46, 14);
+		panel_1.add(posjeduje_labela);
 		
 		calendar = new JCalendar();
 		calendar.setBounds(581, 33, 233, 261);
