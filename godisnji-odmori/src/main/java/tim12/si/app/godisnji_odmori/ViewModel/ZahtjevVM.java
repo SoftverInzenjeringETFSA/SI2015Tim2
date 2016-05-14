@@ -16,7 +16,14 @@ public class ZahtjevVM {
 	private Long brojRadnihDana;
 	private Long idZahtjeva;
 	private String usernamePodnosioca;
+	private Boolean nalaz;
 	
+	public Boolean getNalaz() {
+		return nalaz;
+	}
+	public void setNalaz(Boolean nalaz) {
+		this.nalaz = nalaz;
+	}
 	public ZahtjevVM(String podnosilacIme, String podnosilacPrezime, String nazivSektora, Long idZahtjeva, String username /*Long brojRadnihDana*/ /*, Date pocetakOddsustva, Date zavrsetakOdsustva, String tipOdsustva, Boolean obradjen, Boolean odluka, String opis*/)
 	{
 		this.podnosilacIme = podnosilacIme;
@@ -25,12 +32,21 @@ public class ZahtjevVM {
 		this.idZahtjeva = idZahtjeva;
 		this.usernamePodnosioca = username;
 	}
-	public ZahtjevVM(Date pocetakOdsustva, Date zavrsetakOdsustva, Long tipOdsustva, String opis)
+	public ZahtjevVM(Date pocetakOdsustva, Date zavrsetakOdsustva, Long tipOdsustva, String opis, Boolean nalaz)
 	{
 		this.pocetakOdsustva = pocetakOdsustva;
 		this.zavrsetakOdsustva = zavrsetakOdsustva;
 		this.tipOdsustva = tipOdsustva;
 		this.opis = opis;
+		this.nalaz = nalaz;
+	}
+	public ZahtjevVM(Date pocetakOdsustva, Date zavrsetakOdsustva, long tipOdsustva, String opis, Boolean nalaz) {
+		// TODO Auto-generated constructor stub
+		this.pocetakOdsustva = pocetakOdsustva;
+		this.zavrsetakOdsustva = zavrsetakOdsustva;
+		this.tipOdsustva = tipOdsustva;
+		this.opis = opis;
+		this.nalaz = nalaz;
 	}
 	public String getPodnosilacIme() {
 		return podnosilacIme;

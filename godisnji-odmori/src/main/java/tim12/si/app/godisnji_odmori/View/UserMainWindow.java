@@ -47,6 +47,7 @@ import tim12.si.app.godisnji_odmori.Controller.OdsustvoController;
 import tim12.si.app.godisnji_odmori.Controller.ZahtjevController;
 import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
 import tim12.si.app.godisnji_odmori.Model.Zaposlenik;
+import tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikAccountVM;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikVM;
@@ -83,7 +84,13 @@ public class UserMainWindow {
 	private JLabel lblHasoHasi;
 	private JLabel label_5;
 	private JCalendar calendar;
-	
+	private JDateChooser dateChooser_2;
+	private JDateChooser dateChooser_3;
+	private JTextArea textArea;
+	private JCheckBox chckbxNalazSpecijaliste;
+	ZaposlenikBrDana zbd;
+	ZaposlenikVM zvm;
+
 	/**
 	 * Launch the application.
 	 */
@@ -134,6 +141,7 @@ public class UserMainWindow {
 		//sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 		//ZaposlenikController zc = new ZaposlenikController(sess);
 		ZaposlenikVM zvm = zc.DajZaposlenikoveInformacije(Singleton.getInstance().getUsername());
+		zvm = zc.DajZaposlenikoveInformacije(Singleton.getInstance().getUsername());
 		
 		//lblIDInfo.setText(zvm.getID());
 		
@@ -370,6 +378,10 @@ public class UserMainWindow {
 				txtNovaSifraPotvrda.setBounds(156, 80, 118, 20);
 				panel_12.add(txtNovaSifraPotvrda);
 				
+//INORMACIJE O DANIMA ZAPOSLENIKA
+				
+				zbd= zc.DajZaposlenikViewModel(Singleton.getInstance().getUsername());
+				
 				JPanel panel_13 = new JPanel();
 				panel_13.setBorder(new TitledBorder(null, "Informacije", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 				panel_13.setBounds(326, 11, 285, 159);
@@ -380,7 +392,7 @@ public class UserMainWindow {
 				lblBrojRadnihDana.setBounds(10, 29, 102, 14);
 				panel_13.add(lblBrojRadnihDana);
 				
-				JLabel lblRadniDani = new JLabel("");
+				JLabel lblRadniDani = new JLabel(String.valueOf(zbd.getRadniDani()));
 				lblRadniDani.setBounds(219, 29, 46, 14);
 				panel_13.add(lblRadniDani);
 				
@@ -392,11 +404,11 @@ public class UserMainWindow {
 				lblOstaloDanaGodinjeg.setBounds(10, 129, 231, 14);
 				panel_13.add(lblOstaloDanaGodinjeg);
 				
-				JLabel lblIskoristeno = new JLabel("");
+				JLabel lblIskoristeno = new JLabel(String.valueOf(zbd.getIskoristeniGodisnji()));
 				lblIskoristeno.setBounds(219, 104, 46, 14);
 				panel_13.add(lblIskoristeno);
 				
-				JLabel lblOstaloGodisnjeg = new JLabel("");
+				JLabel lblOstaloGodisnjeg = new JLabel(String.valueOf(zbd.getPreostaloSlobodnih()));
 				lblOstaloGodisnjeg.setBounds(219, 129, 46, 14);
 				panel_13.add(lblOstaloGodisnjeg);
 				
@@ -408,19 +420,23 @@ public class UserMainWindow {
 				lblBrojDanaNeplaniranog.setBounds(10, 79, 189, 14);
 				panel_13.add(lblBrojDanaNeplaniranog);
 				
-				JLabel lblDaniBolovanja = new JLabel("");
+				JLabel lblDaniBolovanja = new JLabel(String.valueOf(zbd.getDaniBolovanja()));
 				lblDaniBolovanja.setBounds(219, 54, 46, 14);
 				panel_13.add(lblDaniBolovanja);
 				
-				JLabel lblNeplaniranoOdsustvo = new JLabel("");
+				JLabel lblNeplaniranoOdsustvo = new JLabel(String.valueOf(zbd.getDaniNeplaniranog()));
 				lblNeplaniranoOdsustvo.setBounds(219, 79, 46, 14);
 				panel_13.add(lblNeplaniranoOdsustvo);
 				
+				//KRAJ INFO DANI
+				
 				JButton btnSpasiPromjene = new JButton("Spasi promjene");
-				btnSpasiPromjene.setBounds(317, 380, 142, 23);
+				btnSpasiPromjene.setBounds(305, 380, 142, 23);
 				panel_9.add(btnSpasiPromjene);
 				
 				JButton btnOdbaciPromjene = new JButton("Odbaci promjene");
+				btnOdbaciPromjene.setBounds(469, 380, 142, 23);
+				panel_9.add(btnOdbaciPromjene);
 				btnOdbaciPromjene.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						try {
@@ -517,6 +533,17 @@ public class UserMainWindow {
 		panel_2.setLayout(null);
 		
 		JButton button = new JButton("Kreiraj zahtjev");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				spasiZahtjevBolovanje();
+			}
+
+			
+		});
+		
+		
+		
 		button.setBounds(439, 380, 132, 23);
 		panel_2.add(button);
 		
@@ -534,12 +561,12 @@ public class UserMainWindow {
 		lblDo_1.setBounds(290, 31, 114, 14);
 		panel_6.add(lblDo_1);
 		
-		JDateChooser dateChooser_2 = new JDateChooser();
+		 dateChooser_2 = new JDateChooser();
 		dateChooser_2.setDateFormatString("yyyy-MM-dd");
 		dateChooser_2.setBounds(52, 56, 114, 20);
 		panel_6.add(dateChooser_2);
 		
-		JDateChooser dateChooser_3 = new JDateChooser();
+		 dateChooser_3 = new JDateChooser();
 		dateChooser_3.setDateFormatString("yyyy-MM-dd");
 		dateChooser_3.setBounds(300, 56, 114, 20);
 		panel_6.add(dateChooser_3);
@@ -554,11 +581,11 @@ public class UserMainWindow {
 		scrollPane_1.setBounds(10, 20, 472, 140);
 		panel_7.add(scrollPane_1);
 		
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		textArea.setLineWrap(true);
 		scrollPane_1.setViewportView(textArea);
 		
-		JCheckBox chckbxNalazSpecijaliste = new JCheckBox("Nalaz specijaliste");
+		 chckbxNalazSpecijaliste = new JCheckBox("Nalaz specijaliste");
 		chckbxNalazSpecijaliste.setBounds(79, 354, 132, 23);
 		panel_2.add(chckbxNalazSpecijaliste);
 		
@@ -627,6 +654,26 @@ public class UserMainWindow {
 	public void ProslijediInfo(ZaposlenikVM zvm) {
 		// TODO Auto-generated method stub
 		txtEmail.setText("Merseda");
+	}
+	
+	private void spasiZahtjevBolovanje() {
+		Date Od = dateChooser_2.getDate();
+		Date Do = dateChooser_3.getDate();
+		String opis = textArea.getText();
+		Boolean nalaz = chckbxNalazSpecijaliste.isSelected();
+		
+		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+		ZahtjevController bolovanje = new ZahtjevController(sess);
+		ZahtjevVM zvm = new ZahtjevVM(Od, Do, (long)2, opis, nalaz);
+		try {
+			Long bolovanje_id = bolovanje.kreirajZahtjev(zvm);
+			
+			JOptionPane.showMessageDialog(null, "Uspješno poslan zahtjev za bolovanje", "Obavještenje", JOptionPane.INFORMATION_MESSAGE);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
 	}
 
 }
