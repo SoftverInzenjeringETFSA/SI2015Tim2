@@ -3,6 +3,7 @@ package tim12.si.app.godisnji_odmori.Controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -24,68 +25,38 @@ public class ZaposlenikController
 	 * 
 	 * @param zaposlenik
 	 */	
+	
+	public ZaposlenikController(){};
 
 	public ZaposlenikController(Session session)
 	{
 		this.session = session;
 		sc = new SektorController();
 	};
-	//dodaje zaposlenika u listu
-	public void DodajZaposlenika() 
+	
+	//dodaje zaposlenika u bazu
+	public void DodajZaposlenika(ZaposlenikVM zaposlenikVM) 
 	{
-		try
-			{
-				//zvm = null;
-				String ime= zvm.getIme();
-				String prezime= zvm.prezime;
-				//na osnovu imena sektora iz baze dobiti nejgov ID
-				//int sectorID=zvm.sektor_id;;
-				Date datumRodjenja=zvm.datumRodjenja;
-				String email=zvm.email;
-				String adresaStanovanja=zvm.adresaStanovanja;
-				String telefon= zvm.telefon;
-				int brojDanaGodisnje= zvm.brojDanaGodisnje;
-				Boolean privilegija=zvm.privilegija;
-				//Zaposlenik z= new Zaposlenik(ime,prezime,sectorID,datumRodjenja,email,adresaStanovanja,telefon,brojDanaGodisnje,privilegija);
-				//Zaposlenik.listaZaposlenika.add(z);
-		}
-		catch (Exception e)
-			{
-				System.err.println("Dodavanje zaposlenika nije uspjelo: " + e.getMessage());
-			}
+		Zaposlenik zaposlenik = pretvoriUZaposlenika(zaposlenikVM);
+		upisiUBazu(zaposlenik);
 	}
 	public int BrojZaposlenih()
 	{
 		return Zaposlenik.listaZaposlenika.size();
 	}
-
-	public void ModificirajZaposlenika(Zaposlenik zaposlenik)
+	//edituje podatke o zaposleniku
+	public void ModificirajZaposlenika(ZaposlenikVM zaposlenikVM, int id)
 	{
-		try
-		{	
-			long index=PronadjiIndexZaposlenika(zaposlenik.getZaposlenik_id());
-			Zaposlenik.listaZaposlenika.remove(index);
-			//modificiramo sve elemente
-			zvm = null;
-			String ime= zvm.getIme();
-			String prezime= zvm.prezime;
-			//isto kao i gore
-			//int sectorID=zvm.sektor_id;;
-			//nesto
-			Date datumRodjenja=zvm.datumRodjenja;
-			String email=zvm.email;
-			String adresaStanovanja=zvm.adresaStanovanja;
-			String telefon= zvm.telefon;
-			int brojDanaGodisnje= zvm.brojDanaGodisnje;
-			Boolean privilegija=zvm.privilegija;
-			//Zaposlenik z= new Zaposlenik(ime,prezime,sectorID,datumRodjenja,email,adresaStanovanja,telefon,brojDanaGodisnje,privilegija);
-			//dodaj ga na isti broj indexa
-			//Zaposlenik.listaZaposlenika.add(index, z);
-	}
-	catch (Exception e)
-		{
-			System.err.println("Modificiranje zaposlenika nije uspjelo: " + e.getMessage());
-		}
+		Zaposlenik zaposlenik = dajZaposlenikaPoId(id);
+		zaposlenik.setIme(zaposlenikVM.ime);
+		zaposlenik.setPrezime(zaposlenikVM.prezime);
+		zaposlenik.setAdresa_stanovanja(zaposlenikVM.adresaStanovanja);
+		zaposlenik.setBroj_dana_godisnjeg(zaposlenikVM.brojDanaGodisnje);
+		zaposlenik.setDatum_rodjenja(zaposlenikVM.datumRodjenja);
+		zaposlenik.setEmail(zaposlenikVM.email);
+		zaposlenik.setSektor_id(zaposlenikVM.sektor);
+		zaposlenik.setTelefon(zaposlenikVM.telefon);
+		modificirajZaposlenikBaza(zaposlenik);
 	}
 
 	public long PronadjiIndexZaposlenika(long zaposlenik_id)
@@ -103,17 +74,24 @@ public class ZaposlenikController
 		}
 		return index;
 	}
-	public void ObrisiZaposlenika(int zaposlenikID)
-	{
-		try
-		{
-			Zaposlenik.listaZaposlenika.remove(zaposlenikID);
-		}
-		catch (Exception e)
-		{
-			System.err.println("Brisanje zaposlenika nije uspjelo: " + e.getMessage());
-		}
+	
+	public String[] dajSveZaposlenike(){
+		List<Zaposlenik> list = dajSveZaposlenikeBaza();
+		int i=0;
+		final String[] listaZaposlenika = new String [list.size()];
 		
+		for (Iterator<Zaposlenik> j = list.iterator(); j.hasNext();){
+			Zaposlenik item=j.next();
+			listaZaposlenika[i]=(item.getIme());
+			i++;
+		}
+		return listaZaposlenika;		
+	}
+	
+	public void ObrisiZaposlenika(long zaposlenikID)
+	{
+		Zaposlenik zaposlenik = dajZaposlenikaPoId(zaposlenikID);
+		obrisiZaposlenikaBaza(zaposlenik);
 	}
 
 	public void AutentifikujKorisnika(Zaposlenik zaposlenik)
@@ -230,10 +208,52 @@ public class ZaposlenikController
 		return vm;
 	}
 	
+	public Zaposlenik pretvoriUZaposlenika (ZaposlenikVM zaposlenikVM){
+		Zaposlenik zaposlenik = new Zaposlenik();
+		zaposlenik.setIme(zaposlenikVM.ime);
+		zaposlenik.setPrezime(zaposlenikVM.prezime);
+		zaposlenik.setAdresa_stanovanja(zaposlenikVM.adresaStanovanja);
+		zaposlenik.setBroj_dana_godisnjeg(zaposlenikVM.brojDanaGodisnje);
+		zaposlenik.setDatum_rodjenja(zaposlenikVM.datumRodjenja);
+		zaposlenik.setEmail(zaposlenikVM.email);
+		zaposlenik.setSektor_id(zaposlenikVM.sektor);
+		zaposlenik.setTelefon(zaposlenikVM.telefon);
+		return zaposlenik;
+	}
+	
 	// =======================================================================
 	// 									DAL
 	// =======================================================================
 	
+	
+	public void upisiUBazu(Zaposlenik zaposlenik){
+		Transaction t = session.beginTransaction(); 
+		session.save(zaposlenik);
+   	    t.commit();
+	}
+
+	public Zaposlenik dajZaposlenikaPoId (long id){
+		
+		Criteria criteria = session.createCriteria(Sektor.class);
+		criteria.add(Restrictions.eq("zaposlenik_id", (long)id));
+		return  (Zaposlenik) criteria.uniqueResult();
+		
+	}
+	
+	public void modificirajZaposlenikBaza (Zaposlenik zaposlenik){
+		
+		Transaction t = session.beginTransaction();
+	  	session.saveOrUpdate(zaposlenik);
+	  	t.commit();
+	}
+	
+	public void obrisiZaposlenikaBaza (Zaposlenik zaposlenik){
+		
+		Transaction t = session.beginTransaction(); 
+		session.delete(zaposlenik);
+   	    t.commit();
+		
+	}
 	
 	public String dajNazivSektoraZaposlenikaBaza(String username){
 			
@@ -245,7 +265,10 @@ public class ZaposlenikController
 		idSektora = (int)z.getSektor_id();
 		
 		return sc.dajNazivSektoraPoIdBaza(idSektora);
-		
+	}
+	
+	public List<Zaposlenik> dajSveZaposlenikeBaza(){
+		return session.createCriteria(Zaposlenik.class).list();
 	}
 	
 }

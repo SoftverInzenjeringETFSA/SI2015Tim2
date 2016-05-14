@@ -55,6 +55,8 @@ import tim12.si.app.godisnji_odmori.Controller.ZahtjevController;
 import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
 import tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
+import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikVM;
+
 import com.toedter.calendar.JYearChooser;
 
 public class ManagementMainWindow {
@@ -62,9 +64,9 @@ public class ManagementMainWindow {
 	private JFrame frmSolutionsi;
 	private JTextField txtHaso;
 	private JTextField txtHasi;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_3;
+	private JTextField txtEmail;
+	private JTextField txtBrojTelefona;
+	private JTextField txtBrojDanaOdmora;
 	private JTable table;
 	private JTextField txtEkonomskiSektor;
 	private JLabel lblMujoMuji;
@@ -72,6 +74,7 @@ public class ManagementMainWindow {
 	private JLabel label_6;
 	private JLabel label_7;
 	private JLabel label_10;
+	private JLabel lblIDZaposlenika;
 	private JList list;
 	private JScrollPane scrollPane_1;
 	private JDialog frame;
@@ -79,10 +82,20 @@ public class ManagementMainWindow {
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel_3;
+	private JLabel lblNewLabel_4;
+	private JLabel lblNewLabel_5;
+	private JLabel lblNewLabel_6;
+	private JLabel lblNewLabel_7;
+	private JLabel lblNewLabel_8;
+	private JLabel lblNewLabel_9;
+	private JLabel lblNewLabel_10;
+	private JLabel lblNewLabel_11;
 	private JTextArea txtrEkonomskiSektorSe;
 	private JSpinner spinner_2;
+	private JDateChooser dateRodjen;
 	private JLabel label_9;
 	private JScrollPane scrollPane_3;
+	private JComboBox comboSektor;
 	JList<String> list_1;
 	JYearChooser spinner_1;
 	JYearChooser spinner_3;
@@ -92,6 +105,8 @@ public class ManagementMainWindow {
 	Session sess = null;
 	private ArrayList<ZahtjevVM> zvm;
 	public SektorController sC = new SektorController();
+	public ZaposlenikController zC = new ZaposlenikController();
+	private JTextField txtAdresa;
 
 
 	/**
@@ -322,113 +337,164 @@ public class ManagementMainWindow {
 		JPanel panel_3 = new JPanel();
 		panel_3.setLayout(null);
 		panel_3.setBorder(new TitledBorder(null, "Osnovni podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_3.setBounds(35, 11, 289, 126);
+		panel_3.setBounds(35, 11, 289, 131);
 		panel_2.add(panel_3);
 		
 		JLabel label_2 = new JLabel("Id zaposlenika:");
-		label_2.setBounds(10, 23, 120, 14);
+		label_2.setBounds(10, 19, 120, 14);
 		panel_3.add(label_2);
 		
 		JLabel label_4 = new JLabel("Ime:");
-		label_4.setBounds(10, 47, 120, 14);
+		label_4.setBounds(10, 41, 120, 14);
 		panel_3.add(label_4);
 		
 		JLabel label_8 = new JLabel("Prezime:");
-		label_8.setBounds(10, 71, 120, 14);
+		label_8.setBounds(10, 69, 120, 14);
 		panel_3.add(label_8);
 		
 		JLabel label_11 = new JLabel("Datum rođenja:");
 		label_11.setBounds(10, 96, 120, 14);
 		panel_3.add(label_11);
 		
-		JLabel label_14 = new JLabel("12352");
-		label_14.setBounds(148, 23, 91, 14);
-		panel_3.add(label_14);
+		JLabel lblIDZaposlenika = new JLabel("");
+		lblIDZaposlenika.setBounds(148, 19, 91, 14);
+		panel_3.add(lblIDZaposlenika);
 		
 		txtHaso = new JTextField();
-		txtHaso.setText("Haso");
-		txtHaso.setBounds(140, 44, 139, 20);
+		txtHaso.setBounds(140, 38, 139, 20);
 		panel_3.add(txtHaso);
 		txtHaso.setColumns(10);
 		
 		txtHasi = new JTextField();
-		txtHasi.setText("Hasić");
-		txtHasi.setBounds(140, 68, 139, 20);
+		txtHasi.setBounds(140, 66, 139, 20);
 		panel_3.add(txtHasi);
 		txtHasi.setColumns(10);
 		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setDateFormatString("yyyy-MM-dd");
-		dateChooser.setBounds(140, 96, 139, 19);
-		panel_3.add(dateChooser);
+		JDateChooser dateRodjen = new JDateChooser();
+		dateRodjen.setDateFormatString("yyyy-MM-dd");
+		dateRodjen.setBounds(140, 96, 139, 19);
+		panel_3.add(dateRodjen);
+		
+		JLabel lblNewLabel_4 = new JLabel("");
+		lblNewLabel_4.setForeground(Color.RED);
+		lblNewLabel_4.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		lblNewLabel_4.setBounds(89, 54, 190, 14);
+		panel_3.add(lblNewLabel_4);
+		
+		JLabel lblNewLabel_5 = new JLabel("");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		lblNewLabel_5.setForeground(Color.RED);
+		lblNewLabel_5.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_5.setBounds(89, 83, 190, 14);
+		panel_3.add(lblNewLabel_5);
+		
+		JLabel lblNewLabel_6 = new JLabel("");
+		lblNewLabel_6.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_6.setForeground(Color.RED);
+		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		lblNewLabel_6.setBounds(89, 114, 190, 14);
+		panel_3.add(lblNewLabel_6);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBorder(new TitledBorder(null, "Podaci o zaposlenju", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_5.setBounds(35, 136, 289, 99);
+		panel_5.setBounds(35, 148, 289, 87);
 		panel_2.add(panel_5);
 		panel_5.setLayout(null);
 		
 		JLabel lblDatumZaposlenja = new JLabel("Broj dana odmora:");
-		lblDatumZaposlenja.setBounds(10, 30, 107, 14);
+		lblDatumZaposlenja.setBounds(10, 24, 107, 14);
 		panel_5.add(lblDatumZaposlenja);
 		
 		JLabel lblSektor = new JLabel("Sektor:");
 		lblSektor.setBounds(10, 55, 87, 14);
 		panel_5.add(lblSektor);
 		
-		textField_3 = new JTextField();
-		textField_3.setText("20");
-		textField_3.setBounds(141, 27, 138, 20);
-		panel_5.add(textField_3);
-		textField_3.setColumns(10);
+		txtBrojDanaOdmora = new JTextField();
+		txtBrojDanaOdmora.setBounds(141, 21, 138, 20);
+		panel_5.add(txtBrojDanaOdmora);
+		txtBrojDanaOdmora.setColumns(10);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Ekonomski"}));
-		comboBox_2.setBounds(141, 52, 138, 20);
-		panel_5.add(comboBox_2);
+		JComboBox comboSektor = new JComboBox();
+		comboSektor.setBounds(141, 52, 138, 20);
+		panel_5.add(comboSektor);
+		
+		JLabel lblNewLabel_7 = new JLabel("");
+		lblNewLabel_7.setForeground(Color.RED);
+		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		lblNewLabel_7.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_7.setBounds(103, 38, 176, 14);
+		panel_5.add(lblNewLabel_7);
+		
+		JLabel lblNewLabel_8 = new JLabel("");
+		lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		lblNewLabel_8.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_8.setForeground(Color.RED);
+		lblNewLabel_8.setBounds(103, 71, 176, 14);
+		panel_5.add(lblNewLabel_8);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setLayout(null);
 		panel_4.setBorder(new TitledBorder(null, "Kontakt podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_4.setBounds(35, 235, 289, 99);
+		panel_4.setBounds(35, 235, 289, 110);
 		panel_2.add(panel_4);
 		
 		JLabel label_15 = new JLabel("E-mail:");
-		label_15.setBounds(10, 29, 98, 14);
+		label_15.setBounds(10, 25, 98, 14);
 		panel_4.add(label_15);
 		
 		JLabel label_16 = new JLabel("Broj telefona:");
 		label_16.setBounds(10, 51, 98, 14);
 		panel_4.add(label_16);
 		
-		textField = new JTextField();
-		textField.setText("hhasic1@gmail.com");
-		textField.setColumns(10);
-		textField.setBounds(127, 23, 152, 20);
-		panel_4.add(textField);
+		txtEmail = new JTextField();
+		txtEmail.setColumns(10);
+		txtEmail.setBounds(127, 19, 152, 20);
+		panel_4.add(txtEmail);
 		
-		textField_1 = new JTextField();
-		textField_1.setText("+387 62 256 364");
-		textField_1.setColumns(10);
-		textField_1.setBounds(127, 48, 152, 20);
-		panel_4.add(textField_1);
-		
-		JLabel label_17 = new JLabel("Ismeta Mujezinovića 23/5");
-		label_17.setBounds(127, 76, 152, 14);
-		panel_4.add(label_17);
+		txtBrojTelefona = new JTextField();
+		txtBrojTelefona.setColumns(10);
+		txtBrojTelefona.setBounds(127, 48, 152, 20);
+		panel_4.add(txtBrojTelefona);
 		
 		JLabel label_18 = new JLabel("Adresa:");
-		label_18.setBounds(10, 76, 46, 14);
+		label_18.setBounds(10, 80, 46, 14);
 		panel_4.add(label_18);
+		
+		txtAdresa = new JTextField();
+		txtAdresa.setBounds(127, 77, 152, 20);
+		panel_4.add(txtAdresa);
+		txtAdresa.setColumns(10);
+		
+		JLabel lblNewLabel_9 = new JLabel("");
+		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		lblNewLabel_9.setForeground(Color.RED);
+		lblNewLabel_9.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_9.setBounds(91, 36, 188, 14);
+		panel_4.add(lblNewLabel_9);
+		
+		JLabel lblNewLabel_10 = new JLabel("");
+		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		lblNewLabel_10.setForeground(Color.RED);
+		lblNewLabel_10.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_10.setBounds(90, 64, 188, 14);
+		panel_4.add(lblNewLabel_10);
+		
+		JLabel lblNewLabel_11 = new JLabel("");
+		lblNewLabel_11.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		lblNewLabel_11.setForeground(Color.RED);
+		lblNewLabel_11.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_11.setBounds(91, 94, 188, 14);
+		panel_4.add(lblNewLabel_11);
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Zaposlenici", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_6.setBounds(334, 11, 455, 323);
+		panel_6.setBounds(334, 11, 455, 334);
 		panel_2.add(panel_6);
 		panel_6.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 23, 435, 289);
+		scrollPane.setBounds(10, 23, 435, 300);
 		panel_6.add(scrollPane);
 		
 		table = new JTable();
@@ -436,8 +502,8 @@ public class ManagementMainWindow {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"13212", "Osman", "Lav", "IT", "15"},
-				{"12352", "Haso", "Hasi\u0107", "Ekonomski", "20"},
+				{"", "", "", "", "15"},
+				{"", "", "", "", "20"},
 			},
 			new String[] {
 				"ID zaposlenika", "Ime", "Prezime", "Sektor", "Broj dana godi\u0161njeg"
@@ -454,22 +520,70 @@ public class ManagementMainWindow {
 		table.getColumnModel().getColumn(4).setPreferredWidth(120);
 		
 		JButton btnDodajZaposlenika = new JButton("Dodaj zaposlenika");
+		btnDodajZaposlenika.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ocistiUnosZaposlenika();
+            	if(!validirajUnosZaposlenika())
+            		return;
+            	zC.DodajZaposlenika(new ZaposlenikVM (txtHaso.getText(), txtHasi.getText(),txtEmail.getText(), dateRodjen.getDate(), txtBrojTelefona.getText(), lblAdresa.getText()));
+            	osvjeziTabeluZaposlenika();
+            	ocistiPoljaZaposlenik();
+			}
+		});
 		btnDodajZaposlenika.setBounds(35, 356, 143, 23);
 		panel_2.add(btnDodajZaposlenika);
 		
 		JButton btnUrediPodatkeO = new JButton("Uredi zaposlenika");
 		btnUrediPodatkeO.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//povući iz tabele i dodijeliti textbox-evima vrijednosti
 			}
 		});
 		btnUrediPodatkeO.setBounds(408, 356, 140, 23);
 		panel_2.add(btnUrediPodatkeO);
 		
 		JButton btnObriiZaposlenika = new JButton("Obriši zaposlenika");
+		btnObriiZaposlenika.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Object[] options = { "Da", "Ne" };
+				int n = JOptionPane.showOptionDialog(null,
+                        "Da li ste sigurni da zelite obrisati?",
+                        "Upozorenje",
+                         JOptionPane.YES_NO_OPTION,
+                         JOptionPane.QUESTION_MESSAGE,
+                         null,     
+                         options,  
+                         options[0]);
+				
+				if (n == JOptionPane.YES_OPTION) {
+					//selektovani red iz tabele
+					//zC.ObrisiZaposlenika(id); ne može po ID
+				    osvjeziTabeluZaposlenika();
+				    ocistiPolja();
+				}
+			}
+		});
 		btnObriiZaposlenika.setBounds(610, 356, 140, 23);
 		panel_2.add(btnObriiZaposlenika);
 		
 		JButton btnSpasiPromjene = new JButton("Spasi promjene");
+		btnSpasiPromjene.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ocistiUnosZaposlenika();
+            	if(!validirajUnosZaposlenika())
+            		return;
+            	//uvezati sa tabelom
+            	{
+            		
+            		JOptionPane.showMessageDialog (null, "Ako zelite dodati novog zaposlenika pritisnite dugme Dodaj zaposlenika", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
+            		return;
+            	}
+            	zC.ModificirajZaposlenika(new ZaposlenikVM(txtHaso.getText(), txtHasi.getText(),txtEmail.getText(), dateRodjen.getDate(), txtBrojTelefona.getText(), lblAdresa.getText()));
+            	osvjeziTabeluZaposlenika();
+            	ocistiPolja();
+			}
+		});
+		
 		btnSpasiPromjene.setBounds(198, 356, 126, 23);
 		panel_2.add(btnSpasiPromjene);
 		
@@ -599,9 +713,6 @@ public class ManagementMainWindow {
             	sC.dodajSektor(new SektorVM(txtEkonomskiSektor.getText(), spinner_1.getValue(),0,spinner_2.getValue().toString(),txtrEkonomskiSektorSe.getText()));
             	osvjeziListuSektora();
             	ocistiPolja();
-            	        	
-        		
-            	
             }
         }); 
 
@@ -746,6 +857,10 @@ public class ManagementMainWindow {
 			}
 		});
 	}
+  
+  public void osvjeziTabeluZaposlenika(){
+	  
+  }
 
 public Boolean validirajUnosSektora(){
 	  Boolean validacija = true;
@@ -755,7 +870,6 @@ public Boolean validirajUnosSektora(){
 		  
 		  lblNewLabel.setText("Polje Naziv je obavezno");
 		  validacija=false;
-		  
 		  
 	  }
 	  
@@ -768,22 +882,54 @@ public Boolean validirajUnosSektora(){
 	  if(spinner_2.getValue().toString().equals("0")){
 		  
 		  lblNewLabel_2.setText("Polje Maximalan broj odsutnih je obavezno");
-		  validacija=false;
-		  
+		  validacija=false;  
 	  }
-	
 	  return validacija;
-	  
 }
 
-public void ocistiUnosSektora(){
+	public Boolean validirajUnosZaposlenika(){
+		Boolean validacija=true;
+		if (txtHaso.getText().isEmpty()){
+			lblNewLabel_4.setText("Polje Ime je obavezno");
+			validacija=false;
+		}
+		if (txtHasi.getText().isEmpty()){
+			lblNewLabel_5.setText("Polje Prezime je obavezno");
+			validacija=false;
+		}
+		/*Date dt= new Date();
+		if (dateRodjen.getDate()){
+			lblNewLabel_6.setText("Polje Ime je obavezno");
+			validacija=false;
+		}*/
+		if (txtAdresa.getText().isEmpty()){
+			lblNewLabel_8.setText("Polje Adresa je obavezno");
+			validacija=false;
+		}
+		return validacija;
+	}
+
+	public void ocistiUnosSektora(){
 	  
 	  lblNewLabel.setText("");
 	  lblNewLabel_1.setText("");
 	  lblNewLabel_2.setText("");
 	  lblNewLabel_3.setText("");
 	  
-}
+	}
+
+	public void ocistiUnosZaposlenika(){
+		  
+		  lblNewLabel_4.setText("");
+		  lblNewLabel_5.setText("");
+		  lblNewLabel_6.setText("");
+		  lblNewLabel_7.setText("");
+		  lblNewLabel_8.setText("");
+		  lblNewLabel_9.setText("");
+		  lblNewLabel_10.setText("");
+		  lblNewLabel_11.setText("");
+		  
+		}
 
 	public void ocistiPolja (){
 		
@@ -793,6 +939,19 @@ public void ocistiUnosSektora(){
     	spinner_1.setValue(2016);
     	spinner_2.setValue(0);
     	spinner_3.setValue(0);
+	}
+	
+	public void ocistiPoljaZaposlenik(){
+		
+		lblIDZaposlenika.setText("");
+		txtHaso.setText("");
+		txtHasi.setText("");
+		dateRodjen.setDate(null);
+		txtBrojDanaOdmora.setText("");
+		comboSektor.setSelectedIndex(-1);
+		txtEmail.setText("");
+		txtBrojTelefona.setText("");
+		txtAdresa.setText("");	
 	}
 }
 
