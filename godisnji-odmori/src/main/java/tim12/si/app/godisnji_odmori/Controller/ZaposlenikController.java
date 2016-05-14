@@ -10,6 +10,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.hql.internal.ast.tree.BooleanLiteralNode;
 
 import tim12.si.app.godisnji_odmori.ViewModel.*;
 import tim12.si.app.godisnji_odmori.ZaposlenikNotFound;
@@ -239,6 +240,16 @@ public class ZaposlenikController
 		return vm;
 	}
 	
+	
+	public Boolean promjeniSifru (String username, String password){
+	
+		Zaposlenik z = dajZaposlenikaBaza(username);
+		z.setPassword(password);
+		promjeniSifruBaza(z);
+		
+		return true;
+	}
+	
 
 	
 	// =======================================================================
@@ -288,4 +299,15 @@ public class ZaposlenikController
 		
 	}
 	
+	public void promjeniSifruBaza (Zaposlenik z) {
+		
+		
+		Transaction t = session.beginTransaction();
+	  	session.saveOrUpdate(z);
+	  	t.commit();
+		
+		
+	}
 }
+	
+

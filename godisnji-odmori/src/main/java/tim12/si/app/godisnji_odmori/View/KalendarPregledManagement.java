@@ -86,7 +86,7 @@ public class KalendarPregledManagement {
 			    	JPanel jpanel = calendar.getDayChooser().getDayPanel();
 					Component component[] = jpanel.getComponents();
 					
-					for(int i=0;i<component.length;i++)component[i].setBackground(c);
+					//for(int i=0;i<component.length;i++)component[i].setBackground(c);
 			    	
 		            kc.postaviZauzete(events, calendar); 
 			    }

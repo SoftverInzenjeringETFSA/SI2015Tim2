@@ -437,12 +437,19 @@ public class UserMainWindow {
 				btnSpasiPromjene.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						try {
+							sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+							ZaposlenikController zc = new ZaposlenikController(sess);
+							label_1.setText("");
+							if(!validirajUnosNoveSifre())
+								return;
 							
-							validirajUnosNoveSifre();
 							
-							String stara = txtStaraSifra.getText();
-							String nova = txtNovaSifra.getText();
-							String novaPotvrda = txtNovaSifraPotvrda.getText();
+							if(zc.promjeniSifru(Singleton.getInstance().getUsername(),txtNovaSifra.getText())){
+								
+								JOptionPane.showMessageDialog (null, "Uspješno ste promijenili šifru", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
+								
+							}
+							
 							
 							
 							
@@ -477,6 +484,7 @@ public class UserMainWindow {
 				
 				
 				label_1 = new JLabel("");
+				label_1.setForeground(Color.RED);
 				label_1.setBounds(326, 333, 285, 36);
 				panel_9.add(label_1);
 		
@@ -711,6 +719,7 @@ public class UserMainWindow {
 	
 	public Boolean validirajUnosNoveSifre () {
 		
+		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 		ZaposlenikController zc = new ZaposlenikController(sess);
 		
 		
@@ -721,14 +730,14 @@ public class UserMainWindow {
 			
 		}
 		
-		if(zc.uporediSifruBaza(Singleton.getInstance().getUsername(), txtStaraSifra.getText())){
+		if(!zc.uporediSifruBaza(Singleton.getInstance().getUsername(), txtStaraSifra.getText())){
 			
-			label_1.setText("Pogresna trenurna sifra.");
+			label_1.setText("Pogresna trenutna sifra.");
 			return false;
 			
 		}
 		
-		if(txtNovaSifra.getText().equals(txtNovaSifraPotvrda.getText())){
+		if(!txtNovaSifra.getText().equals(txtNovaSifraPotvrda.getText())){
 			
 			label_1.setText("Nove sifre se ne podudaraju.");
 			return false;
