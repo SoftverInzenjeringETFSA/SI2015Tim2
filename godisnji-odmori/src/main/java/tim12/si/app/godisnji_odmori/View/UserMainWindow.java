@@ -88,11 +88,13 @@ public class UserMainWindow {
 	private JDateChooser dateChooser_3;
 	private JTextArea textArea;
 	private JCheckBox chckbxNalazSpecijaliste;
-	ZaposlenikBrDana zbd;
-	ZaposlenikVM zvm;
 	private JDateChooser dateChooser;
 	private JDateChooser dateChooser_1;
 	private JTextArea textArea_1;
+	private ZaposlenikBrDana zbd;
+	private ZaposlenikVM zvm;
+	private JLabel label_1;
+
 
 	/**
 	 * Launch the application.
@@ -436,10 +438,35 @@ public class UserMainWindow {
 				JButton btnSpasiPromjene = new JButton("Spasi promjene");
 				btnSpasiPromjene.setBounds(305, 380, 142, 23);
 				panel_9.add(btnSpasiPromjene);
+				btnSpasiPromjene.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						try {
+							
+							validirajUnosNoveSifre();
+							
+							String stara = txtStaraSifra.getText();
+							String nova = txtNovaSifra.getText();
+							String novaPotvrda = txtNovaSifraPotvrda.getText();
+							
+							
+							
+							
+							
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					}
+				});
 				
 				JButton btnOdbaciPromjene = new JButton("Odbaci promjene");
 				btnOdbaciPromjene.setBounds(469, 380, 142, 23);
 				panel_9.add(btnOdbaciPromjene);
+				
+				
+				
+				
 				btnOdbaciPromjene.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						try {
@@ -451,6 +478,11 @@ public class UserMainWindow {
 						
 					}
 				});
+				
+				
+				label_1 = new JLabel("");
+				label_1.setBounds(326, 333, 285, 36);
+				panel_9.add(label_1);
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Godišnji odmor", null, panel_1, null);
@@ -681,6 +713,7 @@ public class UserMainWindow {
 		
 	}
 
+
 	private void spasiZahtjevNeplanirano() {
 		Date Od = dateChooser.getDate();
 		Date Do = dateChooser_1.getDate();
@@ -699,6 +732,34 @@ public class UserMainWindow {
 			
 			e.printStackTrace();
 		}
+	}
+	
+	public Boolean validirajUnosNoveSifre () {
+		
+		ZaposlenikController zc = new ZaposlenikController(sess);
+		
+		
+		if(txtStaraSifra.getText().equals("") || txtNovaSifra.getText().equals("") || txtNovaSifraPotvrda.getText().equals("")){
+			
+			label_1.setText("Sva polja moraju biti popunjena.");
+			return false;
+			
+		}
+		
+		if(zc.uporediSifruBaza(Singleton.getInstance().getUsername(), txtStaraSifra.getText())){
+			
+			label_1.setText("Pogresna trenurna sifra.");
+			return false;
+			
+		}
+		
+		if(txtNovaSifra.getText().equals(txtNovaSifraPotvrda.getText())){
+			
+			label_1.setText("Nove sifre se ne podudaraju.");
+			return false;
+		}
+			
+		return true;
 		
 	}
 }
