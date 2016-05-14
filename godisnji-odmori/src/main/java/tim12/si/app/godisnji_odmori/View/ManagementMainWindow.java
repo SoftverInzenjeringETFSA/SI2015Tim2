@@ -669,7 +669,7 @@ public class ManagementMainWindow {
             	if(!validirajUnosSektora())
             		return;
             	System.out.println(spinner_3.getValue());
-            	if(spinner_3.getValue()==1){
+            	if(spinner_3.getValue()==9999){
             		
             		JOptionPane.showMessageDialog (null, "Ako zelite dodati novi sektor pritisnite dugme Dodaj sektor", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
             		return;
@@ -793,7 +793,7 @@ public void ocistiUnosSektora(){
     	label_9.setText("0");
     	spinner_1.setValue(2016);
     	spinner_2.setValue(0);
-    	spinner_3.setValue(0);
+    	spinner_3.setValue(9999);
 	}
 }
 

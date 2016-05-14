@@ -4,10 +4,21 @@ import tim12.si.app.godisnji_odmori.ViewModel.*;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
+
 import tim12.si.app.godisnji_odmori.Model.*;
 
 public class TipOdsustvaController {
 	
+	Session sess = null;
+	
+	public TipOdsustvaController(Session sess) {
+		// TODO Auto-generated constructor stub
+		this.sess = sess;
+	}
 
 	/**
 	 * 
@@ -48,6 +59,23 @@ public class TipOdsustvaController {
 		// TODO - implement TipOdsustvaController.modificirajTipOdsustva
 				throw new UnsupportedOperationException();
 	}
+	
+	
+	// =======================================================================
+			// 									DAL
+			// =======================================================================
+			
+		
+		
+	public String dajImeTipaOdsustva (Long id){
+		
+		Criteria criteria = sess.createCriteria(TipOdsustva.class);
+		criteria.add(Restrictions.eq("id_odsustva", id));
+		TipOdsustva z = (TipOdsustva) criteria.uniqueResult(); 
+		
+		return z.getNaziv();
+	}
+
 
 
 
