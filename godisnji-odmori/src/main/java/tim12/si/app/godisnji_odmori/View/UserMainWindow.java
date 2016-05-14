@@ -90,6 +90,9 @@ public class UserMainWindow {
 	private JCheckBox chckbxNalazSpecijaliste;
 	ZaposlenikBrDana zbd;
 	ZaposlenikVM zvm;
+	private JDateChooser dateChooser;
+	private JDateChooser dateChooser_1;
+	private JTextArea textArea_1;
 
 	/**
 	 * Launch the application.
@@ -611,12 +614,12 @@ public class UserMainWindow {
 		label_7.setBounds(290, 31, 114, 14);
 		panel_4.add(label_7);
 		
-		JDateChooser dateChooser = new JDateChooser();
+		 dateChooser = new JDateChooser();
 		dateChooser.setDateFormatString("yyyy-MM-dd");
 		dateChooser.setBounds(52, 56, 114, 20);
 		panel_4.add(dateChooser);
 		
-		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1 = new JDateChooser();
 		dateChooser_1.setDateFormatString("yyyy-MM-dd");
 		dateChooser_1.setBounds(300, 56, 114, 20);
 		panel_4.add(dateChooser_1);
@@ -631,7 +634,7 @@ public class UserMainWindow {
 		scrollPane.setBounds(10, 20, 472, 140);
 		panel_5.add(scrollPane);
 		
-		JTextArea textArea_1 = new JTextArea();
+		textArea_1 = new JTextArea();
 		textArea_1.setLineWrap(true);
 		scrollPane.setViewportView(textArea_1);
 		
@@ -678,5 +681,25 @@ public class UserMainWindow {
 		
 	}
 
+	private void spasiZahtjevNeplanirano() {
+		Date Od = dateChooser.getDate();
+		Date Do = dateChooser_1.getDate();
+		String opis = textArea_1.getText();
+		Boolean nalaz = false;
+		
+			
+		
+		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+		ZahtjevController neplanirano = new ZahtjevController(sess);
+		ZahtjevVM zvm = new ZahtjevVM(Od, Do, (long)3, opis, nalaz);
+		try {
+			Long neplanirano_id = neplanirano.kreirajZahtjev(zvm);
+			JOptionPane.showMessageDialog(null, "Uspješno poslan zahtjev za neplanirano odsustvo", "Obavještenje", JOptionPane.INFORMATION_MESSAGE);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+	}
 }
 
