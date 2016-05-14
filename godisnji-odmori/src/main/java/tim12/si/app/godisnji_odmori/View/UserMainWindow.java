@@ -629,6 +629,11 @@ public class UserMainWindow {
 		panel_3.setLayout(null);
 		
 		JButton btnKreirajZahtjev = new JButton("Kreiraj zahtjev");
+		btnKreirajZahtjev.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				spasiZahtjevNeplanirano();
+			}
+		});
 		btnKreirajZahtjev.setBounds(401, 368, 140, 23);
 		panel_3.add(btnKreirajZahtjev);
 		
