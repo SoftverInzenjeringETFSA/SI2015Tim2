@@ -237,10 +237,29 @@ public class ZaposlenikController
 		return vm;
 	}
 	
+
+	
 	// =======================================================================
 	// 									DAL
 	// =======================================================================
 	
+	public String dajPrezimeZaposlenikaBaza (String username){
+		
+		Criteria criteria = session.createCriteria(Zaposlenik.class);
+		criteria.add(Restrictions.eq("username", username));
+		Zaposlenik z = (Zaposlenik) criteria.uniqueResult(); 
+		
+		return z.getPrezime();
+	}
+	
+	public Zaposlenik dajZaposlenikaBaza (String username){
+		
+		Criteria criteria = session.createCriteria(Zaposlenik.class);
+		criteria.add(Restrictions.eq("username", username));
+		Zaposlenik z = (Zaposlenik) criteria.uniqueResult(); 
+		
+		return z;
+	}
 	
 	public String dajNazivSektoraZaposlenikaBaza(String username){
 			
