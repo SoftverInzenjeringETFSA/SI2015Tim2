@@ -46,6 +46,7 @@ import tim12.si.app.godisnji_odmori.Controller.KalendarController;
 import tim12.si.app.godisnji_odmori.Controller.OdsustvoController;
 import tim12.si.app.godisnji_odmori.Controller.ZahtjevController;
 import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
+import tim12.si.app.godisnji_odmori.Model.Zaposlenik;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikAccountVM;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikVM;
@@ -76,6 +77,13 @@ public class UserMainWindow {
 	private JCalendar calendar_1;
 	private JCalendar calendar_2;
 	private ArrayList<Date> events;
+	private ZaposlenikBrDana zaposlenikUserPocetna;
+	private JLabel lblEkonomski;
+	private JLabel lblNewLabel;
+	private JLabel lblHasoHasi;
+	private JLabel label_5;
+	private JCalendar calendar;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -96,14 +104,35 @@ public class UserMainWindow {
 
 	
 	public UserMainWindow() throws ZaposlenikNotFound {
+		
+		
 		initialize();
 		PrikaziInfo();
 	}
 	public void PrikaziInfo() throws ZaposlenikNotFound
 	{
 		try{
-		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
-		ZaposlenikController zc = new ZaposlenikController(sess);
+			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+
+			ZaposlenikController zc= new ZaposlenikController(sess);
+			OdsustvoController oc = new OdsustvoController(sess);
+			KalendarController kc = new KalendarController();
+					
+			zaposlenikUserPocetna = zc.DajZaposlenikViewModel(Singleton.getInstance().getUsername());
+			
+			lblEkonomski.setText(zaposlenikUserPocetna.getSektor());
+			lblNewLabel.setText(zaposlenikUserPocetna.getRadniDani().toString());
+			lblHasoHasi.setText(zaposlenikUserPocetna.getZaposlenikIme()+" "+zaposlenikUserPocetna.getZaposlenikPrezime());
+			label_5.setText(zaposlenikUserPocetna.getPreostaloSlobodnih().toString());
+			
+			events = oc.dajSvaOdsustva(zaposlenikUserPocetna.getSektor());
+	    	calendar.getDayChooser().setEnabled(false);
+	    	kc.postaviZauzete(events, calendar); 
+	    	
+	    	
+	    	
+		//sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+		//ZaposlenikController zc = new ZaposlenikController(sess);
 		ZaposlenikVM zvm = zc.DajZaposlenikoveInformacije(Singleton.getInstance().getUsername());
 		
 		//lblIDInfo.setText(zvm.getID());
@@ -138,6 +167,7 @@ public class UserMainWindow {
 	 */
 	private void initialize()throws ZaposlenikNotFound
 	{
+		
 		frmSolutionsi = new JFrame();
 		frmSolutionsi.setTitle("SolutionSI");
 		frmSolutionsi.getContentPane().setLayout(null);
@@ -151,13 +181,17 @@ public class UserMainWindow {
 		tabbedPane.addTab("Početna", null, panel, null);
 		panel.setLayout(null);
 		
+		ImageIcon ii = new ImageIcon(getClass().getResource("/boss2.png"));
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("/boss2.png"));
 		label.setVerticalAlignment(SwingConstants.BOTTOM);
+		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setBounds(10, 42, 128, 128);
+		label.setIcon(ii);
 		panel.add(label);
 		
-		JLabel lblHasoHasi = new JLabel("Haso Hasi\u0107");
+		
+		
+		lblHasoHasi = new JLabel("Haso Hasi\u0107");
 		lblHasoHasi.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblHasoHasi.setBounds(35, 188, 89, 26);
 		panel.add(lblHasoHasi);
@@ -173,7 +207,7 @@ public class UserMainWindow {
 		lblSektor_1.setBounds(10, 286, 68, 26);
 		panel.add(lblSektor_1);
 		
-		JLabel lblEkonomski = new JLabel("Ekonomski");
+		lblEkonomski = new JLabel("Ekonomski");
 		lblEkonomski.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblEkonomski.setBounds(70, 292, 68, 14);
 		panel.add(lblEkonomski);
@@ -183,7 +217,7 @@ public class UserMainWindow {
 		lblUkupnoRadnihDana.setBounds(10, 332, 128, 14);
 		panel.add(lblUkupnoRadnihDana);
 		
-		JLabel lblNewLabel = new JLabel("251");
+		lblNewLabel = new JLabel("251");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel.setBounds(148, 332, 46, 14);
 		panel.add(lblNewLabel);
@@ -198,11 +232,19 @@ public class UserMainWindow {
 		lblZaposlenik.setBounds(70, 251, 89, 21);
 		panel.add(lblZaposlenik);
 		
-		JCalendar calendar = new JCalendar();
+		calendar = new JCalendar();
 		calendar.setBounds(263, 115, 333, 227);
 		panel.add(calendar);
 		
-		JLabel label_5 = new JLabel("20");
+		JComboBox jcb = (JComboBox) calendar.getMonthChooser().getComboBox(); 
+		jcb.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	KalendarController kc = new KalendarController();
+	            kc.postaviZauzete(events, calendar);
+		    }
+		});
+		
+		label_5 = new JLabel("20");
 		label_5.setForeground(new Color(128, 0, 0));
 		label_5.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
 		label_5.setBounds(311, 379, 27, 26);

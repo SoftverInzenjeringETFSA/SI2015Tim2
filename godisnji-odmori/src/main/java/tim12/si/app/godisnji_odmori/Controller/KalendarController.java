@@ -48,7 +48,7 @@ public class KalendarController {
 		System.out.println(year);
 
 		JPanel jpanel = calendar.getDayChooser().getDayPanel();
-		calendar.getDayChooser().setEnabled(true);
+		calendar.getDayChooser().setEnabled(false);
 		Component component[] = jpanel.getComponents();
 		
 		
