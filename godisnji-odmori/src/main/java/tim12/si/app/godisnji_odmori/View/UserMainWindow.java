@@ -15,6 +15,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.awt.Color;
@@ -536,8 +537,7 @@ public class UserMainWindow {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				
-			
+				spasiZahtjevGodisnji();
 			}
 		});
 		
@@ -720,6 +720,10 @@ public class UserMainWindow {
 			
 			e.printStackTrace();
 		}
+		finally
+		{
+			sess.close();
+		}
 		
 	}
 
@@ -729,9 +733,7 @@ public class UserMainWindow {
 		Date Do = dateChooser_1.getDate();
 		String opis = textArea_1.getText();
 		Boolean nalaz = false;
-		
 			
-		
 		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 		ZahtjevController neplanirano = new ZahtjevController(sess);
 		ZahtjevVM zvm = new ZahtjevVM(Od, Do, (long)3, opis, nalaz);
@@ -741,6 +743,37 @@ public class UserMainWindow {
 		} catch (Exception e) {
 			
 			e.printStackTrace();
+		}
+		finally
+		{
+			sess.close();
+		}
+	}
+	
+	private void spasiZahtjevGodisnji(){
+		/*Calendar cal = Calendar.getInstance();
+		cal.set(calendar_1.getYearChooser().getYear(),calendar_1.getMonthChooser().getMonth(),1,0,0);
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		int month = cal.get(Calendar.MONTH);
+		int year = cal.get(Calendar.YEAR);*/
+		
+		Date Od = calendar_1.getDate();
+		Date Do = calendar_2.getDate();
+		String opis = "Godisnji";
+		Boolean nalaz = false;
+		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+		ZahtjevController godisnji = new ZahtjevController(sess);
+		ZahtjevVM zvm = new ZahtjevVM(Od, Do, (long)1, opis, nalaz);
+		try {
+			Long godisnji_id = godisnji.kreirajZahtjev(zvm);
+			JOptionPane.showMessageDialog(null, "Uspješno poslan zahtjev za godisnji odmor", "Obavještenje", JOptionPane.INFORMATION_MESSAGE);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		finally
+		{
+			sess.close();
 		}
 	}
 	
