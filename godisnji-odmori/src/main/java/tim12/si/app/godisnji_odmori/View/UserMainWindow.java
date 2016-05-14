@@ -94,10 +94,7 @@ public class UserMainWindow {
 	}
 	
 
-	/**
-	 * Create the application.
-	 * @throws ZaposlenikNotFound 
-	 */
+	
 	public UserMainWindow() throws ZaposlenikNotFound {
 		initialize();
 		PrikaziInfo();
@@ -108,19 +105,21 @@ public class UserMainWindow {
 		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 		ZaposlenikController zc = new ZaposlenikController(sess);
 		ZaposlenikVM zvm = zc.DajZaposlenikoveInformacije(Singleton.getInstance().getUsername());
-
+		
 		//lblIDInfo.setText(zvm.getID());
+		
 		lblIme.setText(zvm.getIme());
 		lblPrezime.setText(zvm.getPrezime());
-		//txtEmail.setText(zvm.getEmail());
-		txtEmail.setText("maerseda mail");
+		txtEmail.setText(zvm.getEmail());
 		txtBrojTelefona.setText(zvm.getTelefon());
 		lblAdresaStanovanja.setText(zvm.getAdresaStanovanja());
-		//lblDatumRodjenja.setToolTipText(zvm.getDatumRodjenja());
 		lblDatumRodjenja.setText(zvm.getDatumRodjenja().toString());
+		
+		
 		}
 		catch (Exception er) {
-
+			
+			System.out.println(er);
 			//System.out.print(er.getMessage());
 			if (er.getMessage() != null )
 			JOptionPane.showMessageDialog(frame, er.getMessage(),
@@ -253,16 +252,16 @@ public class UserMainWindow {
 				lblIDInfo.setBounds(184, 40, 91, 14);
 				panel_10.add(lblIDInfo);
 				
-				JLabel lblIme = new JLabel(zvm.getIme());
+				lblIme = new JLabel(zvm.getIme());
 				lblIme.setBounds(184, 64, 91, 14);
 				panel_10.add(lblIme);
 				
-				JLabel lblPrezime = new JLabel(zvm.prezime);
+				lblPrezime = new JLabel(zvm.prezime);
 				lblPrezime.setBounds(184, 88, 91, 14);
 				panel_10.add(lblPrezime);
 				//String strDate = DateFormat.getDateInstance().format(zvm.datumRodjenja);
-				JLabel lblDatumRodjenja = new JLabel();
-				lblDatumRodjenja.setBounds(184, 113, 91, 14);
+				lblDatumRodjenja = new JLabel();
+				lblDatumRodjenja.setBounds(184, 113, 75, 14);
 				panel_10.add(lblDatumRodjenja);
 				
 				//--kraj osnovni podaci
@@ -295,7 +294,7 @@ public class UserMainWindow {
 				lblAdresa.setBounds(10, 77, 46, 14);
 				panel_11.add(lblAdresa);
 				
-				JLabel lblAdresaStanovanja = new JLabel(zvm.getAdresaStanovanja());
+				lblAdresaStanovanja = new JLabel(zvm.getAdresaStanovanja());
 				lblAdresaStanovanja.setBounds(127, 77, 148, 14);
 				panel_11.add(lblAdresaStanovanja);
 				

@@ -23,6 +23,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.hibernate.Session;
+import org.hibernate.boot.model.IdGeneratorStrategyInterpreter.GeneratorNameDeterminationContext;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -36,6 +37,7 @@ public class KalendarPregledManagement {
 	private JCalendar calendar;
 	private ArrayList<Date> events;
 	private JLabel lblNewLabel;
+	private JSpinner js;
 
 	/**
 	 * Launch the application.
@@ -111,7 +113,7 @@ public class KalendarPregledManagement {
 			
 			
 			
-			JSpinner js = (JSpinner) calendar.getYearChooser().getSpinner();
+			js = (JSpinner) calendar.getYearChooser().getSpinner();
 			
 			lblNewLabel = new JLabel("*ukoliko mijenjate godinu, selektujte ponovo mjesec kako bi se učitali podaci");
 			lblNewLabel.setForeground(Color.GRAY);
@@ -120,10 +122,33 @@ public class KalendarPregledManagement {
 			
 			
 			js.addChangeListener(new ChangeListener() {
-
+				
+				
 		        public void stateChanged(ChangeEvent e) {
-		        	KalendarController kc = new KalendarController();
-		            kc.postaviZauzete(events, calendar);
+		        	
+		            
+		        	Session sess = null;
+			    	try {
+			    		
+			    		String novaGodina = js.getValue().toString();
+				    	sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+
+			        	OdsustvoController oc = new OdsustvoController(sess);
+			        	events = oc.dajSvaOdsustva((String)combobox.getSelectedItem());
+			        	KalendarController kc = new KalendarController();
+			            kc.postaviZauzeteNovaGodina(events, calendar, novaGodina); 
+			    }
+			    	catch (Exception er) {
+
+						
+						JOptionPane.showMessageDialog(frame, er.getMessage(),
+								"Greška", JOptionPane.INFORMATION_MESSAGE);
+						
+
+					} finally {
+						if (sess != null)
+							sess.close();
+					}
 		        }
 		    });
 			

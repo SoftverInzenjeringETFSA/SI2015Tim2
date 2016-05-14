@@ -110,7 +110,7 @@ public class ZaposlenikVM {
 	}
 
 	public String getPrezime() {
-		return ime;
+		return prezime;
 	}
 	public void setPrezime(String prezime) throws Exception
 	{
