@@ -389,10 +389,12 @@ public class UserMainWindow {
 				//KRAJ INFO DANI
 				
 				JButton btnSpasiPromjene = new JButton("Spasi promjene");
-				btnSpasiPromjene.setBounds(317, 380, 142, 23);
+				btnSpasiPromjene.setBounds(305, 380, 142, 23);
 				panel_9.add(btnSpasiPromjene);
 				
 				JButton btnOdbaciPromjene = new JButton("Odbaci promjene");
+				btnOdbaciPromjene.setBounds(469, 380, 142, 23);
+				panel_9.add(btnOdbaciPromjene);
 				btnOdbaciPromjene.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						try {
