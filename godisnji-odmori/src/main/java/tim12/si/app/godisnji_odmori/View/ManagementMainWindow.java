@@ -91,7 +91,7 @@ public class ManagementMainWindow {
 
 	Session sess = null;
 	private ArrayList<ZahtjevVM> zvm;
-	public SektorController sC = new SektorController();
+	private SektorController sC;
 
 
 	/**
@@ -114,6 +114,7 @@ public class ManagementMainWindow {
 	 * Create the application.
 	 */
 	public ManagementMainWindow() {
+		sC = new SektorController();
 		initialize();
 		provjeriUsera();
 		

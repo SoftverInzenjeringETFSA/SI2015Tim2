@@ -81,6 +81,9 @@ public class UserMainWindow {
 	private JDateChooser dateChooser_3;
 	private JTextArea textArea;
 	private JCheckBox chckbxNalazSpecijaliste;
+	ZaposlenikBrDana zbd;
+	ZaposlenikVM zvm;
+
 	/**
 	 * Launch the application.
 	 */
@@ -99,10 +102,7 @@ public class UserMainWindow {
 	}
 	
 
-	/**
-	 * Create the application.
-	 * @throws ZaposlenikNotFound 
-	 */
+	
 	public UserMainWindow() throws ZaposlenikNotFound {
 		initialize();
 		PrikaziInfo();
@@ -112,20 +112,22 @@ public class UserMainWindow {
 		try{
 		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 		ZaposlenikController zc = new ZaposlenikController(sess);
-		ZaposlenikVM zvm = zc.DajZaposlenikoveInformacije(Singleton.getInstance().getUsername());
-
+		zvm = zc.DajZaposlenikoveInformacije(Singleton.getInstance().getUsername());
+		
 		//lblIDInfo.setText(zvm.getID());
+		
 		lblIme.setText(zvm.getIme());
 		lblPrezime.setText(zvm.getPrezime());
-		//txtEmail.setText(zvm.getEmail());
-		txtEmail.setText("maerseda mail");
+		txtEmail.setText(zvm.getEmail());
 		txtBrojTelefona.setText(zvm.getTelefon());
 		lblAdresaStanovanja.setText(zvm.getAdresaStanovanja());
-		//lblDatumRodjenja.setToolTipText(zvm.getDatumRodjenja());
 		lblDatumRodjenja.setText(zvm.getDatumRodjenja().toString());
+		
+		
 		}
 		catch (Exception er) {
-
+			
+			System.out.println(er);
 			//System.out.print(er.getMessage());
 			if (er.getMessage() != null )
 			JOptionPane.showMessageDialog(frame, er.getMessage(),
@@ -258,16 +260,16 @@ public class UserMainWindow {
 				lblIDInfo.setBounds(184, 40, 91, 14);
 				panel_10.add(lblIDInfo);
 				
-				JLabel lblIme = new JLabel(zvm.getIme());
+				lblIme = new JLabel(zvm.getIme());
 				lblIme.setBounds(184, 64, 91, 14);
 				panel_10.add(lblIme);
 				
-				JLabel lblPrezime = new JLabel(zvm.prezime);
+				lblPrezime = new JLabel(zvm.prezime);
 				lblPrezime.setBounds(184, 88, 91, 14);
 				panel_10.add(lblPrezime);
 				//String strDate = DateFormat.getDateInstance().format(zvm.datumRodjenja);
-				JLabel lblDatumRodjenja = new JLabel();
-				lblDatumRodjenja.setBounds(184, 113, 91, 14);
+				lblDatumRodjenja = new JLabel();
+				lblDatumRodjenja.setBounds(184, 113, 75, 14);
 				panel_10.add(lblDatumRodjenja);
 				
 				//--kraj osnovni podaci
@@ -300,7 +302,7 @@ public class UserMainWindow {
 				lblAdresa.setBounds(10, 77, 46, 14);
 				panel_11.add(lblAdresa);
 				
-				JLabel lblAdresaStanovanja = new JLabel(zvm.getAdresaStanovanja());
+				lblAdresaStanovanja = new JLabel(zvm.getAdresaStanovanja());
 				lblAdresaStanovanja.setBounds(127, 77, 148, 14);
 				panel_11.add(lblAdresaStanovanja);
 				
@@ -334,6 +336,10 @@ public class UserMainWindow {
 				txtNovaSifraPotvrda.setBounds(156, 80, 118, 20);
 				panel_12.add(txtNovaSifraPotvrda);
 				
+//INORMACIJE O DANIMA ZAPOSLENIKA
+				
+				zbd= zc.DajZaposlenikViewModel(Singleton.getInstance().getUsername());
+				
 				JPanel panel_13 = new JPanel();
 				panel_13.setBorder(new TitledBorder(null, "Informacije", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 				panel_13.setBounds(326, 11, 285, 159);
@@ -344,7 +350,7 @@ public class UserMainWindow {
 				lblBrojRadnihDana.setBounds(10, 29, 102, 14);
 				panel_13.add(lblBrojRadnihDana);
 				
-				JLabel lblRadniDani = new JLabel("");
+				JLabel lblRadniDani = new JLabel(String.valueOf(zbd.getRadniDani()));
 				lblRadniDani.setBounds(219, 29, 46, 14);
 				panel_13.add(lblRadniDani);
 				
@@ -356,11 +362,11 @@ public class UserMainWindow {
 				lblOstaloDanaGodinjeg.setBounds(10, 129, 231, 14);
 				panel_13.add(lblOstaloDanaGodinjeg);
 				
-				JLabel lblIskoristeno = new JLabel("");
+				JLabel lblIskoristeno = new JLabel(String.valueOf(zbd.getIskoristeniGodisnji()));
 				lblIskoristeno.setBounds(219, 104, 46, 14);
 				panel_13.add(lblIskoristeno);
 				
-				JLabel lblOstaloGodisnjeg = new JLabel("");
+				JLabel lblOstaloGodisnjeg = new JLabel(String.valueOf(zbd.getPreostaloSlobodnih()));
 				lblOstaloGodisnjeg.setBounds(219, 129, 46, 14);
 				panel_13.add(lblOstaloGodisnjeg);
 				
@@ -372,13 +378,15 @@ public class UserMainWindow {
 				lblBrojDanaNeplaniranog.setBounds(10, 79, 189, 14);
 				panel_13.add(lblBrojDanaNeplaniranog);
 				
-				JLabel lblDaniBolovanja = new JLabel("");
+				JLabel lblDaniBolovanja = new JLabel(String.valueOf(zbd.getDaniBolovanja()));
 				lblDaniBolovanja.setBounds(219, 54, 46, 14);
 				panel_13.add(lblDaniBolovanja);
 				
-				JLabel lblNeplaniranoOdsustvo = new JLabel("");
+				JLabel lblNeplaniranoOdsustvo = new JLabel(String.valueOf(zbd.getDaniNeplaniranog()));
 				lblNeplaniranoOdsustvo.setBounds(219, 79, 46, 14);
 				panel_13.add(lblNeplaniranoOdsustvo);
+				
+				//KRAJ INFO DANI
 				
 				JButton btnSpasiPromjene = new JButton("Spasi promjene");
 				btnSpasiPromjene.setBounds(317, 380, 142, 23);

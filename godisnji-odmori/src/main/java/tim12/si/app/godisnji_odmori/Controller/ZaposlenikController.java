@@ -224,10 +224,15 @@ public class ZaposlenikController
 		List l = q.list();
 		t.commit();
 		
+		
+		
+		
 		if(l.isEmpty())
 			throw new ZaposlenikNotFound("Zaposlenik s username-om: " + username + " nije pronadjen.");
 			
 		ZaposlenikVM vm = (ZaposlenikVM) l.get(0);
+		
+		
 		return vm;
 	}
 	
