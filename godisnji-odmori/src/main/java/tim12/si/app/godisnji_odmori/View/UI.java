@@ -73,7 +73,6 @@ public class UI {
 			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 			ZaposlenikController zc = new ZaposlenikController(sess);
 			Singleton.getInstance().setUsername(usernameInput.getText());
-			
 			 ZaposlenikAccountVM acc = zc.DajZaposlenikAccVM(Singleton.getInstance().getUsername(), passwordInput.getText());
 			 
 			 if(acc.getPrivilegija()==true)

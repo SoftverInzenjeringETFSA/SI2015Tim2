@@ -47,10 +47,11 @@ public class ZahtjevController {
 		z.setZavrsetak_odsustva(zahtjev.getZavrsetakOdsustva());
 		z.setTip_odsustva(zahtjev.getTipOdsustva());
 		z.setObradjen(false);
-		z.setOdluka(null);
+		z.setOdluka(false);
 		z.setOpis(zahtjev.getOpis());
 		z.setSektor_id(zp.getSektor_id());
 		
+		upisiZahtjevBaza(z);
 		return z.getZahtjev_id();
 	}
 
@@ -217,6 +218,21 @@ public class ZahtjevController {
 			
 		ZahtjevVM vm = (ZahtjevVM) l.get(0);
 		return vm;
+	}
+	
+	
+	
+	// =======================================================================
+		// 									DAL
+		// =======================================================================
+		
+	
+	
+	public void upisiZahtjevBaza(Zahtjev z)
+	{
+		Transaction t = session.beginTransaction(); 
+		session.save(z);
+   	    t.commit();
 	}
 
 }

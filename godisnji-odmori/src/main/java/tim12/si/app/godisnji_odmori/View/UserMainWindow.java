@@ -46,6 +46,7 @@ import tim12.si.app.godisnji_odmori.Controller.KalendarController;
 import tim12.si.app.godisnji_odmori.Controller.OdsustvoController;
 import tim12.si.app.godisnji_odmori.Controller.ZahtjevController;
 import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
+import tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikAccountVM;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikVM;
@@ -76,6 +77,10 @@ public class UserMainWindow {
 	private JCalendar calendar_1;
 	private JCalendar calendar_2;
 	private ArrayList<Date> events;
+	private JDateChooser dateChooser_2;
+	private JDateChooser dateChooser_3;
+	private JTextArea textArea;
+	private JCheckBox chckbxNalazSpecijaliste;
 	/**
 	 * Launch the application.
 	 */
@@ -476,6 +481,17 @@ public class UserMainWindow {
 		panel_2.setLayout(null);
 		
 		JButton button = new JButton("Kreiraj zahtjev");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				spasiZahtjevBolovanje();
+			}
+
+			
+		});
+		
+		
+		
 		button.setBounds(439, 380, 132, 23);
 		panel_2.add(button);
 		
@@ -493,12 +509,12 @@ public class UserMainWindow {
 		lblDo_1.setBounds(290, 31, 114, 14);
 		panel_6.add(lblDo_1);
 		
-		JDateChooser dateChooser_2 = new JDateChooser();
+		 dateChooser_2 = new JDateChooser();
 		dateChooser_2.setDateFormatString("yyyy-MM-dd");
 		dateChooser_2.setBounds(52, 56, 114, 20);
 		panel_6.add(dateChooser_2);
 		
-		JDateChooser dateChooser_3 = new JDateChooser();
+		 dateChooser_3 = new JDateChooser();
 		dateChooser_3.setDateFormatString("yyyy-MM-dd");
 		dateChooser_3.setBounds(300, 56, 114, 20);
 		panel_6.add(dateChooser_3);
@@ -513,11 +529,11 @@ public class UserMainWindow {
 		scrollPane_1.setBounds(10, 20, 472, 140);
 		panel_7.add(scrollPane_1);
 		
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		textArea.setLineWrap(true);
 		scrollPane_1.setViewportView(textArea);
 		
-		JCheckBox chckbxNalazSpecijaliste = new JCheckBox("Nalaz specijaliste");
+		 chckbxNalazSpecijaliste = new JCheckBox("Nalaz specijaliste");
 		chckbxNalazSpecijaliste.setBounds(79, 354, 132, 23);
 		panel_2.add(chckbxNalazSpecijaliste);
 		
@@ -586,6 +602,26 @@ public class UserMainWindow {
 	public void ProslijediInfo(ZaposlenikVM zvm) {
 		// TODO Auto-generated method stub
 		txtEmail.setText("Merseda");
+	}
+	
+	private void spasiZahtjevBolovanje() {
+		Date Od = dateChooser_2.getDate();
+		Date Do = dateChooser_3.getDate();
+		String opis = textArea.getText();
+		Boolean nalaz = chckbxNalazSpecijaliste.isSelected();
+		
+		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+		ZahtjevController bolovanje = new ZahtjevController(sess);
+		ZahtjevVM zvm = new ZahtjevVM(Od, Do, (long)2, opis, nalaz);
+		try {
+			Long bolovanje_id = bolovanje.kreirajZahtjev(zvm);
+			
+			JOptionPane.showMessageDialog(null, "Uspješno poslan zahtjev za bolovanje", "Obavještenje", JOptionPane.INFORMATION_MESSAGE);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
 	}
 
 }

@@ -20,7 +20,16 @@ public class Zahtjev implements java.io.Serializable {
 	private Boolean odluka;
 	private String opis;
 	private long sektor_id;
+	private Boolean nalaz;
 	
+	public Boolean getNalaz() {
+		return nalaz;
+	}
+
+	public void setNalaz(Boolean nalaz) {
+		this.nalaz = nalaz;
+	}
+
 	public Zahtjev() {}
 	
 	public static List<Zahtjev> listaZahtjeva = new ArrayList<Zahtjev>();
