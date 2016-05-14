@@ -23,7 +23,7 @@ public class Zaposlenik implements java.io.Serializable {
 	private String telefon;
 	private int broj_dana_godisnjeg;
 	private Boolean privilegija;
-	public static List<Zaposlenik> listaZaposlenika= new ArrayList<Zaposlenik>();
+	//public static List<Zaposlenik> listaZaposlenika= new ArrayList<Zaposlenik>();
 	public Zaposlenik(){};
 	public Zaposlenik(String ime2, String prezime2, long sectorID, Date datumRodjenja, String email2,String adresaStanovanja, String telefon2,
 			int brojDanaGodisnje, Boolean privilegija2) {

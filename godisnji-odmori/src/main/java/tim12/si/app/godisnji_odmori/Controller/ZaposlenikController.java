@@ -54,7 +54,7 @@ public class ZaposlenikController
 				System.err.println("Dodavanje zaposlenika nije uspjelo: " + e.getMessage());
 			}
 	}
-	public int BrojZaposlenih()
+	/*public int BrojZaposlenih()
 	{
 		return Zaposlenik.listaZaposlenika.size();
 	}
@@ -114,7 +114,7 @@ public class ZaposlenikController
 			System.err.println("Brisanje zaposlenika nije uspjelo: " + e.getMessage());
 		}
 		
-	}
+	}*/
 
 	public void AutentifikujKorisnika(Zaposlenik zaposlenik)
 	{
@@ -124,6 +124,7 @@ public class ZaposlenikController
 	 * 
 	 * @param zaposlenik
 	 */
+	
 	public void OdjaviKorisnika(Zaposlenik zaposlenik)
 	{
 
@@ -132,7 +133,7 @@ public class ZaposlenikController
 	 * 
 	 * @param sektorID
 	 */
-	public List<Zaposlenik> DajZaposlenikePoSektoru(int sektorID)
+	/*public List<Zaposlenik> DajZaposlenikePoSektoru(int sektorID)
 	{
 		List<Zaposlenik> listaZ=new ArrayList<Zaposlenik>();
 		for(Zaposlenik z:Zaposlenik.listaZaposlenika)
@@ -143,7 +144,7 @@ public class ZaposlenikController
 			}
 		}
 		return listaZ;
-	}
+	}*/
 	public ZaposlenikBrDana DajZaposlenikViewModel(String username) throws ZaposlenikNotFound
 	{
 		Transaction t = session.beginTransaction();
@@ -170,10 +171,10 @@ public class ZaposlenikController
 		Transaction t = session.beginTransaction();
 		
 		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana(s.naziv, z.ime,z.zaposlenik_id, "+
-				"z.prezime, count(p.prisustvo_id), z.broj_dana_godisnjeg - (Select count(o1.odsustvo_id) FROM Zaposlenik z1, Odsustvo o1, TipOdsustva to WHERE z1.username = :username  AND z1.zaposlenik_id = o1.zaposlenik_id AND o1.tip = to.id_odsustva AND to.naziv = 'godišnji odmor'),"
-				+ "(Select count(o2.odsustvo_id) FROM Zaposlenik z2, Odsustvo o2, TipOdsustva to1 WHERE z2.username = :username  AND z2.zaposlenik_id = o2.zaposlenik_id AND o2.tip = to1.id_odsustva AND to1.naziv = 'bolovanje'), "
-				+ "(Select count(o3.odsustvo_id) FROM Zaposlenik z3, Odsustvo o3, TipOdsustva to3 WHERE z3.username = :username  AND z3.zaposlenik_id = o3.zaposlenik_id AND o3.tip = to3.id_odsustva AND to3.naziv = 'neplanirano'),"
-				+ "(Select count(o4.odsustvo_id) FROM Zaposlenik z4, Odsustvo o4, TipOdsustva to4 WHERE z4.username = :username  AND z4.zaposlenik_id = o4.zaposlenik_id AND o4.tip = to4.id_odsustva AND to4.naziv = 'godišnji odmor')) "
+				"z.prezime, count(p.prisustvo_id), z.broj_dana_godisnjeg - (Select count(o1.odsustvo_id) FROM Zaposlenik z1, Odsustvo o1, TipOdsustva to WHERE z1.username = :username  AND z1.zaposlenik_id = o1.zaposlenik_id AND o1.tip = to.id_odsustva AND to.id_odsustva = 1),"
+				+ "(Select count(o2.odsustvo_id) FROM Zaposlenik z2, Odsustvo o2, TipOdsustva to1 WHERE z2.username = :username  AND z2.zaposlenik_id = o2.zaposlenik_id AND o2.tip = to1.id_odsustva AND to1.id_odsustva = 2), "
+				+ "(Select count(o3.odsustvo_id) FROM Zaposlenik z3, Odsustvo o3, TipOdsustva to3 WHERE z3.username = :username  AND z3.zaposlenik_id = o3.zaposlenik_id AND o3.tip = to3.id_odsustva AND to3.id_odsustva = 3),"
+				+ "(Select count(o4.odsustvo_id) FROM Zaposlenik z4, Odsustvo o4, TipOdsustva to4 WHERE z4.username = :username  AND z4.zaposlenik_id = o4.zaposlenik_id AND o4.tip = to4.id_odsustva AND to4.id_odsustva = 1)) "
 				+ "FROM Zaposlenik z, Sektor s, Prisustvo p "
 				+ "WHERE z.username = :username AND s.sektor_id = z.sektor_id AND z.zaposlenik_id = p.zaposlenik_id";
 		

@@ -624,7 +624,7 @@ public class UserMainWindow {
 		ZahtjevController bolovanje = new ZahtjevController(sess);
 		ZahtjevVM zvm = new ZahtjevVM(Od, Do, (long)2, opis, nalaz);
 		try {
-			Long bolovanje_id = bolovanje.kreirajZahtjev(zvm);
+			//Long bolovanje_id = bolovanje.kreirajZahtjev(zvm);
 			
 			JOptionPane.showMessageDialog(null, "Uspješno poslan zahtjev za bolovanje", "Obavještenje", JOptionPane.INFORMATION_MESSAGE);
 		} catch (Exception e) {
