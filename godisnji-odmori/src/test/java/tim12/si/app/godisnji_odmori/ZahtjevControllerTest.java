@@ -9,8 +9,23 @@ import tim12.si.app.godisnji_odmori.Controller.ZahtjevController;
 import tim12.si.app.godisnji_odmori.Model.Zahtjev;
 import tim12.si.app.godisnji_odmori.Model.Zaposlenik;
 import tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM;
+import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
+import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikVM;
 
 public class ZahtjevControllerTest extends TestCase {
+	private Zahtjev zahtjev;
+	private ZahtjevController zc;
+	private ZaposlenikBrDana zbd;
+	private ZahtjevVM zvm;
+	@Test
+	public void testOdobriZahtjev()
+	{
+		zbd=new ZaposlenikBrDana();
+		zvm= new ZahtjevVM();
+		
+		assertEquals(zc.odobriZahtjev(zahtjev.getZahtjev_id(), zbd, zvm), 0);
+		
+	}
 	/*
 	private Zaposlenik z;
 	private ZahtjevController zc;
