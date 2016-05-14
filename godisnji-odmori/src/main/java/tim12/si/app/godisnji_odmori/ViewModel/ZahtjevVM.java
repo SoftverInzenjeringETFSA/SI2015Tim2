@@ -17,7 +17,7 @@ public class ZahtjevVM {
 	private Long idZahtjeva;
 	private String usernamePodnosioca;
 	private Boolean nalaz;
-	
+
 	public Boolean getNalaz() {
 		return nalaz;
 	}
@@ -47,6 +47,9 @@ public class ZahtjevVM {
 		this.tipOdsustva = tipOdsustva;
 		this.opis = opis;
 		this.nalaz = nalaz;
+	}
+	public ZahtjevVM() {
+		// TODO Auto-generated constructor stub
 	}
 	public String getPodnosilacIme() {
 		return podnosilacIme;

@@ -132,11 +132,10 @@ public class ZahtjevController {
 			}
 			
 			
-			for (int i = 0; i<dates.size(); i++){
+			for (int i = 0; i<dates.size()-1; i++){
 			Transaction t1 = session.beginTransaction(); 
 			Odsustvo odsustvo = new Odsustvo();
 			odsustvo.setZaposlenik_id(zbr.getZaposlenik_id());
-			odsustvo.setTip(1);
 			odsustvo.setOpis(zvm.getOpis());
 			odsustvo.setTip(tip);
 			odsustvo.setDatum(dates.get(i));
