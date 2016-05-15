@@ -654,9 +654,7 @@ public class ManagementMainWindow {
 	            	JOptionPane.showMessageDialog (null, "Uspjesno ste uredili zaposlenika ","Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
             		osvjeziTabeluZaposlenika();
                 	ocistiPoljaZaposlenik();
-                	
-            		
-            	
+
 			}
 		});
 		

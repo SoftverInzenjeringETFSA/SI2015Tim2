@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import tim12.si.app.godisnji_odmori.Singleton;
+import tim12.si.app.godisnji_odmori.Controller.PrisustvoController;
 import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikAccountVM;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
@@ -28,6 +29,7 @@ import javax.swing.JPasswordField;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class UI {
@@ -39,6 +41,7 @@ public class UI {
 	private JPasswordField passwordInput;
 	private JLabel lblSi;
 	private JDialog frame;
+	private PrisustvoController pC;
 	
 	Session sess = null;
 	private static final Logger logger = Logger.getLogger(UI.class);
@@ -68,7 +71,9 @@ public class UI {
 	 * Create the application.
 	 */
 	public UI() {
+		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 		initialize();
+		pC = new PrisustvoController(sess);
 	}
 	
 	public void UIShow()
@@ -92,6 +97,9 @@ public class UI {
 			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 			ZaposlenikController zc = new ZaposlenikController(sess);
 			Singleton.getInstance().setUsername(usernameInput.getText());
+			Date danas = new Date();
+			if(!pC.provjeriDaLiPostoji(zc.dajIdPoUsernamuBaza(Singleton.getInstance().getUsername()),danas))		
+			pC.evidentirajPrisustvo(zc.dajIdPoUsernamuBaza(Singleton.getInstance().getUsername()),danas);
 			 ZaposlenikAccountVM acc = zc.DajZaposlenikAccVM(Singleton.getInstance().getUsername(), passwordInput.getText());
 			 
 			 if(acc.getPrivilegija()==true)
