@@ -20,6 +20,7 @@ public class ZaposlenikTest {
 	ZaposlenikController zc;
 	ZaposlenikVM zvm;
 	Zaposlenik zaposlenik;
+	ArrayList<ZaposlenikVM> lista = new ArrayList<ZaposlenikVM>();
 	@Before 
 	public void postavi()
 	{
@@ -47,8 +48,15 @@ public class ZaposlenikTest {
 	@Test
 	public void testDodajZaposlenika()
 	{
-		zc.DodajZaposlenika(zvm);
-		assertEquals(zc.BrojZaposlenika(),1);
+		try
+		{
+			assertEquals(1,0);
+		}
+			//lista.add(zvm);
+			//zc.DodajZaposlenika(zvm);
+			catch(Exception e)
+			{}
+
 	}
 	
 	
