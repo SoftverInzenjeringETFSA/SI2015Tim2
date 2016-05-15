@@ -115,4 +115,26 @@ public class ZaposlenikTest {
 		}
 	}
 	
+	@Test
+	public void testModificirajZaposlenika()
+	{
+		ZaposlenikController zc=new ZaposlenikController();
+		Calendar c = new GregorianCalendar(1993,3,2);
+		List<String> l= zc.DodajZaposlenika(new ZaposlenikVM("Ajla", "Alic", "aalic1@gmail.com", c.getTime(),"061/532-653","Adresa 1", "IT","30",false ));
+		
+		zc.ModificirajZaposlenika(new ZaposlenikVM("Ajla", "Alic", "aalic1@gmail.com", c.getTime(),"061/532-653","Adresa 1", "IT","30",false ), 1);
+		
+		Zaposlenik z=new Zaposlenik();
+		try
+		{		
+			z = zc.dajZaposlenikaPoId(1);
+			assertEquals(z.getIme(),"NekoIme");
+        }
+		
+		catch (Exception e) 
+		{
+			assertEquals(e.getMessage(),"Trazeni artikal ne postoji!");
+		}
+	}
+	
 }
