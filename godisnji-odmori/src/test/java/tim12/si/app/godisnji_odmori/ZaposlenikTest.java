@@ -99,6 +99,26 @@ public class ZaposlenikTest {
 	}
 	
 	@Test
+	 public void testObrisiZaposlenika()
+		{
+		ZaposlenikController zc=new ZaposlenikController();
+		Calendar c = new GregorianCalendar(1993,3,2);
+		List<String> l= zc.DodajZaposlenika(new ZaposlenikVM("Ajla", "Alic", "aalic1@gmail.com", c.getTime(),"061/532-653","Adresa 1", "IT","30",false ));
+		
+		zc.obrisiZaposlenika(1);
+			
+			try 
+			{
+				assertEquals("NekoIme", zc.dajZaposlenikaPoId(1).getIme());
+			} 
+			catch (Exception e)
+			{
+				assertEquals(e.getMessage(),"Trazeni zaposlenik ne postoji!");
+			}	
+			
+		}
+	
+	@Test
 	public void nadjiPoIduTest() {
 		ZaposlenikController zc=new ZaposlenikController();
 		Calendar c = new GregorianCalendar(1993,3,2);
