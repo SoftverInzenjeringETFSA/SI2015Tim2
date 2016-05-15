@@ -116,7 +116,7 @@ public class ZaposlenikTest {
 			catch (Exception e)
 			{
 				assertEquals(e.getMessage(),"Trazeni zaposlenik ne postoji!");
-//				Logger.getLogger(ZaposlenikController.class).error(e.getMessage());
+				Logger.getLogger(ZaposlenikController.class).error(e.getMessage());
 			}	
 			
 		}
@@ -135,7 +135,7 @@ public class ZaposlenikTest {
 		catch (Exception e)
 		{
 			assertEquals(e.getMessage(), "Trazeni zaposlenik ne postoji");
-//			Logger.getLogger(ZaposlenikController.class).error(e.getMessage());
+			Logger.getLogger(ZaposlenikController.class).error(e.getMessage());
 		}
 	}
 	
