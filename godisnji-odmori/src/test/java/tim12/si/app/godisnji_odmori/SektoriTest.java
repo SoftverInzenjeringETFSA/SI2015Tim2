@@ -85,11 +85,6 @@ public class SektoriTest extends TestCase {
 		s2.setMax_broj_odsutnih(3);
 		s2.setNaziv("Sektor2");
 		
-		
-
-
-		
-		
 		sc = new SektorController();
 		//sc.dodajSektor(s);
 		l.add(z1);

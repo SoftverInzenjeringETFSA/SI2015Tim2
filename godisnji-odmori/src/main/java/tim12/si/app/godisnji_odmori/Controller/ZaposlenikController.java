@@ -251,9 +251,6 @@ public class ZaposlenikController
 		List l = q.list();
 		t.commit();
 		
-		
-		
-		
 		if(l.isEmpty())
 			throw new ZaposlenikNotFound("Zaposlenik s username-om: " + username + " nije pronadjen.");
 			
