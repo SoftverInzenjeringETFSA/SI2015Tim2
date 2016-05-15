@@ -101,7 +101,7 @@ public class SektoriTest extends TestCase {
 	
 	@Test
 	public void testdodajSektor() {
-		try{
+
 			int brojSektora = sc.dajBrojSektora();
 			System.out.println(brojSektora);
 			sc.dodajSektor(sm);
@@ -109,9 +109,7 @@ public class SektoriTest extends TestCase {
 	
 			assertEquals(sc.dajBrojSektora(), brojSektora+1);
 		}
-		catch(Exception e)
-		{}
-          }
+
 	
 	
 	
