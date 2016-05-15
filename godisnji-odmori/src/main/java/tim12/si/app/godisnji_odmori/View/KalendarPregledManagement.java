@@ -35,6 +35,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 
+
+
 public class KalendarPregledManagement {
 
 	private JFrame frmZauzetiTerminiPo;
@@ -44,6 +46,8 @@ public class KalendarPregledManagement {
 	private ArrayList<Date> events;
 	private JLabel lblNewLabel;
 	private JSpinner js;
+	
+	final static Logger logger = Logger.getLogger(KalendarPregledManagement.class);
 
 	/**
 	 * Launch the application.
@@ -98,7 +102,7 @@ public class KalendarPregledManagement {
 			    }
 			    	catch (Exception er) {
 
-			    		Logger.getLogger(KalendarPregledManagement.class).error(er.getMessage());
+			    		logger.error(er);
 						JOptionPane.showMessageDialog(frame, er.getMessage(),
 								"Greška", JOptionPane.INFORMATION_MESSAGE);
 						
