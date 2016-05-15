@@ -96,23 +96,33 @@ public class SektoriTest extends TestCase {
 	
 	@Test
 	public void testdodajSektor() {
-
-			int brojSektora = sc.dajBrojSektora();
+		int brojSektora=0;
+		try{
+			brojSektora= sc.dajBrojSektora();
 			System.out.println(brojSektora);
 			sc.dodajSektor(sm);
 			System.out.println(brojSektora);
 	
 			assertEquals(sc.dajBrojSektora(), brojSektora+1);
 		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		}
 
 	
 	
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testmodificirajSektor(){
-		
+		try{
 		sm.opis="Noviiii opiiiss TEST";
 		sc.modificirajSektor(sm,(int)sc.dajSektorPoNazivuBaza(sm.naziv).getSektor_id());
+		}
+		catch(Exception e)
+		{}
 		assertEquals(sc.dajSektorPoNazivuBaza(sm.naziv).getOpis(),"Noviiii opiiiss TEST");
 		
           }
@@ -145,15 +155,25 @@ public class SektoriTest extends TestCase {
 	
 	@Test
 	public void testdajNazivSektora() {
+		Sektor s= new Sektor();
+		String naziv="";
+		try{
+		s.setSektor_id((long)1);
+		s.setNaziv("Sektor1");
+		naziv=sc.dajNazivSektora((int)s.getSektor_id());
 		
-		assertEquals(s.getNaziv(), "Sektor1");
-
+		}
+		catch(Exception e)
+		{}
+	
+		assertEquals(naziv, "Sektor1");
           }
 
 	@Test
 	public void testdodajZaposlenikeUSektor () {
 
 		sc.dodajZaposlenikeUSektor(s.getSektor_id(), lista );
+
 		assertEquals(s.getBroj_uposlenih(), 2 );
 
           }

@@ -83,7 +83,7 @@ public class ZaposlenikTest {
 					"WHERE z.ime = :ime AND z.prezime=:prezime";
 			
 			Query p = sess.createQuery(x);
-			//p.setString("Id", zvm.get);
+			//p.setString("Id",zvm.get);
 			p.executeUpdate();
 			assertEquals(tmp,true);
 		}
@@ -116,7 +116,7 @@ public class ZaposlenikTest {
 			catch (Exception e)
 			{
 				assertEquals(e.getMessage(),"Trazeni zaposlenik ne postoji!");
-//				Logger.getLogger(ZaposlenikController.class).error(e.getMessage());
+				Logger.getLogger(ZaposlenikController.class).error(e.getMessage());
 			}	
 			
 		}
@@ -135,7 +135,7 @@ public class ZaposlenikTest {
 		catch (Exception e)
 		{
 			assertEquals(e.getMessage(), "Trazeni zaposlenik ne postoji");
-//			Logger.getLogger(ZaposlenikController.class).error(e.getMessage());
+			Logger.getLogger(ZaposlenikController.class).error(e.getMessage());
 		}
 	}
 	
@@ -169,6 +169,55 @@ public class ZaposlenikTest {
 		List<String> l= zc.DodajZaposlenika(new ZaposlenikVM("Ajla", "Alic", "aalic1@gmail.com", c.getTime(),"061/532-653","Adresa 1", "IT","30",false ));
 		Object[][] list=zc.dajSveZaposlenike();
 		assertTrue(list.length>0);
+	}
+	
+	@Test
+	public void testZaposlenika() {
+		Zaposlenik k = new Zaposlenik();
+		k.setUsername("testUserK");
+		k.setPassword("testPassword123");
+
+		// Najprije je potrebnono Napraviti sesiju i otvoriti je.
+		// Ovo radimo u GUI-u nakon poziva
+		Session session = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+
+			// Session proslijedimo BLL klasi konstruktorom - Dependency
+			// Injection
+			// BLL klasa sprema kao privatni atribut sesiju koja joj je
+			// prosljeđena kroz konstruktor
+
+			// U svakoj BLL metodi otvaramo transakciju
+			Transaction t = session.beginTransaction();
+
+			// Radimo nešto u metodi
+			long novi_id = (Long) session.save(k);
+
+			assertEquals("Id zaposlenika mora biti jednak novom id-u", novi_id,
+					k.getZaposlenik_id());
+			// Kad zavrsimo uradimo commit da se spreme promjene
+			t.commit();
+
+			Zaposlenik novi = (Zaposlenik) session.get(Zaposlenik.class, k.getZaposlenik_id());
+			assertEquals("Idevi moraju biti jednaki", k.getZaposlenik_id(), novi.getZaposlenik_id());
+			assertEquals("Username moraju biti jednaki", k.getUsername(),
+					novi.getUsername());
+			assertEquals("Passwordi moraju biti jednaki", k.getPassword(),
+					novi.getPassword());
+
+			t = session.beginTransaction();
+			session.delete(k);
+			t.commit();
+
+		} catch (Exception e) {
+
+			fail("Greska" + e.getMessage());
+		} finally {
+			// VAZNO: ne zaboraviti zatvoriti konekciju u GUI-u
+			if (session != null)
+				session.close();
+		}
 	}
 	
 }

@@ -10,6 +10,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import org.apache.log4j.Logger;
+
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
@@ -18,18 +21,20 @@ public class IzvjestajPoKorisniku {
 
 	private JFrame frmSolutionsiIzvjetaj;
 	private JTable table;
-
+	final static Logger logger = Logger.getLogger(IzvjestajPoKorisniku.class);
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void IzvjestajPoKorisniku() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					IzvjestajPoKorisniku window = new IzvjestajPoKorisniku();
 					window.frmSolutionsiIzvjetaj.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
+				} 
+				catch (Exception e) {
+					logger.error(e);
+					
 				}
 			}
 		});

@@ -29,6 +29,7 @@ import javax.swing.JTextArea;
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -107,6 +108,9 @@ public class UserMainWindow {
 	private JLabel lblNisteUnijeliPocetni;
 	private JLabel lblNisteUnijeliKrajnji_1;
 	private JLabel lblX;
+	
+	private static final Logger logger = Logger.getLogger(UserMainWindow.class);
+
 
 	/**
 	 * Launch the application.
@@ -120,7 +124,7 @@ public class UserMainWindow {
 					UserMainWindow window = new UserMainWindow();
 					window.frmSolutionsi.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		});
@@ -173,7 +177,8 @@ public class UserMainWindow {
 			calendar_1.getDayChooser().setEnabled(true);
 
 		} catch (Exception er) {
-
+			
+			logger.error(er);
 			if (er.getMessage() != null)
 				JOptionPane.showMessageDialog(frame, er.getMessage(), "Greška", JOptionPane.INFORMATION_MESSAGE);
 			else
@@ -480,8 +485,7 @@ public class UserMainWindow {
 					}
 
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.error(e);
 				}
 
 			}
@@ -496,8 +500,7 @@ public class UserMainWindow {
 				try {
 					initialize();
 				} catch (ZaposlenikNotFound e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.error(e);
 				}
 
 			}
@@ -753,8 +756,9 @@ public class UserMainWindow {
 			JOptionPane.showMessageDialog(null, "Uspješno poslan zahtjev za bolovanje", "Obavještenje",
 					JOptionPane.INFORMATION_MESSAGE);
 		} catch (Exception e) {
-
-			e.printStackTrace();
+			
+			logger.error(e);
+			
 		} finally {
 			sess.close();
 			ocistiBolovanje();
@@ -810,8 +814,8 @@ public class UserMainWindow {
 			JOptionPane.showMessageDialog(null, "Uspješno poslan zahtjev za neplanirano odsustvo", "Obavještenje",
 					JOptionPane.INFORMATION_MESSAGE);
 		} catch (Exception e) {
-
-			e.printStackTrace();
+			
+			logger.error(e);
 		} finally {
 			sess.close();
 			ocistiNeplanirano();
@@ -847,8 +851,9 @@ public class UserMainWindow {
 			JOptionPane.showMessageDialog(null, "Uspješno poslan zahtjev za godisnji odmor", "Obavještenje",
 					JOptionPane.INFORMATION_MESSAGE);
 		} catch (Exception e) {
-
-			e.printStackTrace();
+			
+			logger.error(e);
+			
 		} finally {
 			sess.close();
 

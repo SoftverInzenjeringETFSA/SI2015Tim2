@@ -9,6 +9,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import org.apache.log4j.Logger;
+
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
@@ -18,18 +21,22 @@ public class GodisnjiIzvjestaj {
 
 	private JFrame frmSolutionsiGodisnji;
 	private JTable table;
+	final static Logger logger = Logger.getLogger(GodisnjiIzvjestaj.class);
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void GodisnjiIzvjestaj() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					GodisnjiIzvjestaj window = new GodisnjiIzvjestaj();
 					window.frmSolutionsiGodisnji.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
+				} 
+				catch (Exception e) {
+					
+					logger.error(e);
+					
 				}
 			}
 		});

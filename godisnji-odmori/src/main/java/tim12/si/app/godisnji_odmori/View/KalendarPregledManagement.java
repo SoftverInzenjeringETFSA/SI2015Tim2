@@ -10,8 +10,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
 
+
 import javax.swing.JFrame;
+
+
 import com.toedter.calendar.JCalendar;
+import org.apache.log4j.Logger;
 
 import tim12.si.app.godisnji_odmori.Controller.KalendarController;
 import tim12.si.app.godisnji_odmori.Controller.OdsustvoController;
@@ -31,6 +35,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 
+
+
 public class KalendarPregledManagement {
 
 	private JFrame frmZauzetiTerminiPo;
@@ -40,6 +46,8 @@ public class KalendarPregledManagement {
 	private ArrayList<Date> events;
 	private JLabel lblNewLabel;
 	private JSpinner js;
+	
+	final static Logger logger = Logger.getLogger(KalendarPregledManagement.class);
 
 	/**
 	 * Launch the application.
@@ -94,7 +102,7 @@ public class KalendarPregledManagement {
 			    }
 			    	catch (Exception er) {
 
-						
+			    		logger.error(er);
 						JOptionPane.showMessageDialog(frame, er.getMessage(),
 								"Greška", JOptionPane.INFORMATION_MESSAGE);
 						
@@ -142,7 +150,7 @@ public class KalendarPregledManagement {
 			    }
 			    	catch (Exception er) {
 
-						
+			    		logger.error(er);
 						JOptionPane.showMessageDialog(frame, er.getMessage(),
 								"Greška", JOptionPane.INFORMATION_MESSAGE);
 						
@@ -158,7 +166,7 @@ public class KalendarPregledManagement {
 		
 		catch (Exception er) {
 
-			
+			logger.error(er);
 			JOptionPane.showMessageDialog(frame, er.getMessage(),
 					"Greška", JOptionPane.INFORMATION_MESSAGE);
 			
