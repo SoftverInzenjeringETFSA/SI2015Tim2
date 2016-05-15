@@ -110,6 +110,9 @@ public class ZaposlenikController
 		upisiUBazu(zaposlenik);
 		Date danas = new Date();
 		pC.evidentirajPrisustvo(dajIdPoUsernamuBaza(username),danas);
+		Sektor s= sc.dajSektorPoIdBaza((int)zaposlenik.getSektor_id());
+		s.setBroj_uposlenih(s.getBroj_uposlenih()+1);
+		sc.modificirajSektorBaza(s);
 		BrojZaposlenika();
 		
 		List<String> lista= new ArrayList<String>();
