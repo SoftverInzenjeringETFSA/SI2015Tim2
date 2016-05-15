@@ -45,7 +45,7 @@ public class ZaposlenikTest {
 			z.setIme("M123ersed");
 	}
 	@Test
-	public void TestDodajZaposlenika() throws Exception 
+	public void testDodajZaposlenika()
 	{
 		zc.DodajZaposlenika(zvm);
 		assertEquals(zc.BrojZaposlenika(),1);
