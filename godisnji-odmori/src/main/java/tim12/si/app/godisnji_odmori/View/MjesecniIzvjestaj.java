@@ -1,6 +1,8 @@
 package tim12.si.app.godisnji_odmori.View;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -71,6 +73,8 @@ public class MjesecniIzvjestaj {
 		frmSolutionsiMjesecni.setBounds(100, 100, 547, 306);
 		frmSolutionsiMjesecni.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSolutionsiMjesecni.getContentPane().setLayout(null);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frmSolutionsiMjesecni.setLocation(dim.width/2-frmSolutionsiMjesecni.getSize().width/2, dim.height/2-frmSolutionsiMjesecni.getSize().height/2);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 57, 515, 178);

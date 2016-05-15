@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -23,6 +25,7 @@ import javax.swing.JDialog;
 import java.awt.Font;
 import javax.swing.JPasswordField;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -35,7 +38,6 @@ public class UI {
 	private JPasswordField passwordInput;
 	private JLabel lblSi;
 	private JDialog frame;
-	//kako bi znali koji je user logovan
 	
 	Session sess = null;
 	
@@ -65,11 +67,24 @@ public class UI {
 		initialize();
 	}
 	
+	public void UIShow()
+	{
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UI window = new UI();
+					window.frmLogin.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 	public void provjeriUserIPass(){
 		
 		
 		try {
-			//UI.SetUsername("dbabahmeto1");
 			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 			ZaposlenikController zc = new ZaposlenikController(sess);
 			Singleton.getInstance().setUsername(usernameInput.getText());
@@ -81,20 +96,18 @@ public class UI {
 				 //otvori manager formu
 				 ManagementMainWindow mw = new ManagementMainWindow();
 				 mw.Management();
-				 //mw.provjeriUsera();
 			 }
 			 else
 			 {
 				 //otvori user formu
 				 UserMainWindow uw = new UserMainWindow();
-				 ZaposlenikVM zvm= zc.DajZaposlenikoveInformacije(acc.getUsername());
-				 //uw.ProslijediInfo(zvm);
-				 //String korisnik=acc.getUsername();	 
+				 //ZaposlenikVM zvm= zc.DajZaposlenikoveInformacije(acc.getUsername());
 				 uw.User();
 				 
+				 
 			 }
-			
-			
+			 frmLogin.dispose();
+			 
 		}
 		catch (Exception er) {
 
@@ -113,6 +126,7 @@ public class UI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		frmLogin = new JFrame();
 		frmLogin.setTitle("Login");
 		frmLogin.getContentPane().setForeground(Color.LIGHT_GRAY);
@@ -121,6 +135,7 @@ public class UI {
 		frmLogin.setBounds(100, 100, 325, 254);
 		frmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmLogin.getContentPane().setLayout(null);
+		frmLogin.setLocation(dim.width/2-frmLogin.getSize().width/2, dim.height/2-frmLogin.getSize().height/2);
 		
 		JLabel lblNewLabel = new JLabel("Username:");
 		lblNewLabel.setForeground(Color.BLACK);

@@ -1,6 +1,8 @@
 package tim12.si.app.godisnji_odmori.View;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -49,6 +51,9 @@ public class IzvjestajPoKorisniku {
 		frmSolutionsiIzvjetaj.setBounds(100, 100, 680, 300);
 		frmSolutionsiIzvjetaj.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSolutionsiIzvjetaj.getContentPane().setLayout(null);
+		
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frmSolutionsiIzvjetaj.setLocation(dim.width/2-frmSolutionsiIzvjetaj.getSize().width/2, dim.height/2-frmSolutionsiIzvjetaj.getSize().height/2);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 74, 644, 155);
