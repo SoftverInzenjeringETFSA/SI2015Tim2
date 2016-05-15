@@ -12,23 +12,34 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class OdsustvoTest extends TestCase {
-	
-	/*OdsustvoController oC = new OdsustvoController ();
-	
-	 
+	TipOdsustvaVM to;
+	TipOdsustvaVM to1;
+	TipOdsustvaController tc;
 	@Test
 	public void testdodajOdsustvo () {
 		
+		to.naziv="Odsustvo1";
+		to.opis="opis1";
+		boolean i=false;
+		int inc=tc.dodajTipOdsustva(to);
 		
-		int brojSvihOdsustva= oC.dajSvaOdsustva().size();
-		
-		oC.dodajOdsustvo(kreirajOdsustvo(new Date(25/11/2016),"Ajla", "Alic","Bolest"));
-		
-		
-		assertEquals(oC.dajSvaOdsustva().size(), brojSvihOdsustva+1);
-		
-		
+		if(inc!=0)
+		{
+			i=true;
+
+		assertEquals(true, i);
           }
+	}
+		public void testdajImeTipaOdsustva ()
+		{
+			to.naziv="Odsustvo1";
+			to.opis="opis1";
+			to1.naziv="Odsustvo2";
+			to1.opis="opis2";
+			String naziv=tc.dajImeTipaOdsustva((long)to.hashCode());
+			assertEquals(naziv,"Odsustvo1" );
+	          }
+	/*
 	@Test
 	public void testdajOdsustvaPoTipu () {
 		
