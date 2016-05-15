@@ -39,9 +39,9 @@ public class ZaposlenikTest {
 		Session sess=HibernateUtil.getSessionFactory().openSession();
 		Transaction t= sess.beginTransaction();
 		
-		//long id=(Long) sess.save(zap);
+		long id=(Long) sess.save(zap);
 		
-		//zap.setId(id);
+		zap.setZaposlenik_id(1);
 		
 		t.commit();
 		sess.close();
@@ -115,6 +115,7 @@ public class ZaposlenikTest {
 			catch (Exception e)
 			{
 				assertEquals(e.getMessage(),"Trazeni zaposlenik ne postoji!");
+//				Logger.getLogger(ZaposlenikController.class).error(e.getMessage());
 			}	
 			
 		}
@@ -133,6 +134,7 @@ public class ZaposlenikTest {
 		catch (Exception e)
 		{
 			assertEquals(e.getMessage(), "Trazeni zaposlenik ne postoji");
+//			Logger.getLogger(ZaposlenikController.class).error(e.getMessage());
 		}
 	}
 	
@@ -154,7 +156,8 @@ public class ZaposlenikTest {
 		
 		catch (Exception e) 
 		{
-			assertEquals(e.getMessage(),"Trazeni artikal ne postoji!");
+			assertEquals(e.getMessage(),"Trazeni zaposlenik ne postoji!");
+		//	Logger.getLogger(ZaposlenikController.class).error(e.getMessage());
 		}
 	}
 	
