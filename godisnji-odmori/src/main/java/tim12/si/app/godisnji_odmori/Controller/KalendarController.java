@@ -36,7 +36,6 @@ public class KalendarController {
 	}
 	public void postaviZauzete(ArrayList<Date> events, JCalendar calendar)
 	{
-		System.out.println("Dosooo da postaviiii");
 		
 
 		Calendar cal = Calendar.getInstance();
@@ -45,7 +44,6 @@ public class KalendarController {
 		int month = cal.get(Calendar.MONTH);
 		int year = cal.get(Calendar.YEAR);
 		
-		System.out.println(year);
 
 		JPanel jpanel = calendar.getDayChooser().getDayPanel();
 		calendar.getDayChooser().setEnabled(false);
@@ -53,7 +51,6 @@ public class KalendarController {
 		
 		
 		
-		//System.out.println(events.get(2).toString());
 		
 
 		//arraylist of events
@@ -102,9 +99,7 @@ public class KalendarController {
 		Component component[] = jpanel.getComponents();
 		
 		
-		
-		//System.out.println(events.get(2).toString());
-		
+			
 
 		//arraylist of events
 		for(int i = 0; i < events.size(); i++)
