@@ -18,6 +18,7 @@ public class ZaposlenikVM {
 	public Boolean privilegija;
 	public String telefon;
 	public Date datumRodjenja;
+	public String sektorNaziv;
 	public ZaposlenikVM(){}
 	public ZaposlenikVM(String ime, String prezime,String email,Date datumRodjenja,String telefon, String adresaStanovanja)
 	{
@@ -53,6 +54,20 @@ public class ZaposlenikVM {
 		this.adresaStanovanja= adresaStanovanja;
 		this.sektor= sc.dajSektorPoNazivu(sektor).getSektor_id();
 		this.brojDanaGodisnje = Integer.parseInt(brojDana);
+		this.privilegija=privilegija;
+	}
+	
+	public ZaposlenikVM(String ime, String prezime,String email,Date datumRodjenja,String telefon, String adresaStanovanja, long sektor, int brojDana,Boolean privilegija)
+	{
+		SektorController sc = new SektorController();
+		this.ime= ime;
+		this.prezime= prezime;
+		this.datumRodjenja=datumRodjenja;
+		this.email= email;
+		this.telefon= telefon;
+		this.adresaStanovanja= adresaStanovanja;
+		this.sektor= sektor;
+		this.brojDanaGodisnje = brojDana;
 		this.privilegija=privilegija;
 	}
 

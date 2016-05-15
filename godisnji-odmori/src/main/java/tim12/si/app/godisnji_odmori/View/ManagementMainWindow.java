@@ -99,6 +99,7 @@ public class ManagementMainWindow {
 	JList<String> list_1;
 	JYearChooser spinner_1;
 	JYearChooser spinner_3;
+	JYearChooser spinner_4;
 	private JCheckBox chckbxManagerPrivilegija;
 	
 
@@ -133,6 +134,8 @@ public class ManagementMainWindow {
 	 */
 	public ManagementMainWindow() {
 		sC = new SektorController();
+		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+		zC = new ZaposlenikController(sess);
 		initialize();
 		provjeriUsera();
 		
@@ -145,8 +148,7 @@ public class ManagementMainWindow {
 		//this.frmSolutionsi.setVisible(true);
 		try {
 			//UI.SetUsername("dbabahmeto1");
-			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
-			zC = new ZaposlenikController(sess);
+			
 			ZaposlenikController zc = new ZaposlenikController(sess);
 			String varij = Singleton.getInstance().getUsername();
 			ZaposlenikBrDana zbd = zc.DajZaposlenikViewModel(Singleton.getInstance().getUsername());
@@ -177,10 +179,7 @@ public class ManagementMainWindow {
 			else JOptionPane.showMessageDialog(frame, "Korisnik sa username: " + Singleton.getInstance().getUsername() + " ne postoji.",
 					"Greška", JOptionPane.INFORMATION_MESSAGE);
 
-		} finally {
-			if (sess != null)
-				sess.close();
-		}
+		} 
 		
 		
 	}
@@ -479,6 +478,12 @@ public class ManagementMainWindow {
 		panel_4.add(txtAdresa);
 		txtAdresa.setColumns(10);
 		
+		spinner_4 = new JYearChooser();
+		spinner_4.setBounds(192, 72, 147, 20);
+		spinner_4.setValue(0);
+		spinner_4.setVisible(false);
+		panel_4.add(spinner_4);
+		
 		JLabel lblNewLabel_9 = new JLabel("");
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblNewLabel_9.setForeground(Color.RED);
@@ -509,28 +514,19 @@ public class ManagementMainWindow {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 23, 435, 350);
 		panel_6.add(scrollPane);
-		
+		zC.dajSveZaposlenike();
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"", "", "", "", "15"},
-				{"", "", "", "", "20"},
-			},
+			zC.dajSveZaposlenike(),
 			new String[] {
 				"ID zaposlenika", "Ime", "Prezime", "Sektor", "Broj dana godi\u0161njeg"
 			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				true, true, true, true, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(86);
 		table.getColumnModel().getColumn(4).setPreferredWidth(120);
+		
 		
 		JButton btnDodajZaposlenika = new JButton("Dodaj zaposlenika");
 		btnDodajZaposlenika.addActionListener(new ActionListener() {
@@ -539,15 +535,15 @@ public class ManagementMainWindow {
             	//if(!validirajUnosZaposlenika())
             		//return;
 				try {
-					sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
-					zC = new ZaposlenikController(sess);
+					/*sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+					zC = new ZaposlenikController(sess);*/
 	            	List<String> listaStringova =zC.DodajZaposlenika(new ZaposlenikVM (txtHaso.getText(), txtHasi.getText(),txtEmail.getText(), dateRodjen.getDate(), txtBrojTelefona.getText(), txtAdresa.getText(),(String)comboSektor.getSelectedItem(),txtBrojDanaOdmora.getText(),chckbxManagerPrivilegija.isSelected()));
 	            	JOptionPane.showMessageDialog (null, "Uspjesno ste dodali novog zaposlenika\n Username :"+listaStringova.get(0)+"\n Password: "+ listaStringova.get(1), "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
 				
-            	//	osvjeziTabeluZaposlenika();
+                osvjeziTabeluZaposlenika();
             //	ocistiPoljaZaposlenik();
 			}
 		});
@@ -557,8 +553,40 @@ public class ManagementMainWindow {
 		JButton btnUrediPodatkeO = new JButton("Uredi zaposlenika");
 		btnUrediPodatkeO.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//povući iz tabele i dodijeliti textbox-evima vrijednosti
+				try {
+					
+					/*sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+					zC = new ZaposlenikController(sess);*/
+					int id = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
+					ZaposlenikVM zaposlenikVM=zC.dajZaposlenikaZaUredjivanje(id);
+					txtHaso.setText(zaposlenikVM.ime);
+					txtHasi.setText(zaposlenikVM.prezime);
+					txtEmail.setText(zaposlenikVM.email);
+					dateRodjen.setDate(zaposlenikVM.datumRodjenja);
+					txtBrojTelefona.setText(zaposlenikVM.telefon);
+					txtAdresa.setText(zaposlenikVM.adresaStanovanja);
+					comboSektor.setSelectedItem(sC.dajNazivSektoraPoIdBaza(zaposlenikVM.sektor));
+					chckbxManagerPrivilegija.setSelected(zaposlenikVM.privilegija);
+					
+					StringBuilder sb = new StringBuilder();
+		        	sb.append("");
+		        	sb.append(zaposlenikVM.brojDanaGodisnje);
+		        	String strI1 = sb.toString();
+					
+					txtBrojDanaOdmora.setText(strI1);
+					
+					
+				} catch (Exception er) {
+					
+					if (er.getMessage() != null )
+						JOptionPane.showMessageDialog(frame, er.getMessage(),
+								"Greška", JOptionPane.INFORMATION_MESSAGE);
+				}
+				
+				
+				
 			}
+			
 		});
 		btnUrediPodatkeO.setBounds(408, 406, 140, 23);
 		panel_2.add(btnUrediPodatkeO);
@@ -566,6 +594,12 @@ public class ManagementMainWindow {
 		JButton btnObriiZaposlenika = new JButton("Obriši zaposlenika");
 		btnObriiZaposlenika.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(table.getSelectedRowCount()==0){
+            		JOptionPane.showMessageDialog (null, "Da bi ste obrisali zapolsenika, prvo ga morate selektovat", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
+				/*sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+				zC = new ZaposlenikController(sess);*/
 				Object[] options = { "Da", "Ne" };
 				int n = JOptionPane.showOptionDialog(null,
                         "Da li ste sigurni da zelite obrisati?",
@@ -577,8 +611,9 @@ public class ManagementMainWindow {
                          options[0]);
 				
 				if (n == JOptionPane.YES_OPTION) {
-					//selektovani red iz tabele
-					//zC.ObrisiZaposlenika(id); ne može po ID
+					
+					int id = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
+					zC.obrisiZaposlenika(id);
 				    osvjeziTabeluZaposlenika();
 				    ocistiPolja();
 				}
@@ -595,6 +630,12 @@ public class ManagementMainWindow {
             		//return;
             	//uvezati sa tabelom
             	{
+            		
+            		
+            		//treba sakrivat ID pa pozivat metodu za modifikaciju
+            		
+            		
+            		
             		
             		JOptionPane.showMessageDialog (null, "Ako zelite dodati novog zaposlenika pritisnite dugme Dodaj zaposlenika", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
             		//return;
@@ -766,7 +807,10 @@ public class ManagementMainWindow {
 		JButton btnObriiSektor = new JButton("Obriši sektor");
 		btnObriiSektor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				if(list_1.getSelectedValue()==null){
+            		JOptionPane.showMessageDialog (null, "Da bi ste obrisali sektor, prvo ga morate selektovat", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
 				Object[] options = { "Da", "Ne" };
 				int n = JOptionPane.showOptionDialog(null,
                         "Da li ste sigurni da zelite obrisati?",
@@ -881,6 +925,16 @@ public class ManagementMainWindow {
 	}
   
   public void osvjeziTabeluZaposlenika(){
+	  
+	  table.setModel(new DefaultTableModel(
+				zC.dajSveZaposlenike(),
+				new String[] {
+					"ID zaposlenika", "Ime", "Prezime", "Sektor", "Broj dana godi\u0161njeg"
+				}
+			));
+	  
+	  table.getColumnModel().getColumn(0).setPreferredWidth(86);
+		table.getColumnModel().getColumn(4).setPreferredWidth(120);
 	  
   }
 

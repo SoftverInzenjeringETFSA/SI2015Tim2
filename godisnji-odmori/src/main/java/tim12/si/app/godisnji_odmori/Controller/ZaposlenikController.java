@@ -42,6 +42,49 @@ public class ZaposlenikController
 		pC = new PrisustvoController(session);
 	};
 	
+	
+	public Object[][] dajSveZaposlenike() {
+		
+		
+		
+		List<Zaposlenik> listaZaposlenika = dajSveZaposlenikeBaza();
+		Object[][] listaZaTabele = new Object[listaZaposlenika.size()][5];
+		
+		for(int i =0; i< listaZaposlenika.size();i++){
+			
+			StringBuilder sb = new StringBuilder();
+        	sb.append("");
+        	sb.append(listaZaposlenika.get(i).getZaposlenik_id());
+        	String strI1 = sb.toString();
+        	
+        	StringBuilder sb2 = new StringBuilder();
+        	sb2.append("");
+        	sb2.append(listaZaposlenika.get(i).getBroj_dana_godisnjeg());
+        	String strI2 = sb2.toString();
+        	
+        	
+			
+				listaZaTabele[i][0]=strI1;
+				listaZaTabele[i][1]=listaZaposlenika.get(i).getIme();
+				listaZaTabele[i][2]=listaZaposlenika.get(i).getPrezime();
+				listaZaTabele[i][3]=sc.dajNazivSektoraPoIdBaza(listaZaposlenika.get(i).getSektor_id());
+				listaZaTabele[i][4]=strI2;
+				
+			}
+		
+	
+		
+		return listaZaTabele;
+		
+	}
+	
+	public void obrisiZaposlenika (int id){
+		
+		Zaposlenik zaposlenik = dajZaposlenikaPoId(id);
+		obrisiZaposlenikaBaza(zaposlenik);
+		
+	}
+	
 	//dodaje zaposlenika u bazu
 	public List<String> DodajZaposlenika(ZaposlenikVM zaposlenikVM) 
 	{	
@@ -139,8 +182,8 @@ public class ZaposlenikController
 		
 		return vm;
 	}
-	public ZaposlenikBrDana DajZaposlenikViewModelZaZahtjev(String username) throws ZaposlenikNotFound
-	{
+	
+	public ZaposlenikBrDana DajZaposlenikViewModelZaZahtjev(String username) throws ZaposlenikNotFound{
 		Transaction t = session.beginTransaction();
 		
 		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana(s.naziv, z.ime,z.zaposlenik_id, "+
@@ -166,8 +209,8 @@ public class ZaposlenikController
 		return vm;
 	}
 	
-	public ZaposlenikAccountVM DajZaposlenikAccVM(String username, String password) throws ZaposlenikNotFound
-	{
+	public ZaposlenikAccountVM DajZaposlenikAccVM(String username, String password) throws ZaposlenikNotFound{
+		
 		Transaction t = session.beginTransaction();
 		
 		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikAccountVM(z.username, z.password, z.privilegija) "+
@@ -181,32 +224,13 @@ public class ZaposlenikController
 		if(l.isEmpty())
 			throw new ZaposlenikNotFound("Zaposlenik s username-om: " + username + " nije pronadjen.");
 		ZaposlenikAccountVM vm = (ZaposlenikAccountVM) l.get(0);
+		
 		return vm;
 	}
 	
-	public ZaposlenikVM DajInformacijeZaTabelu (String username) throws ZaposlenikNotFound
-	{
-		Transaction t=session.beginTransaction();
-		//id, ime, prezime, sektor, broj dana godišnjeg
-		String neki="Select new tim12.si.app.godisnji_odmori.Model.Zaposlenik(z.id, z.ime,z.prezime,z.sektor_id, z.broj_dana_godisnjeg)"+
-		"FROM Zaposlenik z WHERE z.username = :username";
-		
-		Query q=session.createQuery(neki);
-		q.setString("username",username);
-		
-		List l=q.list();
-		t.commit();
-		
-		if(l.isEmpty())
-			throw new ZaposlenikNotFound("Zaposlenik s username-om: " + username + " nije pronadjen.");
-			
-		ZaposlenikVM vm = (ZaposlenikVM) l.get(0);
-		return vm;
-	}
 	
 	//Informacije o logovanom korisniku
-	public ZaposlenikVM DajZaposlenikoveInformacije(String username) throws ZaposlenikNotFound
-	{
+	public ZaposlenikVM DajZaposlenikoveInformacije(String username) throws ZaposlenikNotFound {
 		
 		Transaction t = session.beginTransaction();
 		//ime, prezime, datum rodjenja,broj telefona i adresa
@@ -233,6 +257,21 @@ public class ZaposlenikController
 	}
 	
 	
+	public ZaposlenikVM dajZaposlenikaZaUredjivanje (int id) throws ZaposlenikNotFound {
+		
+		
+		Zaposlenik z = dajZaposlenikaPoId(id);
+		
+		ZaposlenikVM vm = new  ZaposlenikVM(z.getIme(),z.getPrezime(),z.getEmail(),z.getDatum_rodjenja(),z.getTelefon(),z.getAdresa_stanovanja(),z.getSektor_id(),z.getBroj_dana_godisnjeg(),z.getPrivilegija());
+		
+		
+		return vm;
+		
+	}
+	
+	
+	
+
 	public Boolean promjeniSifru (String username, String password){
 	
 		Zaposlenik z = dajZaposlenikaBaza(username);
@@ -263,6 +302,7 @@ public class ZaposlenikController
 	// =======================================================================
 	// 									DAL
 	// =======================================================================
+	
 	
 	
 	
@@ -332,6 +372,7 @@ public class ZaposlenikController
    	    t.commit();
 		
 	}
+	
 	
 	public String dajNazivSektoraZaposlenikaBaza(String username){
 			
