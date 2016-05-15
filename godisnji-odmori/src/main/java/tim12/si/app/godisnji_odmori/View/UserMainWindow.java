@@ -12,6 +12,7 @@ import javax.swing.JList;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
@@ -63,8 +65,6 @@ public class UserMainWindow {
 	private JLabel lblIDInfo;
 	private JLabel lblIme;
 	private JLabel lblPrezime;
-	private JTextField txtEmail;
-	private JTextField txtBrojTelefona;
 	private JLabel lblAdresaStanovanja;
 	private JLabel lblDatumRodjenja;
 	private JDialog frame;
@@ -95,6 +95,8 @@ public class UserMainWindow {
 	private ZaposlenikBrDana zbd;
 	private ZaposlenikVM zvm;
 	private JLabel label_1;
+	private JLabel lblpostaviEmail;
+	private JLabel lblPostaviBrTel;
 
 
 	/**
@@ -143,34 +145,22 @@ public class UserMainWindow {
 	    	kc.postaviZauzete(events, calendar); 
 	    	
 	    	
-	    	
-		//sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
-		//ZaposlenikController zc = new ZaposlenikController(sess);
 		ZaposlenikVM zvm = zc.DajZaposlenikoveInformacije(Singleton.getInstance().getUsername());
 		zvm = zc.DajZaposlenikoveInformacije(Singleton.getInstance().getUsername());
 		
-		//lblIDInfo.setText(zvm.getID());
 		
 		lblIme.setText(zvm.getIme());
 		lblPrezime.setText(zvm.getPrezime());
-		txtEmail.setText(zvm.getEmail());
-		txtBrojTelefona.setText(zvm.getTelefon());
 		lblAdresaStanovanja.setText(zvm.getAdresaStanovanja());
 		lblDatumRodjenja.setText(zvm.getDatumRodjenja().toString());
+		lblPostaviBrTel.setText(zvm.getTelefon());
+		lblpostaviEmail.setText(zvm.getEmail());
 		
-		
-		
-		
-		
-		
-		
+	
 		final Color c = calendar_1.getDayChooser().getDayPanel().getComponent(20).getBackground();
     	sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 
-		
-    	
     	events = oc.dajSvaOdsustva(zc.dajNazivSektoraZaposlenikaBaza(Singleton.getInstance().getUsername()));
-    	
     	
     	
     	kc.postaviZauzete(events, calendar_1);
@@ -206,10 +196,12 @@ public class UserMainWindow {
 		frmSolutionsi.setTitle("SolutionSI");
 		frmSolutionsi.getContentPane().setLayout(null);
 		frmSolutionsi.setBounds(10, 20, 665,525);
-		
+		frmSolutionsi.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 11, 626, 442);
 		frmSolutionsi.getContentPane().add(tabbedPane);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frmSolutionsi.setLocation(dim.width/2-frmSolutionsi.getSize().width/2, dim.height/2-frmSolutionsi.getSize().height/2);
 		
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("Početna", null, panel, null);
@@ -356,16 +348,6 @@ public class UserMainWindow {
 				lblBrojTelefona.setBounds(10, 52, 98, 14);
 				panel_11.add(lblBrojTelefona);
 				
-				txtEmail = new JTextField(zvm.getEmail());
-				txtEmail.setBounds(127, 21, 148, 20);
-				panel_11.add(txtEmail);
-				txtEmail.setColumns(10);
-				
-				txtBrojTelefona = new JTextField(zvm.getTelefon());
-				txtBrojTelefona.setBounds(127, 46, 148, 20);
-				panel_11.add(txtBrojTelefona);
-				txtBrojTelefona.setColumns(10);
-				
 				JLabel lblAdresa = new JLabel("Adresa:");
 				lblAdresa.setBounds(10, 77, 46, 14);
 				panel_11.add(lblAdresa);
@@ -373,6 +355,14 @@ public class UserMainWindow {
 				lblAdresaStanovanja = new JLabel(zvm.getAdresaStanovanja());
 				lblAdresaStanovanja.setBounds(127, 77, 148, 14);
 				panel_11.add(lblAdresaStanovanja);
+				
+				lblpostaviEmail = new JLabel("");
+				lblpostaviEmail.setBounds(127, 27, 148, 14);
+				panel_11.add(lblpostaviEmail);
+				
+				lblPostaviBrTel = new JLabel("");
+				lblPostaviBrTel.setBounds(127, 52, 148, 14);
+				panel_11.add(lblPostaviBrTel);
 				
 				JPanel panel_12 = new JPanel();
 				panel_12.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Promjena \u0161ifre", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -639,13 +629,13 @@ public class UserMainWindow {
 				spasiZahtjevNeplanirano();
 			}
 		});
-		btnKreirajZahtjev.setBounds(401, 368, 140, 23);
+		btnKreirajZahtjev.setBounds(432, 380, 140, 23);
 		panel_3.add(btnKreirajZahtjev);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setLayout(null);
 		panel_4.setBorder(new TitledBorder(null, "Vremenski interval", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_4.setBounds(41, 34, 492, 130);
+		panel_4.setBounds(80, 11, 492, 130);
 		panel_3.add(panel_4);
 		
 		JLabel label_6 = new JLabel("Od:");
@@ -669,7 +659,7 @@ public class UserMainWindow {
 		JPanel panel_5 = new JPanel();
 		panel_5.setLayout(null);
 		panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Razlog odsustva", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_5.setBounds(41, 181, 492, 171);
+		panel_5.setBounds(80, 158, 492, 171);
 		panel_3.add(panel_5);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -693,12 +683,19 @@ public class UserMainWindow {
 		menuBar.add(mnOdjava);
 		
 		JMenuItem mntmLogOut = new JMenuItem("Odjavi se");
+		mntmLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frmSolutionsi.dispose();
+				UI ui = new UI();
+				ui.UIShow();
+			}
+		});
 		mnOdjava.add(mntmLogOut);
 	}
 
 	public void ProslijediInfo(ZaposlenikVM zvm) {
 		// TODO Auto-generated method stub
-		txtEmail.setText("Merseda");
+		lblpostaviEmail.setText("Merseda");
 	}
 	
 	private void spasiZahtjevBolovanje() {
@@ -723,6 +720,10 @@ public class UserMainWindow {
 		finally
 		{
 			sess.close();
+			dateChooser_2.setDate(null);
+			dateChooser_3.setDate(null);
+			textArea.setText(null);
+			chckbxNalazSpecijaliste.setSelected(false);
 		}
 		
 	}
@@ -747,16 +748,15 @@ public class UserMainWindow {
 		finally
 		{
 			sess.close();
+			dateChooser.setDate(null);
+			dateChooser_1.setDate(null);
+			textArea_1.setText(null);
+			chckbxNalazSpecijaliste.setSelected(false);
 		}
 	}
 	
 	private void spasiZahtjevGodisnji(){
-		/*Calendar cal = Calendar.getInstance();
-		cal.set(calendar_1.getYearChooser().getYear(),calendar_1.getMonthChooser().getMonth(),1,0,0);
-		int day = cal.get(Calendar.DAY_OF_MONTH);
-		int month = cal.get(Calendar.MONTH);
-		int year = cal.get(Calendar.YEAR);*/
-		
+	
 		Date Od = calendar_1.getDate();
 		Date Do = calendar_2.getDate();
 		String opis = "Godisnji";
@@ -774,6 +774,7 @@ public class UserMainWindow {
 		finally
 		{
 			sess.close();
+			
 		}
 	}
 	

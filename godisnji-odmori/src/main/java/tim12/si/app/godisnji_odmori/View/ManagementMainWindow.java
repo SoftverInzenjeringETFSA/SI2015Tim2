@@ -15,7 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.ImageIcon;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
@@ -150,7 +153,6 @@ public class ManagementMainWindow {
 			//UI.SetUsername("dbabahmeto1");
 			
 			ZaposlenikController zc = new ZaposlenikController(sess);
-			String varij = Singleton.getInstance().getUsername();
 			ZaposlenikBrDana zbd = zc.DajZaposlenikViewModel(Singleton.getInstance().getUsername());
 			System.out.println(zbd.getZaposlenikIme());
 			System.out.println(zbd.getZaposlenikPrezime());
@@ -199,8 +201,10 @@ public class ManagementMainWindow {
 		frmSolutionsi = new JFrame();
 		frmSolutionsi.setTitle("SolutionSI");
 		frmSolutionsi.setBounds(100, 100, 840, 550);
-		frmSolutionsi.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmSolutionsi.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSolutionsi.getContentPane().setLayout(null);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frmSolutionsi.setLocation(dim.width/2-frmSolutionsi.getSize().width/2, dim.height/2-frmSolutionsi.getSize().height/2);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 11, 804, 468);
@@ -893,6 +897,13 @@ public class ManagementMainWindow {
 		menuBar.add(mnOdjava);
 		
 		JMenuItem mntmLogOut = new JMenuItem("Odjavi se");
+		mntmLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmSolutionsi.dispose();
+				UI ui = new UI();
+				ui.UIShow();
+			}
+		});
 		mnOdjava.add(mntmLogOut);
 	}
 	/*public static void Prekini(final JDialog dialog) {

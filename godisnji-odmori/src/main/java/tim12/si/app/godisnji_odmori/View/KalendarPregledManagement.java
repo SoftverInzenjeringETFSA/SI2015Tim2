@@ -2,7 +2,9 @@ package tim12.si.app.godisnji_odmori.View;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -175,6 +177,9 @@ public class KalendarPregledManagement {
 		frmZauzetiTerminiPo.setBounds(100, 100, 595, 400);
 		frmZauzetiTerminiPo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmZauzetiTerminiPo.getContentPane().setLayout(null);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frmZauzetiTerminiPo.setLocation(dim.width/2-frmZauzetiTerminiPo.getSize().width/2, dim.height/2-frmZauzetiTerminiPo.getSize().height/2);
+		
 		
 		calendar = new JCalendar();
 		calendar.setBounds(43, 88, 498, 223);

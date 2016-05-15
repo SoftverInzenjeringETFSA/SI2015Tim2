@@ -2,6 +2,7 @@ package tim12.si.app.godisnji_odmori.View;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -30,6 +31,7 @@ import org.hibernate.Session;
 import javax.swing.UIManager;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -187,12 +189,15 @@ public class ZahtjevPregledManagement {
 		frmSolutionsiZahtjev.setBounds(100, 100, 840, 407);
 		frmSolutionsiZahtjev.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmSolutionsiZahtjev.getContentPane().setLayout(null);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frmSolutionsiZahtjev.setLocation(dim.width/2-frmSolutionsiZahtjev.getSize().width/2, dim.height/2-frmSolutionsiZahtjev.getSize().height/2);
 		
 		frmSolutionsiZahtjev.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 		    	
-		    	new ManagementMainWindow();
+		    	ManagementMainWindow mw =new ManagementMainWindow();
+		    	mw.Management();
 		    	frmSolutionsiZahtjev.dispose();
 		        }
 		    }
@@ -361,56 +366,70 @@ public class ZahtjevPregledManagement {
 			}
 		});
 	}
-	private void odobriZahtjev()
-	{
+
+	private void odobriZahtjev() {
 		Session sess = null;
-		try{
-			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
-			ZahtjevController zc = new ZahtjevController(sess);
-			int i = zc.odobriZahtjev(id_zahtjeva, zbr, zvm);
-			if (i==0) JOptionPane.showMessageDialog(frame,
-					"Ne postoji zahjtev sa datim id-om!", "Greška", JOptionPane.ERROR_MESSAGE);
-			else {
-				JOptionPane.showMessageDialog(frame,
-						"Zahtjev uspješno odobren!", "Odobravanje zahtjeva!", JOptionPane.INFORMATION_MESSAGE);
-				//mee.dispatchEvent(new WindowEvent(mee, WindowEvent.WINDOW_CLOSING));
-				
+		Object[] options = { "Da", "Ne" };
+		int n = JOptionPane.showOptionDialog(null, "Da li ste sigurni da zelite odobriti zahtjev?", "Upozorenje",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+		if (n == JOptionPane.YES_OPTION) {
+			try {
+				sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+				ZahtjevController zc = new ZahtjevController(sess);
+				int i = zc.odobriZahtjev(id_zahtjeva, zbr, zvm);
+				if (i == 0)
+					JOptionPane.showMessageDialog(frame, "Ne postoji zahjtev sa datim id-om!", "Greška",
+							JOptionPane.ERROR_MESSAGE);
+				else {
+					JOptionPane.showMessageDialog(frame, "Zahtjev uspješno odobren!", "Odobravanje zahtjeva!",
+							JOptionPane.INFORMATION_MESSAGE);
+					frmSolutionsiZahtjev.dispose();
+					ManagementMainWindow mw = new ManagementMainWindow();
+					mw.Management();
+
+				}
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(frame, e.getMessage(), "Greška", JOptionPane.INFORMATION_MESSAGE);
+
+			} finally {
+				if (sess != null)
+					sess.close();
 			}
-			
-		}
-		catch (Exception e) {
-			JOptionPane.showMessageDialog(frame, e.getMessage(),
-					"Greška", JOptionPane.INFORMATION_MESSAGE);
-			
-		} finally {
-			if (sess != null)
-				sess.close();
 		}
 	}
-	private void odbijZahtjev()
-	{
+
+	private void odbijZahtjev() {
 		Session sess = null;
-		try{
-			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
-			ZahtjevController zc = new ZahtjevController(sess);
-			int i = zc.odbijZahtjev(id_zahtjeva, zbr, zvm);
-			if (i==0) JOptionPane.showMessageDialog(frame,
-					"Ne postoji zahjtev sa datim id-om!", "Greška", JOptionPane.ERROR_MESSAGE);
-			else {
-				JOptionPane.showMessageDialog(frame,
-						"Zahtjev uspješno odbijen!", "Odbijanje zahtjeva!", JOptionPane.INFORMATION_MESSAGE);
-				//mee.dispatchEvent(new WindowEvent(mee, WindowEvent.WINDOW_CLOSING));
-				
+		Object[] options = { "Da", "Ne" };
+		int n = JOptionPane.showOptionDialog(null, "Da li ste sigurni da zelite odbiti zahtjev?", "Upozorenje",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+		if (n == JOptionPane.YES_OPTION) {
+			try {
+				sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+				ZahtjevController zc = new ZahtjevController(sess);
+				int i = zc.odbijZahtjev(id_zahtjeva, zbr, zvm);
+				if (i == 0)
+					JOptionPane.showMessageDialog(frame, "Ne postoji zahjtev sa datim id-om!", "Greška",
+							JOptionPane.ERROR_MESSAGE);
+				else {
+					JOptionPane.showMessageDialog(frame, "Zahtjev uspješno odbijen!", "Odbijanje zahtjeva!",
+							JOptionPane.INFORMATION_MESSAGE);
+
+					frmSolutionsiZahtjev.dispose();
+					ManagementMainWindow mw = new ManagementMainWindow();
+					mw.Management();
+				}
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(frame, e.getMessage(), "Greška", JOptionPane.INFORMATION_MESSAGE);
+
+			} finally {
+				if (sess != null)
+					sess.close();
 			}
-			
 		}
-		catch (Exception e) {
-			JOptionPane.showMessageDialog(frame, e.getMessage(),
-					"Greška", JOptionPane.INFORMATION_MESSAGE);
-			
-		} finally {
-			if (sess != null)
-				sess.close();
-		}
+
 	}
 }

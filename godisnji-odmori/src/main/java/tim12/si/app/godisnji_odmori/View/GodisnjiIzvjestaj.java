@@ -1,6 +1,7 @@
 package tim12.si.app.godisnji_odmori.View;
+import java.awt.Dimension;
 import java.awt.EventQueue;
-
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -50,10 +51,11 @@ public class GodisnjiIzvjestaj {
 		frmSolutionsiGodisnji.setBounds(100, 100, 675, 300);
 		frmSolutionsiGodisnji.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSolutionsiGodisnji.getContentPane().setLayout(null);
-		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 70, 639, 159);
 		frmSolutionsiGodisnji.getContentPane().add(scrollPane);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frmSolutionsiGodisnji.setLocation(dim.width/2-frmSolutionsiGodisnji.getSize().width/2, dim.height/2-frmSolutionsiGodisnji.getSize().height/2);
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
