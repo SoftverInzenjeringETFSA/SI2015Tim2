@@ -2,6 +2,7 @@ package tim12.si.app.godisnji_odmori;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -57,7 +58,7 @@ public class ZaposlenikTest {
 	}
 
 	@Test
-	public void testDajZaposlenikaAkoPostojiUBazi() throws Exception {
+	public void testDodajZaposlenika() throws Exception {
 		Session sess = null;
 		
 		try {
@@ -65,8 +66,8 @@ public class ZaposlenikTest {
 			
 			ZaposlenikController zc= new ZaposlenikController(sess);
 			ZaposlenikVM zvm=new ZaposlenikVM();
-			zvm.setIme("Haso");
-			zvm.setPrezime("");
+			zvm.setIme("Ajla");
+			zvm.setPrezime("Alic");
 			Calendar c = new GregorianCalendar(1986,5,12);
 			zvm.setDatumRodjenja(c.getTime());
 			zvm.setBrojDanaGodisnje(30);
@@ -77,7 +78,7 @@ public class ZaposlenikTest {
 			
 			List<String> tmp= zc.DodajZaposlenika(zvm);
 			String x= "DELETE from Zaposlenik z " +
-					"WHERE z.zaposlenik_ime = :ime";
+					"WHERE z.ime = :ime AND z.prezime=:prezime";
 			
 			Query p = sess.createQuery(x);
 			//p.setString("Id", zvm.get);
@@ -96,5 +97,22 @@ public class ZaposlenikTest {
 				sess.close();
 		}
 	}
-
+	
+	@Test
+	public void nadjiPoIduTest() {
+		ZaposlenikController zc=new ZaposlenikController();
+		Calendar c = new GregorianCalendar(1993,3,2);
+		List<String> l= zc.DodajZaposlenika(new ZaposlenikVM("Ajla", "Alic", "aalic1@gmail.com", c.getTime(),"061/532-653","Adresa 1", "IT","30",false ));
+		
+		Zaposlenik z = new Zaposlenik();
+		try{
+			z=zc.dajZaposlenikaPoId(1);
+			assertEquals(z.getIme(),"Ime");
+		}
+		catch (Exception e)
+		{
+			assertEquals(e.getMessage(), "Trazeni zaposlenik ne postoji");
+		}
+	}
+	
 }
