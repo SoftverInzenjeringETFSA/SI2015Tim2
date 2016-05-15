@@ -39,6 +39,7 @@ import org.hibernate.Session;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JScrollPane;
@@ -51,13 +52,12 @@ import com.toedter.calendar.JDateChooser;
 
 import tim12.si.app.godisnji_odmori.Singleton;
 import tim12.si.app.godisnji_odmori.ZaposlenikNotFound;
-import tim12.si.app.godisnji_odmori.Controller.ZahtjevController;
-import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
 import tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikVM;
 
 import com.toedter.calendar.JYearChooser;
+import javax.swing.JCheckBox;
 
 public class ManagementMainWindow {
 
@@ -99,13 +99,16 @@ public class ManagementMainWindow {
 	JList<String> list_1;
 	JYearChooser spinner_1;
 	JYearChooser spinner_3;
+	private JCheckBox chckbxManagerPrivilegija;
+	
+
 
 	//static final Logger logger = Logger.getLogger(ManagementMainWindow.class);
 
 	Session sess = null;
 	private ArrayList<ZahtjevVM> zvm;
 	private SektorController sC = new SektorController();
-	private ZaposlenikController zC = new ZaposlenikController();
+	private ZaposlenikController zC;
 	private JTextField txtAdresa;
 
 
@@ -143,6 +146,7 @@ public class ManagementMainWindow {
 		try {
 			//UI.SetUsername("dbabahmeto1");
 			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+			zC = new ZaposlenikController(sess);
 			ZaposlenikController zc = new ZaposlenikController(sess);
 			String varij = Singleton.getInstance().getUsername();
 			ZaposlenikBrDana zbd = zc.DajZaposlenikViewModel(Singleton.getInstance().getUsername());
@@ -195,12 +199,12 @@ public class ManagementMainWindow {
 	private void initialize() {
 		frmSolutionsi = new JFrame();
 		frmSolutionsi.setTitle("SolutionSI");
-		frmSolutionsi.setBounds(100, 100, 840, 489);
+		frmSolutionsi.setBounds(100, 100, 840, 550);
 		frmSolutionsi.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmSolutionsi.getContentPane().setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 11, 804, 407);
+		tabbedPane.setBounds(10, 11, 804, 468);
 		frmSolutionsi.getContentPane().add(tabbedPane);
 		
 		JPanel panel = new JPanel();
@@ -399,7 +403,7 @@ public class ManagementMainWindow {
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBorder(new TitledBorder(null, "Podaci o zaposlenju", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_5.setBounds(35, 148, 289, 87);
+		panel_5.setBounds(35, 148, 289, 126);
 		panel_2.add(panel_5);
 		panel_5.setLayout(null);
 		
@@ -416,7 +420,10 @@ public class ManagementMainWindow {
 		panel_5.add(txtBrojDanaOdmora);
 		txtBrojDanaOdmora.setColumns(10);
 		
-		JComboBox comboSektor = new JComboBox();
+		comboSektor = new JComboBox();
+		String sektori[] = sC.dajSveSektore();
+		comboSektor.setModel(new DefaultComboBoxModel(sektori));
+		comboSektor.setSelectedIndex(-1);
 		comboSektor.setBounds(141, 52, 138, 20);
 		panel_5.add(comboSektor);
 		
@@ -434,10 +441,15 @@ public class ManagementMainWindow {
 		lblNewLabel_8.setBounds(103, 71, 176, 14);
 		panel_5.add(lblNewLabel_8);
 		
+		chckbxManagerPrivilegija = new JCheckBox("Manager privilegija            ");
+		chckbxManagerPrivilegija.setHorizontalTextPosition(SwingConstants.LEFT);
+		chckbxManagerPrivilegija.setBounds(10, 96, 176, 23);
+		panel_5.add(chckbxManagerPrivilegija);
+		
 		JPanel panel_4 = new JPanel();
 		panel_4.setLayout(null);
 		panel_4.setBorder(new TitledBorder(null, "Kontakt podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_4.setBounds(35, 235, 289, 110);
+		panel_4.setBounds(35, 285, 289, 110);
 		panel_2.add(panel_4);
 		
 		JLabel label_15 = new JLabel("E-mail:");
@@ -490,12 +502,12 @@ public class ManagementMainWindow {
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Zaposlenici", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_6.setBounds(334, 11, 455, 334);
+		panel_6.setBounds(334, 11, 455, 384);
 		panel_2.add(panel_6);
 		panel_6.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 23, 435, 300);
+		scrollPane.setBounds(10, 23, 435, 350);
 		panel_6.add(scrollPane);
 		
 		table = new JTable();
@@ -523,15 +535,23 @@ public class ManagementMainWindow {
 		JButton btnDodajZaposlenika = new JButton("Dodaj zaposlenika");
 		btnDodajZaposlenika.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ocistiUnosZaposlenika();
-            	if(!validirajUnosZaposlenika())
-            		return;
-            	zC.DodajZaposlenika(new ZaposlenikVM (txtHaso.getText(), txtHasi.getText(),txtEmail.getText(), dateRodjen.getDate(), txtBrojTelefona.getText(), txtAdresa.getText()));
-            	osvjeziTabeluZaposlenika();
-            	ocistiPoljaZaposlenik();
+				//ocistiUnosZaposlenika();
+            	//if(!validirajUnosZaposlenika())
+            		//return;
+				try {
+					sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+					zC = new ZaposlenikController(sess);
+	            	List<String> listaStringova =zC.DodajZaposlenika(new ZaposlenikVM (txtHaso.getText(), txtHasi.getText(),txtEmail.getText(), dateRodjen.getDate(), txtBrojTelefona.getText(), txtAdresa.getText(),(String)comboSektor.getSelectedItem(),txtBrojDanaOdmora.getText(),chckbxManagerPrivilegija.isSelected()));
+	            	JOptionPane.showMessageDialog (null, "Uspjesno ste dodali novog zaposlenika\n Username :"+listaStringova.get(0)+"\n Password: "+ listaStringova.get(1), "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				
+            	//	osvjeziTabeluZaposlenika();
+            //	ocistiPoljaZaposlenik();
 			}
 		});
-		btnDodajZaposlenika.setBounds(35, 356, 143, 23);
+		btnDodajZaposlenika.setBounds(35, 406, 143, 23);
 		panel_2.add(btnDodajZaposlenika);
 		
 		JButton btnUrediPodatkeO = new JButton("Uredi zaposlenika");
@@ -540,7 +560,7 @@ public class ManagementMainWindow {
 				//povući iz tabele i dodijeliti textbox-evima vrijednosti
 			}
 		});
-		btnUrediPodatkeO.setBounds(408, 356, 140, 23);
+		btnUrediPodatkeO.setBounds(408, 406, 140, 23);
 		panel_2.add(btnUrediPodatkeO);
 		
 		JButton btnObriiZaposlenika = new JButton("Obriši zaposlenika");
@@ -564,7 +584,7 @@ public class ManagementMainWindow {
 				}
 			}
 		});
-		btnObriiZaposlenika.setBounds(610, 356, 140, 23);
+		btnObriiZaposlenika.setBounds(610, 406, 140, 23);
 		panel_2.add(btnObriiZaposlenika);
 		
 		JButton btnSpasiPromjene = new JButton("Spasi promjene");
@@ -586,7 +606,7 @@ public class ManagementMainWindow {
 			}
 		});
 		
-		btnSpasiPromjene.setBounds(198, 356, 126, 23);
+		btnSpasiPromjene.setBounds(198, 406, 126, 23);
 		panel_2.add(btnSpasiPromjene);
 		
 		JPanel panel_7 = new JPanel();

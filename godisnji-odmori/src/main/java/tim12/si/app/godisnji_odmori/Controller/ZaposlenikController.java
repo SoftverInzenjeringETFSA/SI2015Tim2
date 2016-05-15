@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
+
+import javax.print.DocFlavor.STRING;
+import javax.swing.text.StyledEditorKit.BoldAction;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -23,6 +27,7 @@ public class ZaposlenikController
 	private ZaposlenikVM zvm;
 	private SektorController sc;
 	private int brojZaposlenika=0;
+	private PrisustvoController pC;
 	/**
 	 * 
 	 * @param zaposlenik
@@ -34,16 +39,67 @@ public class ZaposlenikController
 	{
 		this.session = session;
 		sc = new SektorController();
+		pC = new PrisustvoController(session);
 	};
 	
 	//dodaje zaposlenika u bazu
-	public void DodajZaposlenika(ZaposlenikVM zaposlenikVM) 
-	{
-		Zaposlenik zaposlenik = pretvoriUZaposlenika(zaposlenikVM);
+	public List<String> DodajZaposlenika(ZaposlenikVM zaposlenikVM) 
+	{	
+		Random rng= new Random();
+		String slova = "0123456789abcdefghijklmnopqrstuvwxyz";
+		char []password=new char[8];
+		for(int i =0;i<8;i++){
+			
+			password[i]=slova.charAt(rng.nextInt(slova.length()));
+		}
+			
+		
+		String username = generisiUsername(zaposlenikVM.ime, zaposlenikVM.prezime);
+		
+		Zaposlenik zaposlenik = pretvoriUZaposlenika(zaposlenikVM, username, new String(password));
 		upisiUBazu(zaposlenik);
+		Date danas = new Date();
+		pC.evidentirajPrisustvo(dajIdPoUsernamuBaza(username),danas);
 		BrojZaposlenika();
 		
+		List<String> lista= new ArrayList<String>();
+		lista.add(username);
+		lista.add(new String(password));
+		
+		return lista;
+		
 	}
+	
+	private String generisiUsername(String ime, String prezime)
+	{
+		String username;
+		String original;
+		username=ime.substring(0,1).toLowerCase()+prezime.toLowerCase();
+		original = username;
+		int brojac=1;
+		Boolean dobar = false;
+		while(!dobar){
+			
+			dobar = provjeriUsernameBaza(username);
+			if(dobar==false){
+				StringBuilder sb = new StringBuilder();
+            	sb.append("");
+            	sb.append(brojac);
+            	String strI = sb.toString();
+            	username = original;
+				username=username+strI;
+				brojac++;
+			}
+			
+				
+		}
+		
+		
+		return username;
+		
+	}
+	
+	
 	
 	//edituje podatke o zaposleniku
 	public void ModificirajZaposlenika(ZaposlenikVM zaposlenikVM, long id)
@@ -188,7 +244,7 @@ public class ZaposlenikController
 	
 
 	
-	public Zaposlenik pretvoriUZaposlenika (ZaposlenikVM zaposlenikVM){
+	public Zaposlenik pretvoriUZaposlenika (ZaposlenikVM zaposlenikVM,String username, String password){
 		Zaposlenik zaposlenik = new Zaposlenik();
 		zaposlenik.setIme(zaposlenikVM.ime);
 		zaposlenik.setPrezime(zaposlenikVM.prezime);
@@ -198,12 +254,17 @@ public class ZaposlenikController
 		zaposlenik.setEmail(zaposlenikVM.email);
 		zaposlenik.setSektor_id(zaposlenikVM.sektor);
 		zaposlenik.setTelefon(zaposlenikVM.telefon);
+		zaposlenik.setPrivilegija(zaposlenikVM.getPrivilegija());
+		zaposlenik.setUsername(username);
+		zaposlenik.setPassword(password);
 		return zaposlenik;
 	}
 	
 	// =======================================================================
 	// 									DAL
 	// =======================================================================
+	
+	
 	
 	public String dajPrezimeZaposlenikaBaza (String username){
 		
@@ -223,6 +284,16 @@ public class ZaposlenikController
 		return z;
 	}
 	
+	public long dajIdPoUsernamuBaza (String username){
+		
+		Criteria criteria = session.createCriteria(Zaposlenik.class);
+		criteria.add(Restrictions.eq("username", username));
+		Zaposlenik z = (Zaposlenik) criteria.uniqueResult(); 
+		
+		return z.getZaposlenik_id();
+		
+	}
+	
 	public void upisiUBazu(Zaposlenik zaposlenik){
 		Transaction t = session.beginTransaction(); 
 		session.save(zaposlenik);
@@ -231,9 +302,19 @@ public class ZaposlenikController
 
 	public Zaposlenik dajZaposlenikaPoId (long id){
 		
-		Criteria criteria = session.createCriteria(Sektor.class);
+		Criteria criteria = session.createCriteria(Zaposlenik.class);
 		criteria.add(Restrictions.eq("zaposlenik_id", (long)id));
 		return  (Zaposlenik) criteria.uniqueResult();
+		
+	}
+	
+	public Boolean provjeriUsernameBaza (String username){
+		
+		Criteria criteria = session.createCriteria(Zaposlenik.class);
+		criteria.add(Restrictions.eq("username", username));
+		Zaposlenik zaposlenik = (Zaposlenik)criteria.uniqueResult();
+		
+		return(zaposlenik==null);
 		
 	}
 	

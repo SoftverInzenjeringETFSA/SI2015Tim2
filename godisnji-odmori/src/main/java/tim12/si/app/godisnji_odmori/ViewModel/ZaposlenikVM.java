@@ -2,6 +2,10 @@ package tim12.si.app.godisnji_odmori.ViewModel;
 
 import java.util.Date;
 
+import antlr.Parser;
+import antlr.ParserSharedInputState;
+import tim12.si.app.godisnji_odmori.Controller.SektorController;
+
 public class ZaposlenikVM {
 	
 
@@ -36,6 +40,20 @@ public class ZaposlenikVM {
 		this.brojDanaGodisnje=brojDanaGodisnje;
 		this.privilegija=privilegija;
 		this.telefon=telefon;
+	}
+	
+	public ZaposlenikVM(String ime, String prezime,String email,Date datumRodjenja,String telefon, String adresaStanovanja, String sektor, String brojDana,Boolean privilegija)
+	{
+		SektorController sc = new SektorController();
+		this.ime= ime;
+		this.prezime= prezime;
+		this.datumRodjenja=datumRodjenja;
+		this.email= email;
+		this.telefon= telefon;
+		this.adresaStanovanja= adresaStanovanja;
+		this.sektor= sc.dajSektorPoNazivu(sektor).getSektor_id();
+		this.brojDanaGodisnje = Integer.parseInt(brojDana);
+		this.privilegija=privilegija;
 	}
 
 	
