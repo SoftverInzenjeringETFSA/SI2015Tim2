@@ -32,8 +32,7 @@ public class Zahtjev implements java.io.Serializable {
 
 	public Zahtjev() {}
 	
-	public static List<Zahtjev> listaZahtjeva = new ArrayList<Zahtjev>();
-
+	
 	public long getZahtjev_id()
 	{
 		return this.zahtjev_id;

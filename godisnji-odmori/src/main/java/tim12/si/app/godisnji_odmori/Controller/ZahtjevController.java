@@ -28,19 +28,7 @@ public class ZahtjevController {
 		this.session = session;
 	}
 	public long kreirajZahtjev(ZahtjevVM zahtjev) throws Exception{
-		/*Boolean flag = false;
-		Zaposlenik zp = null;
-		for(int i = 0; i<Zaposlenik.listaZaposlenika.size(); i++)
-		{
-			if (Zaposlenik.listaZaposlenika.get(i).getIme() == zahtjev.getPodnosilacIme() &&
-					Zaposlenik.listaZaposlenika.get(i).getPrezime() == zahtjev.getPodnosilacPrezime())
-				{ 
-					flag = true;
-					zp = Zaposlenik.listaZaposlenika.get(i);
-					break;				
-				}
-		}
-		if (!flag) throw new Exception("Zaposlenik ne postoji.");*/
+		
 		ZaposlenikController zc = new ZaposlenikController(session);
 		
 		Zaposlenik zp = zc.dajZaposlenikaBaza(Singleton.getInstance().getUsername());
@@ -73,23 +61,7 @@ public class ZahtjevController {
 	 * @param zahtjevID
 	 * @param odobren
 	 */
-	/*public void odobriZahtjev(long zahtjevID, Boolean odobren) throws Exception{
-		Boolean flag = false;
-		int temp = -1;
-		for(int i = 0; i<Zahtjev.listaZahtjeva.size(); i++)
-		{
-			if (Zahtjev.listaZahtjeva.get(i).getZahtjev_id() == zahtjevID)
-				{ 
-					flag = true;
-					temp = i;
-					break;				
-				}
-		}
-		if (!flag) throw new Exception("Zahtjev ne postoji.");
-		
-		Zahtjev.listaZahtjeva.get(temp).setObradjen(true);
-		Zahtjev.listaZahtjeva.get(temp).setOdluka(true);
-	}*/
+	
 	public int odobriZahtjev(long zahtjevID, ZaposlenikBrDana zbr, ZahtjevVM zvm)
 	{
 		Transaction t = session.beginTransaction();
@@ -169,21 +141,7 @@ public class ZahtjevController {
 		}
 	}
 
-	/*public ArrayList<Zahtjev> dajNeobradjeneZahtjeve() {
-		List<Zahtjev> neobradjeni = new ArrayList<Zahtjev>();
-		
-		for(int i = 0; i<Zahtjev.listaZahtjeva.size(); i++)
-		{
-			if (Zahtjev.listaZahtjeva.get(i).getObradjen() == false)
-				neobradjeni.add(Zahtjev.listaZahtjeva.get(i));
-		}
-		
-		return (ArrayList<Zahtjev>) neobradjeni;
-	}
-
-	public ArrayList<Zahtjev> dajSveZahtjeve() {
-		return (ArrayList<Zahtjev>) Zahtjev.listaZahtjeva;
-	}*/
+	
 	
 	public ArrayList<ZahtjevVM> dajSveZahtjeveIzSektora(String sektor)
 	{
