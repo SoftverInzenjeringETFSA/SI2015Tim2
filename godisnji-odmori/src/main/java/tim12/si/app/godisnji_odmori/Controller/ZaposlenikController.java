@@ -67,7 +67,14 @@ public class ZaposlenikController
 				listaZaTabele[i][0]=strI1;
 				listaZaTabele[i][1]=listaZaposlenika.get(i).getIme();
 				listaZaTabele[i][2]=listaZaposlenika.get(i).getPrezime();
-				listaZaTabele[i][3]=sc.dajNazivSektoraPoIdBaza(listaZaposlenika.get(i).getSektor_id());
+				if(listaZaposlenika.get(i).getSektor_id()==0){
+					
+					listaZaTabele[i][3]="Nema sektora";
+				}
+				else {
+					listaZaTabele[i][3]=sc.dajNazivSektoraPoIdBaza(listaZaposlenika.get(i).getSektor_id());
+				}
+				
 				listaZaTabele[i][4]=strI2;
 				
 			}
@@ -299,9 +306,32 @@ public class ZaposlenikController
 		return zaposlenik;
 	}
 	
+	
+	public void ispisiZaposlenikeIzSektora (long id){
+		
+		List<Zaposlenik> listaZaposlenika = dajSveZaposlenikeBaza();
+		for(int i = 0; i < listaZaposlenika.size();i++){
+			
+			if(listaZaposlenika.get(i).getSektor_id()==id){
+				
+				listaZaposlenika.get(i).setSektor_id(0);
+				modificirajZaposlenikBaza(listaZaposlenika.get(i));
+			}
+			
+			
+		}
+		
+		
+		
+		
+	}
+	
 	// =======================================================================
 	// 									DAL
 	// =======================================================================
+	
+	
+	
 	
 	
 	

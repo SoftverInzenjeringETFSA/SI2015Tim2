@@ -154,8 +154,6 @@ public class ManagementMainWindow {
 			
 			ZaposlenikController zc = new ZaposlenikController(sess);
 			ZaposlenikBrDana zbd = zc.DajZaposlenikViewModel(Singleton.getInstance().getUsername());
-			System.out.println(zbd.getZaposlenikIme());
-			System.out.println(zbd.getZaposlenikPrezime());
 			lblMujoMuji.setText(zbd.getZaposlenikIme() + " " + zbd.getZaposlenikPrezime());
 			lblMenadmentLjudskihResursa.setText(zbd.getSektor());
 			label_6.setText(zbd.getRadniDani().toString());
@@ -174,7 +172,7 @@ public class ManagementMainWindow {
 		}
 		catch (Exception er) {
 
-			//System.out.print(er.getMessage());
+			
 			if (er.getMessage() != null )
 			JOptionPane.showMessageDialog(frame, er.getMessage(),
 					"Greška", JOptionPane.INFORMATION_MESSAGE);
@@ -378,26 +376,26 @@ public class ManagementMainWindow {
 		panel_3.add(txtHasi);
 		txtHasi.setColumns(10);
 		
-		final JDateChooser dateRodjen = new JDateChooser();
+		dateRodjen = new JDateChooser();
 		dateRodjen.setDateFormatString("yyyy-MM-dd");
 		dateRodjen.setBounds(140, 96, 139, 19);
 		panel_3.add(dateRodjen);
 		
-		JLabel lblNewLabel_4 = new JLabel("");
+		lblNewLabel_4 = new JLabel("");
 		lblNewLabel_4.setForeground(Color.RED);
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblNewLabel_4.setBounds(89, 54, 190, 14);
 		panel_3.add(lblNewLabel_4);
 		
-		JLabel lblNewLabel_5 = new JLabel("");
+		lblNewLabel_5 = new JLabel("");
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblNewLabel_5.setForeground(Color.RED);
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_5.setBounds(89, 83, 190, 14);
 		panel_3.add(lblNewLabel_5);
 		
-		JLabel lblNewLabel_6 = new JLabel("");
+		lblNewLabel_6 = new JLabel("");
 		lblNewLabel_6.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_6.setForeground(Color.RED);
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 9));
@@ -430,14 +428,14 @@ public class ManagementMainWindow {
 		comboSektor.setBounds(141, 52, 138, 20);
 		panel_5.add(comboSektor);
 		
-		JLabel lblNewLabel_7 = new JLabel("");
+		lblNewLabel_7 = new JLabel("");
 		lblNewLabel_7.setForeground(Color.RED);
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblNewLabel_7.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_7.setBounds(103, 38, 176, 14);
+		lblNewLabel_7.setBounds(74, 38, 205, 14);
 		panel_5.add(lblNewLabel_7);
 		
-		JLabel lblNewLabel_8 = new JLabel("");
+		lblNewLabel_8 = new JLabel("");
 		lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_8.setForeground(Color.RED);
@@ -484,25 +482,25 @@ public class ManagementMainWindow {
 		
 		spinner_4 = new JYearChooser();
 		spinner_4.setBounds(192, 72, 147, 20);
-		spinner_4.setValue(0);
+		spinner_4.setValue(9999);
 		spinner_4.setVisible(false);
 		panel_4.add(spinner_4);
 		
-		JLabel lblNewLabel_9 = new JLabel("");
+		lblNewLabel_9 = new JLabel("");
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblNewLabel_9.setForeground(Color.RED);
 		lblNewLabel_9.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_9.setBounds(91, 36, 188, 14);
 		panel_4.add(lblNewLabel_9);
 		
-		JLabel lblNewLabel_10 = new JLabel("");
+		lblNewLabel_10 = new JLabel("");
 		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblNewLabel_10.setForeground(Color.RED);
 		lblNewLabel_10.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_10.setBounds(90, 64, 188, 14);
 		panel_4.add(lblNewLabel_10);
 		
-		JLabel lblNewLabel_11 = new JLabel("");
+		lblNewLabel_11 = new JLabel("");
 		lblNewLabel_11.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblNewLabel_11.setForeground(Color.RED);
 		lblNewLabel_11.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -535,12 +533,11 @@ public class ManagementMainWindow {
 		JButton btnDodajZaposlenika = new JButton("Dodaj zaposlenika");
 		btnDodajZaposlenika.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//ocistiUnosZaposlenika();
-            	//if(!validirajUnosZaposlenika())
-            		//return;
+				ocistiUnosZaposlenika();
+            	if(!validirajUnosZaposlenika())
+            		return;
 				try {
-					/*sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
-					zC = new ZaposlenikController(sess);*/
+					
 	            	List<String> listaStringova =zC.DodajZaposlenika(new ZaposlenikVM (txtHaso.getText(), txtHasi.getText(),txtEmail.getText(), dateRodjen.getDate(), txtBrojTelefona.getText(), txtAdresa.getText(),(String)comboSektor.getSelectedItem(),txtBrojDanaOdmora.getText(),chckbxManagerPrivilegija.isSelected()));
 	            	JOptionPane.showMessageDialog (null, "Uspjesno ste dodali novog zaposlenika\n Username :"+listaStringova.get(0)+"\n Password: "+ listaStringova.get(1), "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
 				} catch (Exception e) {
@@ -548,7 +545,7 @@ public class ManagementMainWindow {
 				}
 				
                 osvjeziTabeluZaposlenika();
-            //	ocistiPoljaZaposlenik();
+            	ocistiPoljaZaposlenik();
 			}
 		});
 		btnDodajZaposlenika.setBounds(35, 406, 143, 23);
@@ -559,8 +556,7 @@ public class ManagementMainWindow {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					
-					/*sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
-					zC = new ZaposlenikController(sess);*/
+					
 					int id = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
 					ZaposlenikVM zaposlenikVM=zC.dajZaposlenikaZaUredjivanje(id);
 					txtHaso.setText(zaposlenikVM.ime);
@@ -571,6 +567,7 @@ public class ManagementMainWindow {
 					txtAdresa.setText(zaposlenikVM.adresaStanovanja);
 					comboSektor.setSelectedItem(sC.dajNazivSektoraPoIdBaza(zaposlenikVM.sektor));
 					chckbxManagerPrivilegija.setSelected(zaposlenikVM.privilegija);
+					spinner_4.setValue(id);
 					
 					StringBuilder sb = new StringBuilder();
 		        	sb.append("");
@@ -620,6 +617,7 @@ public class ManagementMainWindow {
 					zC.obrisiZaposlenika(id);
 				    osvjeziTabeluZaposlenika();
 				    ocistiPolja();
+				    ocistiUnosZaposlenika();
 				}
 			}
 		});
@@ -629,25 +627,23 @@ public class ManagementMainWindow {
 		JButton btnSpasiPromjene = new JButton("Spasi promjene");
 		btnSpasiPromjene.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				ocistiUnosZaposlenika();
-            	//if(!validirajUnosZaposlenika())
-            		//return;
-            	//uvezati sa tabelom
-            	{
+            	if(!validirajUnosZaposlenika())
+            		return;        	
             		
             		
-            		//treba sakrivat ID pa pozivat metodu za modifikaciju
+            		if(spinner_4.getValue()==9999){
+                		
+                		JOptionPane.showMessageDialog (null, "Ako zelite dodati novog zaposlenika pritisnite dugme Dodaj zaposlenika", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
+                		return;
+                	}
             		
-            		
-            		
-            		
-            		JOptionPane.showMessageDialog (null, "Ako zelite dodati novog zaposlenika pritisnite dugme Dodaj zaposlenika", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
-            		//return;
-            	}
-            	//umjesto broja 5 treba ubaciti index selektovanog zaposlenika iz tabele
-            	zC.ModificirajZaposlenika(new ZaposlenikVM(txtHaso.getText(), txtHasi.getText(),txtEmail.getText(), dateRodjen.getDate(), txtBrojTelefona.getText(),txtAdresa.getText()),5);
-            	osvjeziTabeluZaposlenika();
-            	ocistiPolja();
+            		zC.ModificirajZaposlenika(new ZaposlenikVM(txtHaso.getText(), txtHasi.getText(),txtEmail.getText(), dateRodjen.getDate(), txtBrojTelefona.getText(),txtAdresa.getText(),(String)comboSektor.getSelectedItem(),txtBrojDanaOdmora.getText(),chckbxManagerPrivilegija.isSelected()),spinner_4.getValue());
+	            	JOptionPane.showMessageDialog (null, "Uspjesno ste uredili zaposlenika ","Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
+            		osvjeziTabeluZaposlenika();
+                	ocistiPoljaZaposlenik();
+            	
 			}
 		});
 		
@@ -762,7 +758,7 @@ public class ManagementMainWindow {
 		
 		spinner_3 = new JYearChooser();
 		spinner_3.setBounds(192, 72, 147, 20);
-		spinner_3.setValue(0);
+		spinner_3.setValue(9999);
 		spinner_3.setVisible(false);
 		panel_9.add(spinner_3);
 		
@@ -778,6 +774,7 @@ public class ManagementMainWindow {
             	if(!validirajUnosSektora())
             		return;
             	sC.dodajSektor(new SektorVM(txtEkonomskiSektor.getText(), spinner_1.getValue(),0,spinner_2.getValue().toString(),txtrEkonomskiSektorSe.getText()));
+        		JOptionPane.showMessageDialog (null, "Uspjesno ste dodali novi sektor", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
             	osvjeziListuSektora();
             	ocistiPolja();
             }
@@ -830,6 +827,7 @@ public class ManagementMainWindow {
 				    sC.obrisiSektor(naziv);
 				    osvjeziListuSektora();
 				    ocistiPolja();
+				    ocistiUnosSektora();
 				}
 				
 			}
@@ -848,13 +846,13 @@ public class ManagementMainWindow {
             	ocistiUnosSektora();
             	if(!validirajUnosSektora())
             		return;
-            	System.out.println(spinner_3.getValue());
             	if(spinner_3.getValue()==9999){
             		
             		JOptionPane.showMessageDialog (null, "Ako zelite dodati novi sektor pritisnite dugme Dodaj sektor", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
             		return;
             	}
             	sC.modificirajSektor(new SektorVM(txtEkonomskiSektor.getText(), spinner_1.getValue(),0,spinner_2.getValue().toString(),txtrEkonomskiSektorSe.getText()), spinner_3.getValue());
+            	JOptionPane.showMessageDialog (null, "Uspjesno ste  uredili sektor ","Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
             	osvjeziListuSektora();
             	ocistiPolja();
             }
@@ -960,21 +958,49 @@ public Boolean validirajUnosSektora(){
 		  
 	  }
 	  
-	  if(spinner_1.getValue()== 0){
+	    StringBuilder sb = new StringBuilder();
+	  	sb.append("");
+	  	sb.append(spinner_1.getValue());
+	  	String strI1 = sb.toString();
+	  
+	  if(spinner_1.getValue()== 0 || strI1.equals("")){
 		  
 		  lblNewLabel_1.setText("Polje Godina je obavezno");
 		  validacija=false;
 		  
 	  }
-	  if(spinner_2.getValue().toString().equals("0")){
+	  else{
+			
+			String regex = "^\\d+$";
+			if(!strI1.matches(regex)){
+				
+				lblNewLabel_1.setText("Polje Godina moze sadrzavat samo cifre");
+				validacija=false;
+			}
+			
+		}
+	  
+	  if(spinner_2.getValue().toString().equals("0") || spinner_2.getValue().toString().equals("") ){
 		  
 		  lblNewLabel_2.setText("Polje Maximalan broj odsutnih je obavezno");
 		  validacija=false;  
 	  }
+	  else{
+			
+			String regex = "^\\d+$";
+			if(!spinner_2.getValue().toString().matches(regex)){
+				
+				lblNewLabel_2.setText("Polje Maximalan broj odsustva moze sadrzavat samo cifre");
+				validacija=false;
+			}
+			
+		}
+	  
 	  return validacija;
 }
 
 	public Boolean validirajUnosZaposlenika(){
+		
 		Boolean validacija=true;
 		if (txtHaso.getText().isEmpty()){
 			lblNewLabel_4.setText("Polje Ime je obavezno");
@@ -984,15 +1010,28 @@ public Boolean validirajUnosSektora(){
 			lblNewLabel_5.setText("Polje Prezime je obavezno");
 			validacija=false;
 		}
-		/*Date dt= new Date();
-		if (dateRodjen.getDate()){
-			lblNewLabel_6.setText("Polje Ime je obavezno");
-			validacija=false;
-		}*/
-		if (txtAdresa.getText().isEmpty()){
-			lblNewLabel_8.setText("Polje Adresa je obavezno");
+
+		if(txtBrojDanaOdmora.getText().isEmpty()){
+			
+			lblNewLabel_7.setText("Polje Broj dana odmora je obavezno");
 			validacija=false;
 		}
+		else{
+			
+			String regex = "^\\d+$";
+			if(!txtBrojDanaOdmora.getText().matches(regex)){
+				
+				lblNewLabel_7.setText("Polje Broj dana moze sadrzavat samo cifre");
+				validacija=false;
+			}
+			
+		}
+		
+		if (comboSektor.getSelectedIndex()==-1){
+			lblNewLabel_8.setText("Polje Sektor je obavezno");
+			validacija=false;
+		}
+		
 		return validacija;
 	}
 
@@ -1030,7 +1069,7 @@ public Boolean validirajUnosSektora(){
 	
 	public void ocistiPoljaZaposlenik(){
 		
-		lblIDZaposlenika.setText("");
+
 		txtHaso.setText("");
 		txtHasi.setText("");
 		dateRodjen.setDate(null);
@@ -1038,7 +1077,8 @@ public Boolean validirajUnosSektora(){
 		comboSektor.setSelectedIndex(-1);
 		txtEmail.setText("");
 		txtBrojTelefona.setText("");
-		txtAdresa.setText("");	
+		txtAdresa.setText("");
+		spinner_4.setValue(9999);
 	}
 }
 

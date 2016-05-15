@@ -20,11 +20,18 @@ import tim12.si.app.godisnji_odmori.ViewModel.*;
 import tim12.si.app.godisnji_odmori.HibernateUtil;
 import tim12.si.app.godisnji_odmori.Model.*;
 
+
 public class SektorController {
 	
 	private int brojsektora;
 	public Session session = HibernateUtil.getSessionFactory().openSession();
 	public Transaction t;
+	private ZaposlenikController zc;
+	
+	public SektorController() {
+		
+		
+	}
 	
 	
 	
@@ -91,8 +98,11 @@ public class SektorController {
 	
 	public void obrisiSektor (String naziv){
 		
+		zc = new ZaposlenikController(session);
+		
 		Sektor sektor = dajSektorPoNazivuBaza(naziv);
 		obrisiSektorBaza(sektor);
+		zc.ispisiZaposlenikeIzSektora(sektor.getSektor_id());
 	}
 	
 	public Sektor pretvoriUSektor(SektorVM sektorVM) {
