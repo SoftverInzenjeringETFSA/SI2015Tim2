@@ -117,11 +117,6 @@ public class OdsustvoTest extends TestCase {
 		odsustvo.opis="Imam visoku temperaturu";
 		
 		return odsustvo;
-		
-			
-	
-
-
 		}
 	
 

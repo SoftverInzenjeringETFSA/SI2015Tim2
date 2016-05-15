@@ -109,11 +109,8 @@ public class OdsustvoController {
 				
 			}
 			
-			
 		}
 		
-		
-			
 		for(Date kljuc: datumi.keySet()){
 			
 			
@@ -121,11 +118,6 @@ public class OdsustvoController {
 					listaDatuma.add(kljuc);
 				
 		}
-
-			
-		
-		
-
 		
 		
 		return listaDatuma;
