@@ -19,6 +19,8 @@ import tim12.si.app.godisnji_odmori.Model.*;
 public class OdsustvoController {
 	private Session session;
 	private SektorController sc;
+
+	public OdsustvoController() {}
 	public OdsustvoController(Session session)
 	{
 		this.session = session;

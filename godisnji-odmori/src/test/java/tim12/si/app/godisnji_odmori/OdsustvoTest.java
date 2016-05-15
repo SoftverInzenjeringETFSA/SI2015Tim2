@@ -15,6 +15,7 @@ public class OdsustvoTest extends TestCase {
 	TipOdsustvaVM to;
 	TipOdsustvaVM to1;
 	TipOdsustvaController tc;
+	OdsustvoController oC= new OdsustvoController();
 	@Test
 	public void testdodajOdsustvo () {
 		
@@ -39,7 +40,7 @@ public class OdsustvoTest extends TestCase {
 			String naziv=tc.dajImeTipaOdsustva((long)to.hashCode());
 			assertEquals(naziv,"Odsustvo1" );
 	          }
-	/*
+		
 	@Test
 	public void testdajOdsustvaPoTipu () {
 		
@@ -99,9 +100,7 @@ public class OdsustvoTest extends TestCase {
 	@Test
 	public void testdajSvaOdsustva () {
 		
-		
-		
-		assertEquals(oC.dajSvaOdsustva(),44);
+		assertEquals(oC.dajSvaOdsustva("IT"),44);
 		
 		//44 je prouzvoljan broj i treba provjerit u bazi koje ce biti prije nego sto se testira
 		
@@ -124,8 +123,6 @@ public class OdsustvoTest extends TestCase {
 
 
 		}
-	
-*/
 	
 
 }
