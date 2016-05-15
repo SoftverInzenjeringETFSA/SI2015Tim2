@@ -58,6 +58,9 @@ public class UI {
 				try {
 					UI window = new UI();
 					window.frmLogin.setVisible(true);
+					Session sessi = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+					ZaposlenikController zc = new ZaposlenikController(sessi);
+					if(zc.dajZaposlenikaPoId(1)==null)
 					App.main(null);
 				} catch (Exception e) {
 					
