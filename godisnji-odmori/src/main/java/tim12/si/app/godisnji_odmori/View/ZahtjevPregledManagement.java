@@ -26,6 +26,7 @@ import javax.swing.event.AncestorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import javax.swing.UIManager;
@@ -75,6 +76,9 @@ public class ZahtjevPregledManagement {
 	private ZahtjevVM zvm;
 	private ArrayList<Date> events;
 	private JLabel posjeduje_labela;
+	
+	private static final Logger logger = Logger.getLogger(ZahtjevPregledManagement.class);
+
 
 	/**
 	 * Launch the application.
@@ -162,7 +166,8 @@ public class ZahtjevPregledManagement {
 		}
 		catch (Exception er) {
 
-			//System.out.print(er.getMessage());
+			logger.error(er);
+			
 			if (er.getMessage() != null )
 			JOptionPane.showMessageDialog(frame, er.getMessage(),
 					"Greška", JOptionPane.INFORMATION_MESSAGE);
@@ -390,6 +395,8 @@ public class ZahtjevPregledManagement {
 				}
 
 			} catch (Exception e) {
+				
+				logger.error(e);
 				JOptionPane.showMessageDialog(frame, e.getMessage(), "Greška", JOptionPane.INFORMATION_MESSAGE);
 
 			} finally {
@@ -423,6 +430,8 @@ public class ZahtjevPregledManagement {
 				}
 
 			} catch (Exception e) {
+				
+				logger.error(e);
 				JOptionPane.showMessageDialog(frame, e.getMessage(), "Greška", JOptionPane.INFORMATION_MESSAGE);
 
 			} finally {

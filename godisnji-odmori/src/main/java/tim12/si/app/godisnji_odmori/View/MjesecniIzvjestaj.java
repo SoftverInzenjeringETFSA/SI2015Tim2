@@ -49,7 +49,7 @@ public class MjesecniIzvjestaj {
 					MjesecniIzvjestaj window = new MjesecniIzvjestaj();
 					window.frmSolutionsiMjesecni.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		});

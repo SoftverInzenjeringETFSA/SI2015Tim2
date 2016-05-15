@@ -150,7 +150,7 @@ public class KalendarPregledManagement {
 			    }
 			    	catch (Exception er) {
 
-						
+			    		logger.error(er);
 						JOptionPane.showMessageDialog(frame, er.getMessage(),
 								"Greška", JOptionPane.INFORMATION_MESSAGE);
 						
@@ -166,7 +166,7 @@ public class KalendarPregledManagement {
 		
 		catch (Exception er) {
 
-			
+			logger.error(er);
 			JOptionPane.showMessageDialog(frame, er.getMessage(),
 					"Greška", JOptionPane.INFORMATION_MESSAGE);
 			

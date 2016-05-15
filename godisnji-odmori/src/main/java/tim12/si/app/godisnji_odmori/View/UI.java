@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import tim12.si.app.godisnji_odmori.Singleton;
@@ -40,6 +41,8 @@ public class UI {
 	private JDialog frame;
 	
 	Session sess = null;
+	private static final Logger logger = Logger.getLogger(UI.class);
+
 	
 	
 	/**
@@ -52,7 +55,8 @@ public class UI {
 					UI window = new UI();
 					window.frmLogin.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					
+					logger.error(e);
 				}
 			}
 		});
@@ -75,7 +79,7 @@ public class UI {
 					UI window = new UI();
 					window.frmLogin.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		});
@@ -111,7 +115,7 @@ public class UI {
 		}
 		catch (Exception er) {
 
-			
+			logger.error(er);
 			JOptionPane.showMessageDialog(frame, er.getMessage(),
 					"Greška", JOptionPane.INFORMATION_MESSAGE);
 

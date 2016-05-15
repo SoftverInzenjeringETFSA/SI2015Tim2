@@ -36,6 +36,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 
@@ -63,6 +64,8 @@ import com.toedter.calendar.JYearChooser;
 import javax.swing.JCheckBox;
 
 public class ManagementMainWindow {
+	
+	final static Logger logger = Logger.getLogger(KalendarPregledManagement.class);
 
 	private JFrame frmSolutionsi;
 	private JTextField txtHaso;
@@ -126,7 +129,8 @@ public class ManagementMainWindow {
 					ManagementMainWindow window = new ManagementMainWindow();
 					window.frmSolutionsi.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
+					
 				}
 			}
 		});
@@ -172,7 +176,7 @@ public class ManagementMainWindow {
 		}
 		catch (Exception er) {
 
-			
+			logger.error(er);
 			if (er.getMessage() != null )
 			JOptionPane.showMessageDialog(frame, er.getMessage(),
 					"Greška", JOptionPane.INFORMATION_MESSAGE);
@@ -185,9 +189,16 @@ public class ManagementMainWindow {
 	}
 	public void otvoriZahtjev (int selected)
 	{
-		if (selected == -1) {JOptionPane.showMessageDialog(frame, "Neophodno je prvo selektovati zahtjev",
-				"Info", JOptionPane.INFORMATION_MESSAGE); return;}
-		new ZahtjevPregledManagement(zvm.get(selected).getIdZahtjeva(),zvm.get(selected).getNazivSektora(),zvm.get(selected).getUsernamePodnosioca());
+		if (selected == -1) {
+			
+			JOptionPane.showMessageDialog(frame, "Neophodno je prvo selektovati zahtjev",
+			"Info", JOptionPane.INFORMATION_MESSAGE); 
+			
+			return;
+		}
+		
+		ZahtjevPregledManagement zahtjevPregledManagement = new ZahtjevPregledManagement(zvm.get(selected).getIdZahtjeva(),zvm.get(selected).getNazivSektora(),zvm.get(selected).getUsernamePodnosioca());
+		
 		frmSolutionsi.dispose();
 	}
 	
@@ -312,8 +323,7 @@ public class ManagementMainWindow {
 		btnPregledKalendara.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-				//frmSolutionsi.setVisible(false);
-				new KalendarPregledManagement();
+				KalendarPregledManagement kalendar= new KalendarPregledManagement();
 				
 			}
 		});
@@ -541,7 +551,8 @@ public class ManagementMainWindow {
 	            	List<String> listaStringova =zC.DodajZaposlenika(new ZaposlenikVM (txtHaso.getText(), txtHasi.getText(),txtEmail.getText(), dateRodjen.getDate(), txtBrojTelefona.getText(), txtAdresa.getText(),(String)comboSektor.getSelectedItem(),txtBrojDanaOdmora.getText(),chckbxManagerPrivilegija.isSelected()));
 	            	JOptionPane.showMessageDialog (null, "Uspjesno ste dodali novog zaposlenika\n Username :"+listaStringova.get(0)+"\n Password: "+ listaStringova.get(1), "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
 				} catch (Exception e) {
-					// TODO: handle exception
+					
+					logger.error(e);
 				}
 				
                 osvjeziTabeluZaposlenika();
@@ -579,6 +590,7 @@ public class ManagementMainWindow {
 					
 				} catch (Exception er) {
 					
+					logger.error(er);
 					if (er.getMessage() != null )
 						JOptionPane.showMessageDialog(frame, er.getMessage(),
 								"Greška", JOptionPane.INFORMATION_MESSAGE);
@@ -636,13 +648,16 @@ public class ManagementMainWindow {
             		if(spinner_4.getValue()==9999){
                 		
                 		JOptionPane.showMessageDialog (null, "Ako zelite dodati novog zaposlenika pritisnite dugme Dodaj zaposlenika", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
-                		return;
+                		
+                	}else{
+                		
+                		zC.ModificirajZaposlenika(new ZaposlenikVM(txtHaso.getText(), txtHasi.getText(),txtEmail.getText(), dateRodjen.getDate(), txtBrojTelefona.getText(),txtAdresa.getText(),(String)comboSektor.getSelectedItem(),txtBrojDanaOdmora.getText(),chckbxManagerPrivilegija.isSelected()),spinner_4.getValue());
+    	            	JOptionPane.showMessageDialog (null, "Uspjesno ste uredili zaposlenika ","Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
+                		osvjeziTabeluZaposlenika();
+                    	ocistiPoljaZaposlenik();
                 	}
             		
-            		zC.ModificirajZaposlenika(new ZaposlenikVM(txtHaso.getText(), txtHasi.getText(),txtEmail.getText(), dateRodjen.getDate(), txtBrojTelefona.getText(),txtAdresa.getText(),(String)comboSektor.getSelectedItem(),txtBrojDanaOdmora.getText(),chckbxManagerPrivilegija.isSelected()),spinner_4.getValue());
-	            	JOptionPane.showMessageDialog (null, "Uspjesno ste uredili zaposlenika ","Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
-            		osvjeziTabeluZaposlenika();
-                	ocistiPoljaZaposlenik();
+            		
             	
 			}
 		});
