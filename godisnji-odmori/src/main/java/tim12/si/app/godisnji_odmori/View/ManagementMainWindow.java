@@ -53,6 +53,7 @@ import java.awt.event.KeyEvent;
 import java.io.InputStream;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
 
 import tim12.si.app.godisnji_odmori.Singleton;
 import tim12.si.app.godisnji_odmori.ZaposlenikNotFound;
@@ -389,6 +390,8 @@ public class ManagementMainWindow {
 		dateRodjen = new JDateChooser();
 		dateRodjen.setDateFormatString("yyyy-MM-dd");
 		dateRodjen.setBounds(140, 96, 139, 19);
+		JTextFieldDateEditor editor = (JTextFieldDateEditor) dateRodjen.getDateEditor();
+		editor.setEditable(false);
 		panel_3.add(dateRodjen);
 		
 		lblNewLabel_4 = new JLabel("");
