@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -15,10 +16,13 @@ import tim12.si.app.godisnji_odmori.Singleton;
 import tim12.si.app.godisnji_odmori.ZahtjevNotFound;
 import tim12.si.app.godisnji_odmori.ZaposlenikNotFound;
 import tim12.si.app.godisnji_odmori.Model.*;
+import tim12.si.app.godisnji_odmori.View.ZahtjevPregledManagement;
 
 public class ZahtjevController {
 	
 	private Session session;
+	private ZaposlenikController zc;
+	private static final Logger logger = Logger.getLogger(ZahtjevController.class);
 	/**
 	 * 
 	 * @param zahtjev
@@ -182,6 +186,35 @@ public class ZahtjevController {
 	}
 	
 	
+	public Boolean provjeriMozelToliko (ZahtjevVM zvm){
+		
+			long izabraoBrojDana=0;
+			long preostalo=0;
+		try {
+			
+			zc= new ZaposlenikController(session);
+			ZaposlenikBrDana zbr = zc.DajZaposlenikViewModelZaZahtjev(Singleton.getInstance().getUsername());
+			preostalo = zbr.getPreostaloSlobodnih();
+			izabraoBrojDana = daysBetween(zvm.getPocetakOdsustva().getTime(),zvm.getZavrsetakOdsustva().getTime());
+			
+			
+			
+			
+		} catch (Exception e) {
+			
+			logger.error(e);
+			
+		}
+		
+		return (preostalo>izabraoBrojDana);
+		
+	}
+	
+	private int daysBetween(long t1, long t2) {
+	    return (int) ((t2 - t1) / (1000 * 60 * 60 * 24));
+	} 
+	
+	
 	
 	// =======================================================================
 		// 									DAL
@@ -189,8 +222,8 @@ public class ZahtjevController {
 		
 	
 	
-	public void upisiZahtjevBaza(Zahtjev z)
-	{
+	public void upisiZahtjevBaza(Zahtjev z){
+		
 		Transaction t = session.beginTransaction(); 
 		session.save(z);
    	    t.commit();

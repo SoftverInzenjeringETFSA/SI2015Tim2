@@ -847,6 +847,14 @@ public class UserMainWindow {
 		ZahtjevController godisnji = new ZahtjevController(sess);
 		ZahtjevVM zvm = new ZahtjevVM(Od, Do, (long) 1, opis, nalaz);
 		try {
+			if(!godisnji.provjeriMozelToliko(zvm)){
+				
+				JOptionPane.showMessageDialog(null, "Izabrali ste vie dana nego sto Vam je dozvoljeno.", "Obavještenje",
+						JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+				
+			
 			Long godisnji_id = godisnji.kreirajZahtjev(zvm);
 			JOptionPane.showMessageDialog(null, "Uspješno poslan zahtjev za godisnji odmor", "Obavještenje",
 					JOptionPane.INFORMATION_MESSAGE);
