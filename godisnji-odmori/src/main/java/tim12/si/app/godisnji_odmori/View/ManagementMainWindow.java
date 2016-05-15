@@ -645,11 +645,10 @@ public class ManagementMainWindow {
             		return;        	
             		
             		
-            		if(spinner_4.getValue()==9999){
-                		
+            		if(spinner_4.getValue()==9999)
                 		JOptionPane.showMessageDialog (null, "Ako zelite dodati novog zaposlenika pritisnite dugme Dodaj zaposlenika", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
                 		
-                	}else{
+                	else{
                 		
                 		zC.ModificirajZaposlenika(new ZaposlenikVM(txtHaso.getText(), txtHasi.getText(),txtEmail.getText(), dateRodjen.getDate(), txtBrojTelefona.getText(),txtAdresa.getText(),(String)comboSektor.getSelectedItem(),txtBrojDanaOdmora.getText(),chckbxManagerPrivilegija.isSelected()),spinner_4.getValue());
     	            	JOptionPane.showMessageDialog (null, "Uspjesno ste uredili zaposlenika ","Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
