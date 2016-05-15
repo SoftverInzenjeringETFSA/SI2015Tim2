@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Vector;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -157,7 +158,7 @@ public class ZaposlenikTest {
 		catch (Exception e) 
 		{
 			assertEquals(e.getMessage(),"Trazeni zaposlenik ne postoji!");
-		//	Logger.getLogger(ZaposlenikController.class).error(e.getMessage());
+			Logger.getLogger(ZaposlenikController.class).error(e.getMessage());
 		}
 	}
 	
