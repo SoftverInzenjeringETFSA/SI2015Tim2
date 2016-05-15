@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 
 //import ba.unsa.etf.si.tim12.dal.domainmodel.Korisnik;
 import tim12.si.app.godisnji_odmori.ViewModel.*;
+import tim12.si.app.godisnji_odmori.Singleton;
 import tim12.si.app.godisnji_odmori.ZahtjevNotFound;
 import tim12.si.app.godisnji_odmori.ZaposlenikNotFound;
 import tim12.si.app.godisnji_odmori.Model.*;
@@ -27,31 +28,23 @@ public class ZahtjevController {
 		this.session = session;
 	}
 	public long kreirajZahtjev(ZahtjevVM zahtjev) throws Exception{
-		Boolean flag = false;
-		Zaposlenik zp = null;
-		for(int i = 0; i<Zaposlenik.listaZaposlenika.size(); i++)
-		{
-			if (Zaposlenik.listaZaposlenika.get(i).getIme() == zahtjev.getPodnosilacIme() &&
-					Zaposlenik.listaZaposlenika.get(i).getPrezime() == zahtjev.getPodnosilacPrezime())
-				{ 
-					flag = true;
-					zp = Zaposlenik.listaZaposlenika.get(i);
-					break;				
-				}
-		}
-		if (!flag) throw new Exception("Zaposlenik ne postoji.");
 		
+		ZaposlenikController zc = new ZaposlenikController(session);
+		
+		Zaposlenik zp = zc.dajZaposlenikaBaza(Singleton.getInstance().getUsername());
 		Zahtjev z = new Zahtjev();
 		z.setPodnosilac_id(zp.getZaposlenik_id());
 		z.setPocetak_odsustva(zahtjev.getPocetakOdsustva());
 		z.setZavrsetak_odsustva(zahtjev.getZavrsetakOdsustva());
 		z.setTip_odsustva(zahtjev.getTipOdsustva());
 		z.setObradjen(false);
-		z.setOdluka(null);
+		z.setOdluka(false);
 		z.setOpis(zahtjev.getOpis());
 		z.setSektor_id(zp.getSektor_id());
-		
+		z.setNalaz(zahtjev.getNalaz());
+		upisiZahtjevBaza(z);
 		return z.getZahtjev_id();
+		
 	}
 
 	/**
@@ -68,23 +61,7 @@ public class ZahtjevController {
 	 * @param zahtjevID
 	 * @param odobren
 	 */
-	public void odobriZahtjev(long zahtjevID, Boolean odobren) throws Exception{
-		Boolean flag = false;
-		int temp = -1;
-		for(int i = 0; i<Zahtjev.listaZahtjeva.size(); i++)
-		{
-			if (Zahtjev.listaZahtjeva.get(i).getZahtjev_id() == zahtjevID)
-				{ 
-					flag = true;
-					temp = i;
-					break;				
-				}
-		}
-		if (!flag) throw new Exception("Zahtjev ne postoji.");
-		
-		Zahtjev.listaZahtjeva.get(temp).setObradjen(true);
-		Zahtjev.listaZahtjeva.get(temp).setOdluka(true);
-	}
+	
 	public int odobriZahtjev(long zahtjevID, ZaposlenikBrDana zbr, ZahtjevVM zvm)
 	{
 		Transaction t = session.beginTransaction();
@@ -127,11 +104,10 @@ public class ZahtjevController {
 			}
 			
 			
-			for (int i = 0; i<dates.size(); i++){
+			for (int i = 0; i<dates.size()-1; i++){
 			Transaction t1 = session.beginTransaction(); 
 			Odsustvo odsustvo = new Odsustvo();
 			odsustvo.setZaposlenik_id(zbr.getZaposlenik_id());
-			odsustvo.setTip(1);
 			odsustvo.setOpis(zvm.getOpis());
 			odsustvo.setTip(tip);
 			odsustvo.setDatum(dates.get(i));
@@ -165,21 +141,7 @@ public class ZahtjevController {
 		}
 	}
 
-	public ArrayList<Zahtjev> dajNeobradjeneZahtjeve() {
-		List<Zahtjev> neobradjeni = new ArrayList<Zahtjev>();
-		
-		for(int i = 0; i<Zahtjev.listaZahtjeva.size(); i++)
-		{
-			if (Zahtjev.listaZahtjeva.get(i).getObradjen() == false)
-				neobradjeni.add(Zahtjev.listaZahtjeva.get(i));
-		}
-		
-		return (ArrayList<Zahtjev>) neobradjeni;
-	}
-
-	public ArrayList<Zahtjev> dajSveZahtjeve() {
-		return (ArrayList<Zahtjev>) Zahtjev.listaZahtjeva;
-	}
+	
 	
 	public ArrayList<ZahtjevVM> dajSveZahtjeveIzSektora(String sektor)
 	{
@@ -204,7 +166,7 @@ public class ZahtjevController {
 	{
 		Transaction t = session.beginTransaction();
 		
-		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM(za.pocetak_odsustva, za.zavrsetak_odsustva, za.tip_odsustva, za.opis) "
+		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM(za.pocetak_odsustva, za.zavrsetak_odsustva, za.tip_odsustva, za.opis, za.nalaz) "
 				+ "FROM Zahtjev za "
 				+ "WHERE za.zahtjev_id = :id ";
 		Query q = session.createQuery(hql);
@@ -217,6 +179,21 @@ public class ZahtjevController {
 			
 		ZahtjevVM vm = (ZahtjevVM) l.get(0);
 		return vm;
+	}
+	
+	
+	
+	// =======================================================================
+		// 									DAL
+		// =======================================================================
+		
+	
+	
+	public void upisiZahtjevBaza(Zahtjev z)
+	{
+		Transaction t = session.beginTransaction(); 
+		session.save(z);
+   	    t.commit();
 	}
 
 }

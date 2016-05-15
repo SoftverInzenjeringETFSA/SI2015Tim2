@@ -72,17 +72,15 @@ public class OdsustvoController {
 
 	public ArrayList<Date> dajSvaOdsustva(String sektor) {
 		
-		System.out.println("Dosooo");
-		System.out.println(sektor);
-
+		
 		int maxBrojDana = sc.dajSektorPoNazivuBaza(sektor).getMax_broj_odsutnih();
 		ArrayList<Date> ld = new ArrayList<Date>();
 		ArrayList<Date> listaDatuma = new ArrayList<Date>();
 		Transaction t = session.beginTransaction();
 		
 		String hql = "Select o.datum "
-				+ "FROM Odsustvo o, Zaposlenik z, Sektor s "
-				+ "WHERE o.zaposlenik_id = z.zaposlenik_id AND z.sektor_id = s.sektor_id AND s.naziv = :sektor ";
+				+ "FROM Odsustvo o, Zaposlenik z, Sektor s, TipOdsustva to "
+				+ "WHERE o.zaposlenik_id = z.zaposlenik_id AND z.sektor_id = s.sektor_id AND s.naziv = :sektor AND o.tip = to.id_odsustva AND to.id_odsustva = 1 ";
 				
 		Query q = session.createQuery(hql);
 		q.setString("sektor", sektor);

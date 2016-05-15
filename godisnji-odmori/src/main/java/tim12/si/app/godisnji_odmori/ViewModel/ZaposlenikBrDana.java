@@ -12,7 +12,7 @@ public class ZaposlenikBrDana {
 	private Long daniNeplaniranog;
 	private Long iskoristeniGodisnji;
 	private Long zaposlenik_id;
-	
+	public ZaposlenikBrDana(){}
 	public ZaposlenikBrDana(String sektor,String zaposlenikIme, String zaposlenikPrezime, Long radniDani/*, int neradniDani*/, Long preostaloSlobodnih)
 	{
 		this.sektor = sektor;

@@ -15,6 +15,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.awt.Color;
@@ -46,6 +47,8 @@ import tim12.si.app.godisnji_odmori.Controller.KalendarController;
 import tim12.si.app.godisnji_odmori.Controller.OdsustvoController;
 import tim12.si.app.godisnji_odmori.Controller.ZahtjevController;
 import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
+import tim12.si.app.godisnji_odmori.Model.Zaposlenik;
+import tim12.si.app.godisnji_odmori.ViewModel.ZahtjevVM;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikAccountVM;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikVM;
@@ -76,6 +79,24 @@ public class UserMainWindow {
 	private JCalendar calendar_1;
 	private JCalendar calendar_2;
 	private ArrayList<Date> events;
+	private ZaposlenikBrDana zaposlenikUserPocetna;
+	private JLabel lblEkonomski;
+	private JLabel lblNewLabel;
+	private JLabel lblHasoHasi;
+	private JLabel label_5;
+	private JCalendar calendar;
+	private JDateChooser dateChooser_2;
+	private JDateChooser dateChooser_3;
+	private JTextArea textArea;
+	private JCheckBox chckbxNalazSpecijaliste;
+	private JDateChooser dateChooser;
+	private JDateChooser dateChooser_1;
+	private JTextArea textArea_1;
+	private ZaposlenikBrDana zbd;
+	private ZaposlenikVM zvm;
+	private JLabel label_1;
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -94,32 +115,74 @@ public class UserMainWindow {
 	}
 	
 
-	/**
-	 * Create the application.
-	 * @throws ZaposlenikNotFound 
-	 */
+	
 	public UserMainWindow() throws ZaposlenikNotFound {
+		
+		
 		initialize();
 		PrikaziInfo();
 	}
 	public void PrikaziInfo() throws ZaposlenikNotFound
 	{
 		try{
-		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
-		ZaposlenikController zc = new ZaposlenikController(sess);
-		ZaposlenikVM zvm = zc.DajZaposlenikoveInformacije(Singleton.getInstance().getUsername());
+			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 
+			ZaposlenikController zc= new ZaposlenikController(sess);
+			OdsustvoController oc = new OdsustvoController(sess);
+			KalendarController kc = new KalendarController();
+					
+			zaposlenikUserPocetna = zc.DajZaposlenikViewModel(Singleton.getInstance().getUsername());
+			
+			lblEkonomski.setText(zaposlenikUserPocetna.getSektor());
+			lblNewLabel.setText(zaposlenikUserPocetna.getRadniDani().toString());
+			lblHasoHasi.setText(zaposlenikUserPocetna.getZaposlenikIme()+" "+zaposlenikUserPocetna.getZaposlenikPrezime());
+			label_5.setText(zaposlenikUserPocetna.getPreostaloSlobodnih().toString());
+			
+			events = oc.dajSvaOdsustva(zaposlenikUserPocetna.getSektor());
+	    	calendar.getDayChooser().setEnabled(false);
+	    	kc.postaviZauzete(events, calendar); 
+	    	
+	    	
+	    	
+		//sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+		//ZaposlenikController zc = new ZaposlenikController(sess);
+		ZaposlenikVM zvm = zc.DajZaposlenikoveInformacije(Singleton.getInstance().getUsername());
+		zvm = zc.DajZaposlenikoveInformacije(Singleton.getInstance().getUsername());
+		
 		//lblIDInfo.setText(zvm.getID());
+		
 		lblIme.setText(zvm.getIme());
 		lblPrezime.setText(zvm.getPrezime());
 		txtEmail.setText(zvm.getEmail());
 		txtBrojTelefona.setText(zvm.getTelefon());
 		lblAdresaStanovanja.setText(zvm.getAdresaStanovanja());
-		//lblDatumRodjenja.setToolTipText(zvm.getDatumRodjenja());
 		lblDatumRodjenja.setText(zvm.getDatumRodjenja().toString());
+		
+		
+		
+		
+		
+		
+		
+		final Color c = calendar_1.getDayChooser().getDayPanel().getComponent(20).getBackground();
+    	sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+
+		
+    	
+    	events = oc.dajSvaOdsustva(zc.dajNazivSektoraZaposlenikaBaza(Singleton.getInstance().getUsername()));
+    	
+    	
+    	
+    	kc.postaviZauzete(events, calendar_1);
+    	kc.postaviZauzete(events, calendar_2);
+        calendar_2.getDayChooser().setEnabled(true);
+		calendar_1.getDayChooser().setEnabled(true);
+		
+		
 		}
 		catch (Exception er) {
-
+			
+			System.out.println(er);
 			//System.out.print(er.getMessage());
 			if (er.getMessage() != null )
 			JOptionPane.showMessageDialog(frame, er.getMessage(),
@@ -136,7 +199,9 @@ public class UserMainWindow {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize()throws ZaposlenikNotFound
+	{
+		
 		frmSolutionsi = new JFrame();
 		frmSolutionsi.setTitle("SolutionSI");
 		frmSolutionsi.getContentPane().setLayout(null);
@@ -150,13 +215,17 @@ public class UserMainWindow {
 		tabbedPane.addTab("Početna", null, panel, null);
 		panel.setLayout(null);
 		
+		ImageIcon ii = new ImageIcon(getClass().getResource("/boss2.png"));
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("/boss2.png"));
 		label.setVerticalAlignment(SwingConstants.BOTTOM);
+		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setBounds(10, 42, 128, 128);
+		label.setIcon(ii);
 		panel.add(label);
 		
-		JLabel lblHasoHasi = new JLabel("Haso Hasi\u0107");
+		
+		
+		lblHasoHasi = new JLabel("Haso Hasi\u0107");
 		lblHasoHasi.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblHasoHasi.setBounds(35, 188, 89, 26);
 		panel.add(lblHasoHasi);
@@ -172,7 +241,7 @@ public class UserMainWindow {
 		lblSektor_1.setBounds(10, 286, 68, 26);
 		panel.add(lblSektor_1);
 		
-		JLabel lblEkonomski = new JLabel("Ekonomski");
+		lblEkonomski = new JLabel("Ekonomski");
 		lblEkonomski.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblEkonomski.setBounds(70, 292, 68, 14);
 		panel.add(lblEkonomski);
@@ -182,7 +251,7 @@ public class UserMainWindow {
 		lblUkupnoRadnihDana.setBounds(10, 332, 128, 14);
 		panel.add(lblUkupnoRadnihDana);
 		
-		JLabel lblNewLabel = new JLabel("251");
+		lblNewLabel = new JLabel("251");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel.setBounds(148, 332, 46, 14);
 		panel.add(lblNewLabel);
@@ -197,11 +266,19 @@ public class UserMainWindow {
 		lblZaposlenik.setBounds(70, 251, 89, 21);
 		panel.add(lblZaposlenik);
 		
-		JCalendar calendar = new JCalendar();
+		calendar = new JCalendar();
 		calendar.setBounds(263, 115, 333, 227);
 		panel.add(calendar);
 		
-		JLabel label_5 = new JLabel("20");
+		JComboBox jcb = (JComboBox) calendar.getMonthChooser().getComboBox(); 
+		jcb.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	KalendarController kc = new KalendarController();
+	            kc.postaviZauzete(events, calendar);
+		    }
+		});
+		
+		label_5 = new JLabel("20");
 		label_5.setForeground(new Color(128, 0, 0));
 		label_5.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
 		label_5.setBounds(311, 379, 27, 26);
@@ -220,162 +297,221 @@ public class UserMainWindow {
 		
 		//INFORMACIJE//
 		
-		//--osnovni podaci--
-		JPanel panel_10 = new JPanel();
-		panel_10.setBorder(new TitledBorder(null, "Osnovni podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_10.setBounds(10, 11, 285, 159);
-		panel_9.add(panel_10);
-		panel_10.setLayout(null);
-		
-		JLabel label_20 = new JLabel("Id zaposlenika:");
-		label_20.setBounds(10, 40, 120, 14);
-		panel_10.add(label_20);
-		
-		JLabel label_23 = new JLabel("Ime:");
-		label_23.setBounds(10, 64, 120, 14);
-		panel_10.add(label_23);
-		
-		JLabel label_24 = new JLabel("Prezime:");
-		label_24.setBounds(10, 88, 120, 14);
-		panel_10.add(label_24);
-		
-		JLabel label_27 = new JLabel("Datum rođenja:");
-		label_27.setBounds(10, 113, 120, 14);
-		panel_10.add(label_27);
-		
-		JLabel lblIDInfo = new JLabel("");
-		lblIDInfo.setBounds(184, 40, 91, 14);
-		panel_10.add(lblIDInfo);
-		
-		JLabel lblIme = new JLabel();
-		lblIme.setBounds(184, 64, 91, 14);
-		panel_10.add(lblIme);
-		
-		JLabel lblPrezime = new JLabel("");
-		lblPrezime.setBounds(184, 88, 91, 14);
-		panel_10.add(lblPrezime);
-		
-		JLabel lblDatumRodjenja = new JLabel("");
-		lblDatumRodjenja.setBounds(184, 113, 91, 14);
-		panel_10.add(lblDatumRodjenja);
-		
-		//--kraj osnovni podaci
-		
-		JPanel panel_11 = new JPanel();
-		panel_11.setBorder(new TitledBorder(null, "Kontakt podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_11.setBounds(10, 192, 285, 134);
-		panel_9.add(panel_11);
-		panel_11.setLayout(null);
-		
-		JLabel lblEmail = new JLabel("E-mail:");
-		lblEmail.setBounds(10, 27, 98, 14);
-		panel_11.add(lblEmail);
-		
-		JLabel lblBrojTelefona = new JLabel("Broj telefona:");
-		lblBrojTelefona.setBounds(10, 52, 98, 14);
-		panel_11.add(lblBrojTelefona);
-		
-		txtEmail = new JTextField();
-		txtEmail.setBounds(127, 21, 148, 20);
-		panel_11.add(txtEmail);
-		txtEmail.setColumns(10);
-		
-		txtBrojTelefona = new JTextField();
-		txtBrojTelefona.setBounds(127, 46, 148, 20);
-		panel_11.add(txtBrojTelefona);
-		txtBrojTelefona.setColumns(10);
-		
-		JLabel lblAdresa = new JLabel("Adresa:");
-		lblAdresa.setBounds(10, 77, 46, 14);
-		panel_11.add(lblAdresa);
-		
-		JLabel lblAdresaStanovanja = new JLabel("");
-		lblAdresaStanovanja.setBounds(127, 77, 148, 14);
-		panel_11.add(lblAdresaStanovanja);
-		
-		JPanel panel_12 = new JPanel();
-		panel_12.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Promjena \u0161ifre", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_12.setBounds(326, 192, 285, 134);
-		panel_9.add(panel_12);
-		panel_12.setLayout(null);
-		
-		JLabel lblStaraifra = new JLabel("* Stara šifra:");
-		lblStaraifra.setBounds(10, 32, 154, 14);
-		panel_12.add(lblStaraifra);
-		
-		JLabel lblnovaifra = new JLabel("* Nova šifra:");
-		lblnovaifra.setBounds(10, 58, 154, 14);
-		panel_12.add(lblnovaifra);
-		
-		JLabel lblPotvrditeNovu = new JLabel("* Potvrdite novu šifru:");
-		lblPotvrditeNovu.setBounds(10, 86, 154, 14);
-		panel_12.add(lblPotvrditeNovu);
-		
-		txtStaraSifra = new JPasswordField();
-		txtStaraSifra.setBounds(156, 26, 118, 20);
-		panel_12.add(txtStaraSifra);
-		
-		txtNovaSifra = new JPasswordField();
-		txtNovaSifra.setBounds(156, 52, 118, 20);
-		panel_12.add(txtNovaSifra);
-		
-		txtNovaSifraPotvrda = new JPasswordField();
-		txtNovaSifraPotvrda.setBounds(156, 80, 118, 20);
-		panel_12.add(txtNovaSifraPotvrda);
-		
-		JPanel panel_13 = new JPanel();
-		panel_13.setBorder(new TitledBorder(null, "Informacije", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_13.setBounds(326, 11, 285, 159);
-		panel_9.add(panel_13);
-		panel_13.setLayout(null);
-		
-		JLabel lblBrojRadnihDana = new JLabel("Broj radnih dana:");
-		lblBrojRadnihDana.setBounds(10, 29, 102, 14);
-		panel_13.add(lblBrojRadnihDana);
-		
-		JLabel lblRadniDani = new JLabel("");
-		lblRadniDani.setBounds(219, 29, 46, 14);
-		panel_13.add(lblRadniDani);
-		
-		JLabel lblIskoritenoDanaGodinjeg = new JLabel("Iskorišteno dana godišnjeg odmora:");
-		lblIskoritenoDanaGodinjeg.setBounds(10, 104, 231, 14);
-		panel_13.add(lblIskoritenoDanaGodinjeg);
-		
-		JLabel lblOstaloDanaGodinjeg = new JLabel("Ostalo dana godišnjeg odmora:");
-		lblOstaloDanaGodinjeg.setBounds(10, 129, 231, 14);
-		panel_13.add(lblOstaloDanaGodinjeg);
-		
-		JLabel lblIskoristeno = new JLabel("");
-		lblIskoristeno.setBounds(219, 104, 46, 14);
-		panel_13.add(lblIskoristeno);
-		
-		JLabel lblOstaloGodisnjeg = new JLabel("");
-		lblOstaloGodisnjeg.setBounds(219, 129, 46, 14);
-		panel_13.add(lblOstaloGodisnjeg);
-		
-		JLabel lblBrojDanaBolovanja = new JLabel("Broj dana bolovanja:");
-		lblBrojDanaBolovanja.setBounds(10, 54, 129, 14);
-		panel_13.add(lblBrojDanaBolovanja);
-		
-		JLabel lblBrojDanaNeplaniranog = new JLabel("Broj dana neplaniranog odsustva:");
-		lblBrojDanaNeplaniranog.setBounds(10, 79, 189, 14);
-		panel_13.add(lblBrojDanaNeplaniranog);
-		
-		JLabel lblDaniBolovanja = new JLabel("");
-		lblDaniBolovanja.setBounds(219, 54, 46, 14);
-		panel_13.add(lblDaniBolovanja);
-		
-		JLabel lblNeplaniranoOdsustvo = new JLabel("");
-		lblNeplaniranoOdsustvo.setBounds(219, 79, 46, 14);
-		panel_13.add(lblNeplaniranoOdsustvo);
-		
-		JButton btnSpasiPromjene = new JButton("Spasi promjene");
-		btnSpasiPromjene.setBounds(317, 380, 142, 23);
-		panel_9.add(btnSpasiPromjene);
-		
-		JButton btnOdbaciPromjene = new JButton("Odbaci promjene");
-		btnOdbaciPromjene.setBounds(469, 380, 142, 23);
-		panel_9.add(btnOdbaciPromjene);
+				//--osnovni podaci--
+				sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+				ZaposlenikController zc = new ZaposlenikController(sess);
+				ZaposlenikVM zvm = zc.DajZaposlenikoveInformacije(Singleton.getInstance().getUsername());
+				
+				JPanel panel_10 = new JPanel();
+				panel_10.setBorder(new TitledBorder(null, "Osnovni podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				panel_10.setBounds(10, 11, 285, 159);
+				panel_9.add(panel_10);
+				panel_10.setLayout(null);
+				
+				JLabel label_20 = new JLabel("Id zaposlenika:");
+				label_20.setBounds(10, 40, 120, 14);
+				panel_10.add(label_20);
+				
+				JLabel label_23 = new JLabel("Ime:");
+				label_23.setBounds(10, 64, 120, 14);
+				panel_10.add(label_23);
+				
+				JLabel label_24 = new JLabel("Prezime:");
+				label_24.setBounds(10, 88, 120, 14);
+				panel_10.add(label_24);
+				
+				JLabel label_27 = new JLabel("Datum rođenja:");
+				label_27.setBounds(10, 113, 120, 14);
+				panel_10.add(label_27);
+				
+				JLabel lblIDInfo = new JLabel();
+				lblIDInfo.setBounds(184, 40, 91, 14);
+				panel_10.add(lblIDInfo);
+				
+				lblIme = new JLabel(zvm.getIme());
+				lblIme.setBounds(184, 64, 91, 14);
+				panel_10.add(lblIme);
+				
+				lblPrezime = new JLabel(zvm.prezime);
+				lblPrezime.setBounds(184, 88, 91, 14);
+				panel_10.add(lblPrezime);
+				//String strDate = DateFormat.getDateInstance().format(zvm.datumRodjenja);
+				lblDatumRodjenja = new JLabel();
+				lblDatumRodjenja.setBounds(184, 113, 75, 14);
+				panel_10.add(lblDatumRodjenja);
+				
+				//--kraj osnovni podaci
+				
+				JPanel panel_11 = new JPanel();
+				panel_11.setBorder(new TitledBorder(null, "Kontakt podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				panel_11.setBounds(10, 192, 285, 134);
+				panel_9.add(panel_11);
+				panel_11.setLayout(null);
+				
+				JLabel lblEmail = new JLabel("E-mail:");
+				lblEmail.setBounds(10, 27, 98, 14);
+				panel_11.add(lblEmail);
+				
+				JLabel lblBrojTelefona = new JLabel("Broj telefona:");
+				lblBrojTelefona.setBounds(10, 52, 98, 14);
+				panel_11.add(lblBrojTelefona);
+				
+				txtEmail = new JTextField(zvm.getEmail());
+				txtEmail.setBounds(127, 21, 148, 20);
+				panel_11.add(txtEmail);
+				txtEmail.setColumns(10);
+				
+				txtBrojTelefona = new JTextField(zvm.getTelefon());
+				txtBrojTelefona.setBounds(127, 46, 148, 20);
+				panel_11.add(txtBrojTelefona);
+				txtBrojTelefona.setColumns(10);
+				
+				JLabel lblAdresa = new JLabel("Adresa:");
+				lblAdresa.setBounds(10, 77, 46, 14);
+				panel_11.add(lblAdresa);
+				
+				lblAdresaStanovanja = new JLabel(zvm.getAdresaStanovanja());
+				lblAdresaStanovanja.setBounds(127, 77, 148, 14);
+				panel_11.add(lblAdresaStanovanja);
+				
+				JPanel panel_12 = new JPanel();
+				panel_12.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Promjena \u0161ifre", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+				panel_12.setBounds(326, 192, 285, 134);
+				panel_9.add(panel_12);
+				panel_12.setLayout(null);
+				
+				JLabel lblStaraifra = new JLabel("* Stara šifra:");
+				lblStaraifra.setBounds(10, 32, 154, 14);
+				panel_12.add(lblStaraifra);
+				
+				JLabel lblnovaifra = new JLabel("* Nova šifra:");
+				lblnovaifra.setBounds(10, 58, 154, 14);
+				panel_12.add(lblnovaifra);
+				
+				JLabel lblPotvrditeNovu = new JLabel("* Potvrdite novu šifru:");
+				lblPotvrditeNovu.setBounds(10, 86, 154, 14);
+				panel_12.add(lblPotvrditeNovu);
+				
+				txtStaraSifra = new JPasswordField();
+				txtStaraSifra.setBounds(156, 26, 118, 20);
+				panel_12.add(txtStaraSifra);
+				
+				txtNovaSifra = new JPasswordField();
+				txtNovaSifra.setBounds(156, 52, 118, 20);
+				panel_12.add(txtNovaSifra);
+				
+				txtNovaSifraPotvrda = new JPasswordField();
+				txtNovaSifraPotvrda.setBounds(156, 80, 118, 20);
+				panel_12.add(txtNovaSifraPotvrda);
+				
+//INORMACIJE O DANIMA ZAPOSLENIKA
+				
+				zbd= zc.DajZaposlenikViewModel(Singleton.getInstance().getUsername());
+				
+				JPanel panel_13 = new JPanel();
+				panel_13.setBorder(new TitledBorder(null, "Informacije", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				panel_13.setBounds(326, 11, 285, 159);
+				panel_9.add(panel_13);
+				panel_13.setLayout(null);
+				
+				JLabel lblBrojRadnihDana = new JLabel("Broj radnih dana:");
+				lblBrojRadnihDana.setBounds(10, 29, 102, 14);
+				panel_13.add(lblBrojRadnihDana);
+				
+				JLabel lblRadniDani = new JLabel(String.valueOf(zbd.getRadniDani()));
+				lblRadniDani.setBounds(219, 29, 46, 14);
+				panel_13.add(lblRadniDani);
+				
+				JLabel lblIskoritenoDanaGodinjeg = new JLabel("Iskorišteno dana godišnjeg odmora:");
+				lblIskoritenoDanaGodinjeg.setBounds(10, 104, 231, 14);
+				panel_13.add(lblIskoritenoDanaGodinjeg);
+				
+				JLabel lblOstaloDanaGodinjeg = new JLabel("Ostalo dana godišnjeg odmora:");
+				lblOstaloDanaGodinjeg.setBounds(10, 129, 231, 14);
+				panel_13.add(lblOstaloDanaGodinjeg);
+				
+				JLabel lblIskoristeno = new JLabel(String.valueOf(zbd.getIskoristeniGodisnji()));
+				lblIskoristeno.setBounds(219, 104, 46, 14);
+				panel_13.add(lblIskoristeno);
+				
+				JLabel lblOstaloGodisnjeg = new JLabel(String.valueOf(zbd.getPreostaloSlobodnih()));
+				lblOstaloGodisnjeg.setBounds(219, 129, 46, 14);
+				panel_13.add(lblOstaloGodisnjeg);
+				
+				JLabel lblBrojDanaBolovanja = new JLabel("Broj dana bolovanja:");
+				lblBrojDanaBolovanja.setBounds(10, 54, 129, 14);
+				panel_13.add(lblBrojDanaBolovanja);
+				
+				JLabel lblBrojDanaNeplaniranog = new JLabel("Broj dana neplaniranog odsustva:");
+				lblBrojDanaNeplaniranog.setBounds(10, 79, 189, 14);
+				panel_13.add(lblBrojDanaNeplaniranog);
+				
+				JLabel lblDaniBolovanja = new JLabel(String.valueOf(zbd.getDaniBolovanja()));
+				lblDaniBolovanja.setBounds(219, 54, 46, 14);
+				panel_13.add(lblDaniBolovanja);
+				
+				JLabel lblNeplaniranoOdsustvo = new JLabel(String.valueOf(zbd.getDaniNeplaniranog()));
+				lblNeplaniranoOdsustvo.setBounds(219, 79, 46, 14);
+				panel_13.add(lblNeplaniranoOdsustvo);
+				
+				//KRAJ INFO DANI
+				
+				JButton btnSpasiPromjene = new JButton("Spasi promjene");
+				btnSpasiPromjene.setBounds(305, 380, 142, 23);
+				panel_9.add(btnSpasiPromjene);
+				btnSpasiPromjene.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						try {
+							sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+							ZaposlenikController zc = new ZaposlenikController(sess);
+							label_1.setText("");
+							if(!validirajUnosNoveSifre())
+								return;
+							
+							
+							if(zc.promjeniSifru(Singleton.getInstance().getUsername(),txtNovaSifra.getText())){
+								
+								JOptionPane.showMessageDialog (null, "Uspješno ste promijenili šifru", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
+								
+							}
+							
+							
+							
+							
+							
+							
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					}
+				});
+				
+				JButton btnOdbaciPromjene = new JButton("Odbaci promjene");
+				btnOdbaciPromjene.setBounds(469, 380, 142, 23);
+				panel_9.add(btnOdbaciPromjene);
+				
+				
+				
+				
+				btnOdbaciPromjene.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						try {
+							initialize();
+						} catch (ZaposlenikNotFound e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					}
+				});
+				
+				
+				label_1 = new JLabel("");
+				label_1.setForeground(Color.RED);
+				label_1.setBounds(326, 333, 285, 36);
+				panel_9.add(label_1);
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Godišnji odmor", null, panel_1, null);
@@ -401,31 +537,7 @@ public class UserMainWindow {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				final Color c = calendar_1.getDayChooser().getDayPanel().getComponent(20).getBackground();
-		    	sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
-
-				OdsustvoController oc = new OdsustvoController(sess);
-		    	KalendarController kc = new KalendarController();
-		    	ZaposlenikController zc = new ZaposlenikController(sess);
-		    	
-		    	events = oc.dajSvaOdsustva(zc.dajNazivSektoraZaposlenikaBaza(Singleton.getInstance().getUsername()));
-		    	calendar_1.getDayChooser().setEnabled(true);
-		    	
-		    	JPanel jpanel = calendar_1.getDayChooser().getDayPanel();
-				Component component[] = jpanel.getComponents();
-				
-				for(int i=0;i<component.length;i++)component[i].setBackground(c);
-				
-				calendar_2.getDayChooser().setEnabled(true);
-		    	
-		    	JPanel jpanel1 = calendar_2.getDayChooser().getDayPanel();
-				Component component1[] = jpanel1.getComponents();
-				
-				for(int i=0;i<component1.length;i++)component1[i].setBackground(c);
-				
-		    	kc.postaviZauzete(events, calendar_1);
-		    	kc.postaviZauzete(events, calendar_2);
-			
+				spasiZahtjevGodisnji();
 			}
 		});
 		
@@ -461,6 +573,17 @@ public class UserMainWindow {
 		panel_2.setLayout(null);
 		
 		JButton button = new JButton("Kreiraj zahtjev");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				spasiZahtjevBolovanje();
+			}
+
+			
+		});
+		
+		
+		
 		button.setBounds(439, 380, 132, 23);
 		panel_2.add(button);
 		
@@ -478,12 +601,12 @@ public class UserMainWindow {
 		lblDo_1.setBounds(290, 31, 114, 14);
 		panel_6.add(lblDo_1);
 		
-		JDateChooser dateChooser_2 = new JDateChooser();
+		 dateChooser_2 = new JDateChooser();
 		dateChooser_2.setDateFormatString("yyyy-MM-dd");
 		dateChooser_2.setBounds(52, 56, 114, 20);
 		panel_6.add(dateChooser_2);
 		
-		JDateChooser dateChooser_3 = new JDateChooser();
+		 dateChooser_3 = new JDateChooser();
 		dateChooser_3.setDateFormatString("yyyy-MM-dd");
 		dateChooser_3.setBounds(300, 56, 114, 20);
 		panel_6.add(dateChooser_3);
@@ -498,11 +621,11 @@ public class UserMainWindow {
 		scrollPane_1.setBounds(10, 20, 472, 140);
 		panel_7.add(scrollPane_1);
 		
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		textArea.setLineWrap(true);
 		scrollPane_1.setViewportView(textArea);
 		
-		JCheckBox chckbxNalazSpecijaliste = new JCheckBox("Nalaz specijaliste");
+		 chckbxNalazSpecijaliste = new JCheckBox("Nalaz specijaliste");
 		chckbxNalazSpecijaliste.setBounds(79, 354, 132, 23);
 		panel_2.add(chckbxNalazSpecijaliste);
 		
@@ -511,6 +634,11 @@ public class UserMainWindow {
 		panel_3.setLayout(null);
 		
 		JButton btnKreirajZahtjev = new JButton("Kreiraj zahtjev");
+		btnKreirajZahtjev.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				spasiZahtjevNeplanirano();
+			}
+		});
 		btnKreirajZahtjev.setBounds(401, 368, 140, 23);
 		panel_3.add(btnKreirajZahtjev);
 		
@@ -528,12 +656,12 @@ public class UserMainWindow {
 		label_7.setBounds(290, 31, 114, 14);
 		panel_4.add(label_7);
 		
-		JDateChooser dateChooser = new JDateChooser();
+		 dateChooser = new JDateChooser();
 		dateChooser.setDateFormatString("yyyy-MM-dd");
 		dateChooser.setBounds(52, 56, 114, 20);
 		panel_4.add(dateChooser);
 		
-		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1 = new JDateChooser();
 		dateChooser_1.setDateFormatString("yyyy-MM-dd");
 		dateChooser_1.setBounds(300, 56, 114, 20);
 		panel_4.add(dateChooser_1);
@@ -548,7 +676,7 @@ public class UserMainWindow {
 		scrollPane.setBounds(10, 20, 472, 140);
 		panel_5.add(scrollPane);
 		
-		JTextArea textArea_1 = new JTextArea();
+		textArea_1 = new JTextArea();
 		textArea_1.setLineWrap(true);
 		scrollPane.setViewportView(textArea_1);
 		
@@ -572,5 +700,111 @@ public class UserMainWindow {
 		// TODO Auto-generated method stub
 		txtEmail.setText("Merseda");
 	}
+	
+	private void spasiZahtjevBolovanje() {
+		Date Od = dateChooser_2.getDate();
+		Date Do = dateChooser_3.getDate();
+		String opis = textArea.getText();
+		Boolean nalaz = chckbxNalazSpecijaliste.isSelected();
+		
+			
+		
+		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+		ZahtjevController bolovanje = new ZahtjevController(sess);
+		ZahtjevVM zvm = new ZahtjevVM(Od, Do, (long)2, opis, nalaz);
+		try {
+			Long bolovanje_id = bolovanje.kreirajZahtjev(zvm);
+			
+			JOptionPane.showMessageDialog(null, "Uspješno poslan zahtjev za bolovanje", "Obavještenje", JOptionPane.INFORMATION_MESSAGE);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		finally
+		{
+			sess.close();
+		}
+		
+	}
 
+
+	private void spasiZahtjevNeplanirano() {
+		Date Od = dateChooser.getDate();
+		Date Do = dateChooser_1.getDate();
+		String opis = textArea_1.getText();
+		Boolean nalaz = false;
+			
+		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+		ZahtjevController neplanirano = new ZahtjevController(sess);
+		ZahtjevVM zvm = new ZahtjevVM(Od, Do, (long)3, opis, nalaz);
+		try {
+			Long neplanirano_id = neplanirano.kreirajZahtjev(zvm);
+			JOptionPane.showMessageDialog(null, "Uspješno poslan zahtjev za neplanirano odsustvo", "Obavještenje", JOptionPane.INFORMATION_MESSAGE);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		finally
+		{
+			sess.close();
+		}
+	}
+	
+	private void spasiZahtjevGodisnji(){
+		/*Calendar cal = Calendar.getInstance();
+		cal.set(calendar_1.getYearChooser().getYear(),calendar_1.getMonthChooser().getMonth(),1,0,0);
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		int month = cal.get(Calendar.MONTH);
+		int year = cal.get(Calendar.YEAR);*/
+		
+		Date Od = calendar_1.getDate();
+		Date Do = calendar_2.getDate();
+		String opis = "Godisnji";
+		Boolean nalaz = false;
+		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+		ZahtjevController godisnji = new ZahtjevController(sess);
+		ZahtjevVM zvm = new ZahtjevVM(Od, Do, (long)1, opis, nalaz);
+		try {
+			Long godisnji_id = godisnji.kreirajZahtjev(zvm);
+			JOptionPane.showMessageDialog(null, "Uspješno poslan zahtjev za godisnji odmor", "Obavještenje", JOptionPane.INFORMATION_MESSAGE);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		finally
+		{
+			sess.close();
+		}
+	}
+	
+	public Boolean validirajUnosNoveSifre () {
+		
+		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+		ZaposlenikController zc = new ZaposlenikController(sess);
+		
+		
+		if(txtStaraSifra.getText().equals("") || txtNovaSifra.getText().equals("") || txtNovaSifraPotvrda.getText().equals("")){
+			
+			label_1.setText("Sva polja moraju biti popunjena.");
+			return false;
+			
+		}
+		
+		if(!zc.uporediSifruBaza(Singleton.getInstance().getUsername(), txtStaraSifra.getText())){
+			
+			label_1.setText("Pogresna trenutna sifra.");
+			return false;
+			
+		}
+		
+		if(!txtNovaSifra.getText().equals(txtNovaSifraPotvrda.getText())){
+			
+			label_1.setText("Nove sifre se ne podudaraju.");
+			return false;
+		}
+			
+		return true;
+		
+	}
 }
+

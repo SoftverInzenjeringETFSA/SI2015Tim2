@@ -32,5 +32,8 @@
         <property name="sektor_id" type="long">
             <column name="SEKTOR_ID" />
         </property>
+         <property name="nalaz" type="java.lang.Boolean">
+            <column name="NALAZ" />
+        </property>
     </class>
 </hibernate-mapping>

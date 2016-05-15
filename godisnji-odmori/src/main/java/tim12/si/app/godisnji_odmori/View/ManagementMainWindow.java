@@ -104,8 +104,8 @@ public class ManagementMainWindow {
 
 	Session sess = null;
 	private ArrayList<ZahtjevVM> zvm;
-	public SektorController sC = new SektorController();
-	public ZaposlenikController zC = new ZaposlenikController();
+	private SektorController sC = new SektorController();
+	private ZaposlenikController zC = new ZaposlenikController();
 	private JTextField txtAdresa;
 
 
@@ -129,6 +129,7 @@ public class ManagementMainWindow {
 	 * Create the application.
 	 */
 	public ManagementMainWindow() {
+		sC = new SektorController();
 		initialize();
 		provjeriUsera();
 		
@@ -780,7 +781,7 @@ public class ManagementMainWindow {
             	if(!validirajUnosSektora())
             		return;
             	System.out.println(spinner_3.getValue());
-            	if(spinner_3.getValue()==1){
+            	if(spinner_3.getValue()==9999){
             		
             		JOptionPane.showMessageDialog (null, "Ako zelite dodati novi sektor pritisnite dugme Dodaj sektor", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
             		return;
@@ -939,7 +940,7 @@ public Boolean validirajUnosSektora(){
     	label_9.setText("0");
     	spinner_1.setValue(2016);
     	spinner_2.setValue(0);
-    	spinner_3.setValue(0);
+    	spinner_3.setValue(9999);
 	}
 	
 	public void ocistiPoljaZaposlenik(){

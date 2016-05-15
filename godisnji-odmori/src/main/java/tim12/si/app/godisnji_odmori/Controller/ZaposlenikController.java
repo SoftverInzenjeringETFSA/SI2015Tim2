@@ -11,6 +11,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.hql.internal.ast.tree.BooleanLiteralNode;
 
 import tim12.si.app.godisnji_odmori.ViewModel.*;
 import tim12.si.app.godisnji_odmori.ZaposlenikNotFound;
@@ -40,10 +41,7 @@ public class ZaposlenikController
 		Zaposlenik zaposlenik = pretvoriUZaposlenika(zaposlenikVM);
 		upisiUBazu(zaposlenik);
 	}
-	public int BrojZaposlenih()
-	{
-		return Zaposlenik.listaZaposlenika.size();
-	}
+	
 	//edituje podatke o zaposleniku
 	public void ModificirajZaposlenika(ZaposlenikVM zaposlenikVM, long id)
 	{
@@ -59,75 +57,14 @@ public class ZaposlenikController
 		modificirajZaposlenikBaza(zaposlenik);
 	}
 
-	public long PronadjiIndexZaposlenika(long zaposlenik_id)
-	{
-		int brojac=0;
-		int index=0;
-		for(Zaposlenik zaposlenik: Zaposlenik.listaZaposlenika)
-		{
-			if(zaposlenik.getZaposlenik_id()==zaposlenik_id)
-			{
-				index=brojac;
-				break;
-			}
-			brojac++;
-		}
-		return index;
-	}
 	
-	public String[] dajSveZaposlenike(){
-		List<Zaposlenik> list = dajSveZaposlenikeBaza();
-		int i=0;
-		final String[] listaZaposlenika = new String [list.size()];
-		
-		for (Iterator<Zaposlenik> j = list.iterator(); j.hasNext();){
-			Zaposlenik item=j.next();
-			listaZaposlenika[i]=(item.getIme());
-			i++;
-		}
-		return listaZaposlenika;		
-	}
-	
-	public void ObrisiZaposlenika(long zaposlenikID)
-	{
-		Zaposlenik zaposlenik = dajZaposlenikaPoId(zaposlenikID);
-		obrisiZaposlenikaBaza(zaposlenik);
-	}
 
-	public void AutentifikujKorisnika(Zaposlenik zaposlenik)
-	{
-		
-	}
-	/**
-	 * 
-	 * @param zaposlenik
-	 */
-	public void OdjaviKorisnika(Zaposlenik zaposlenik)
-	{
-
-	}
-	/**
-	 * 
-	 * @param sektorID
-	 */
-	public List<Zaposlenik> DajZaposlenikePoSektoru(long sektorID)
-	{
-		List<Zaposlenik> listaZ=new ArrayList<Zaposlenik>();
-		for(Zaposlenik z:Zaposlenik.listaZaposlenika)
-		{
-			if(z.getSektor_id()==sektorID)
-			{
-				listaZ.add(z);
-			}
-		}
-		return listaZ;
-	}
 	public ZaposlenikBrDana DajZaposlenikViewModel(String username) throws ZaposlenikNotFound
 	{
 		Transaction t = session.beginTransaction();
 		
 		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana(s.naziv, z.ime, "+
-				"z.prezime, count(p.prisustvo_id), z.broj_dana_godisnjeg - (Select count(o1.odsustvo_id) FROM Zaposlenik z1, Odsustvo o1, TipOdsustva to WHERE z1.username = :username  AND z1.zaposlenik_id = o1.zaposlenik_id AND o1.tip = to.id_odsustva AND to.id_odsustva = 2)) "
+				"z.prezime, count(p.prisustvo_id), z.broj_dana_godisnjeg - (Select count(o1.odsustvo_id) FROM Zaposlenik z1, Odsustvo o1, TipOdsustva to WHERE z1.username = :username  AND z1.zaposlenik_id = o1.zaposlenik_id AND o1.tip = to.id_odsustva AND to.id_odsustva = 1)) "
 				+ "FROM Zaposlenik z, Sektor s, Prisustvo p "
 				+ "WHERE z.username = :username AND s.sektor_id = z.sektor_id AND z.zaposlenik_id = p.zaposlenik_id";
 		Query q = session.createQuery(hql);
@@ -148,10 +85,10 @@ public class ZaposlenikController
 		Transaction t = session.beginTransaction();
 		
 		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana(s.naziv, z.ime,z.zaposlenik_id, "+
-				"z.prezime, count(p.prisustvo_id), z.broj_dana_godisnjeg - (Select count(o1.odsustvo_id) FROM Zaposlenik z1, Odsustvo o1, TipOdsustva to WHERE z1.username = :username  AND z1.zaposlenik_id = o1.zaposlenik_id AND o1.tip = to.id_odsustva AND to.naziv = 'godišnji odmor'),"
-				+ "(Select count(o2.odsustvo_id) FROM Zaposlenik z2, Odsustvo o2, TipOdsustva to1 WHERE z2.username = :username  AND z2.zaposlenik_id = o2.zaposlenik_id AND o2.tip = to1.id_odsustva AND to1.naziv = 'bolovanje'), "
-				+ "(Select count(o3.odsustvo_id) FROM Zaposlenik z3, Odsustvo o3, TipOdsustva to3 WHERE z3.username = :username  AND z3.zaposlenik_id = o3.zaposlenik_id AND o3.tip = to3.id_odsustva AND to3.naziv = 'neplanirano'),"
-				+ "(Select count(o4.odsustvo_id) FROM Zaposlenik z4, Odsustvo o4, TipOdsustva to4 WHERE z4.username = :username  AND z4.zaposlenik_id = o4.zaposlenik_id AND o4.tip = to4.id_odsustva AND to4.naziv = 'godišnji odmor')) "
+				"z.prezime, count(p.prisustvo_id), z.broj_dana_godisnjeg - (Select count(o1.odsustvo_id) FROM Zaposlenik z1, Odsustvo o1, TipOdsustva to WHERE z1.username = :username  AND z1.zaposlenik_id = o1.zaposlenik_id AND o1.tip = to.id_odsustva AND to.id_odsustva = 1),"
+				+ "(Select count(o2.odsustvo_id) FROM Zaposlenik z2, Odsustvo o2, TipOdsustva to1 WHERE z2.username = :username  AND z2.zaposlenik_id = o2.zaposlenik_id AND o2.tip = to1.id_odsustva AND to1.id_odsustva = 2), "
+				+ "(Select count(o3.odsustvo_id) FROM Zaposlenik z3, Odsustvo o3, TipOdsustva to3 WHERE z3.username = :username  AND z3.zaposlenik_id = o3.zaposlenik_id AND o3.tip = to3.id_odsustva AND to3.id_odsustva = 3),"
+				+ "(Select count(o4.odsustvo_id) FROM Zaposlenik z4, Odsustvo o4, TipOdsustva to4 WHERE z4.username = :username  AND z4.zaposlenik_id = o4.zaposlenik_id AND o4.tip = to4.id_odsustva AND to4.id_odsustva = 1)) "
 				+ "FROM Zaposlenik z, Sektor s, Prisustvo p "
 				+ "WHERE z.username = :username AND s.sektor_id = z.sektor_id AND z.zaposlenik_id = p.zaposlenik_id";
 		
@@ -165,6 +102,8 @@ public class ZaposlenikController
 			throw new ZaposlenikNotFound("Zaposlenik s username-om: " + username + " nije pronadjen.");
 			
 		ZaposlenikBrDana vm = (ZaposlenikBrDana) l.get(0);
+		
+		
 		return vm;
 	}
 	
@@ -212,6 +151,7 @@ public class ZaposlenikController
 		
 		Transaction t = session.beginTransaction();
 		//ime, prezime, datum rodjenja,broj telefona i adresa
+		//,z.ime,z.prezime,z.email,z.datum_rodjenja,z.telefon,z.adresa_stanovanja
 		String hql = "Select new tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikVM(z.ime,z.prezime,z.email,z.datum_rodjenja,z.telefon,z.adresa_stanovanja)"+
 		"FROM Zaposlenik z WHERE z.username = :username";
 		
@@ -221,12 +161,29 @@ public class ZaposlenikController
 		List l = q.list();
 		t.commit();
 		
+		
+		
+		
 		if(l.isEmpty())
 			throw new ZaposlenikNotFound("Zaposlenik s username-om: " + username + " nije pronadjen.");
 			
 		ZaposlenikVM vm = (ZaposlenikVM) l.get(0);
+		
+		
 		return vm;
 	}
+	
+	
+	public Boolean promjeniSifru (String username, String password){
+	
+		Zaposlenik z = dajZaposlenikaBaza(username);
+		z.setPassword(password);
+		promjeniSifruBaza(z);
+		
+		return true;
+	}
+	
+
 	
 	public Zaposlenik pretvoriUZaposlenika (ZaposlenikVM zaposlenikVM){
 		Zaposlenik zaposlenik = new Zaposlenik();
@@ -245,6 +202,23 @@ public class ZaposlenikController
 	// 									DAL
 	// =======================================================================
 	
+	public String dajPrezimeZaposlenikaBaza (String username){
+		
+		Criteria criteria = session.createCriteria(Zaposlenik.class);
+		criteria.add(Restrictions.eq("username", username));
+		Zaposlenik z = (Zaposlenik) criteria.uniqueResult(); 
+		
+		return z.getPrezime();
+	}
+	
+	public Zaposlenik dajZaposlenikaBaza (String username){
+		
+		Criteria criteria = session.createCriteria(Zaposlenik.class);
+		criteria.add(Restrictions.eq("username", username));
+		Zaposlenik z = (Zaposlenik) criteria.uniqueResult(); 
+		
+		return z;
+	}
 	
 	public void upisiUBazu(Zaposlenik zaposlenik){
 		Transaction t = session.beginTransaction(); 
@@ -291,4 +265,27 @@ public class ZaposlenikController
 		return session.createCriteria(Zaposlenik.class).list();
 	}
 	
+	public Boolean uporediSifruBaza(String username,String sifra){
+		
+	
+		
+		Criteria criteria = session.createCriteria(Zaposlenik.class);
+		criteria.add(Restrictions.eq("username", username));
+		Zaposlenik z = (Zaposlenik) criteria.uniqueResult(); 
+		
+		return(z.getPassword().equals(sifra));
+		
+	}
+	
+	public void promjeniSifruBaza (Zaposlenik z) {
+		
+		
+		Transaction t = session.beginTransaction();
+	  	session.saveOrUpdate(z);
+	  	t.commit();
+		
+		
+	}
 }
+	
+
