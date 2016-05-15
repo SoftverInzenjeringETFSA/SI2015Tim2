@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Vector;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -119,7 +120,7 @@ public class ZaposlenikTest {
 		}
 	
 	@Test
-	public void nadjiPoIduTest() {
+	public void testNadjiPoIdu() {
 		ZaposlenikController zc=new ZaposlenikController();
 		Calendar c = new GregorianCalendar(1993,3,2);
 		List<String> l= zc.DodajZaposlenika(new ZaposlenikVM("Ajla", "Alic", "aalic1@gmail.com", c.getTime(),"061/532-653","Adresa 1", "IT","30",false ));
@@ -155,6 +156,15 @@ public class ZaposlenikTest {
 		{
 			assertEquals(e.getMessage(),"Trazeni artikal ne postoji!");
 		}
+	}
+	
+	@Test
+	public void testDajSveZaposlenike(){
+		ZaposlenikController zc=new ZaposlenikController();
+		Calendar c = new GregorianCalendar(1993,3,2);
+		List<String> l= zc.DodajZaposlenika(new ZaposlenikVM("Ajla", "Alic", "aalic1@gmail.com", c.getTime(),"061/532-653","Adresa 1", "IT","30",false ));
+		Object[][] list=zc.dajSveZaposlenike();
+		assertTrue(list.length>0);
 	}
 	
 }
