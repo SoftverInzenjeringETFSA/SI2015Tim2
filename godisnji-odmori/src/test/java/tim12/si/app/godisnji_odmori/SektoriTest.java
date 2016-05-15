@@ -120,7 +120,6 @@ public class SektoriTest extends TestCase {
 		sc.modificirajSektor(sm,(int)sc.dajSektorPoNazivuBaza(sm.naziv).getSektor_id());
 		assertEquals(sc.dajSektorPoNazivuBaza(sm.naziv).getOpis(),"Noviiii opiiiss TEST");
 		
-
           }
 
 	@Test

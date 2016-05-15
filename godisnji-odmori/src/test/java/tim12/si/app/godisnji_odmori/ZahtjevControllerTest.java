@@ -22,7 +22,7 @@ public class ZahtjevControllerTest extends TestCase {
 	{
 		zbd=new ZaposlenikBrDana();
 		zvm= new ZahtjevVM();
-		assertEquals(zc.odobriZahtjev(zahtjev.getZahtjev_id(), zbd, zvm), 0);
+		assertEquals(zc.odobriZahtjev(zahtjev.getZahtjev_id(), zbd, zvm), 1);
 		
 	}
 	/*

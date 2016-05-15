@@ -17,14 +17,24 @@ import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikVM;
 import tim12.si.app.godisnji_odmori.Model.Zaposlenik;
 public class ZaposlenikTest {
 
-	ZaposlenikController zaposlenikController;
+	ZaposlenikController zc;
 	ZaposlenikVM zvm;
 	Zaposlenik zaposlenik;
 	@Before 
 	public void postavi()
 	{
 		//zaposlenikController = new ZaposlenikController();
+		Date d= new Date(1994,10,10); 
 		zvm= new ZaposlenikVM();
+		zvm.ime="Neko";
+		zvm.prezime="Nekic";
+		zvm.adresaStanovanja="Kosevo";
+		zvm.brojDanaGodisnje=20;
+		zvm.datumRodjenja=d;
+		zvm.email="n@gmail.com";
+		zvm.privilegija=true;
+		zvm.sektor=2;
+		zvm.telefon="000000";
 		
 	}
 	@Test
@@ -37,7 +47,8 @@ public class ZaposlenikTest {
 	@Test
 	public void TestDodajZaposlenika() throws Exception 
 	{
-		
+		zc.DodajZaposlenika(zvm);
+		assertEquals(zc.BrojZaposlenika(),1);
 	}
 	
 	

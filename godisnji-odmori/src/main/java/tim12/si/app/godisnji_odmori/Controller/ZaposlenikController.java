@@ -22,6 +22,7 @@ public class ZaposlenikController
 	private Session session;
 	private ZaposlenikVM zvm;
 	private SektorController sc;
+	private int brojZaposlenika=0;
 	/**
 	 * 
 	 * @param zaposlenik
@@ -40,6 +41,8 @@ public class ZaposlenikController
 	{
 		Zaposlenik zaposlenik = pretvoriUZaposlenika(zaposlenikVM);
 		upisiUBazu(zaposlenik);
+		BrojZaposlenika();
+		
 	}
 	
 	//edituje podatke o zaposleniku
@@ -286,6 +289,12 @@ public class ZaposlenikController
 		
 		
 	}
+
+	public long BrojZaposlenika() {
+		// TODO Auto-generated method stub
+		return brojZaposlenika+1;
+	}
+
 }
 	
 
