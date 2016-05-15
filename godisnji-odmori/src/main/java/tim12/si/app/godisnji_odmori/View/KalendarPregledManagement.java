@@ -10,8 +10,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
 
+
 import javax.swing.JFrame;
+
+
 import com.toedter.calendar.JCalendar;
+import org.apache.log4j.Logger;
 
 import tim12.si.app.godisnji_odmori.Controller.KalendarController;
 import tim12.si.app.godisnji_odmori.Controller.OdsustvoController;
@@ -94,7 +98,7 @@ public class KalendarPregledManagement {
 			    }
 			    	catch (Exception er) {
 
-						
+			    		Logger.getLogger(KalendarPregledManagement.class).error(er.getMessage());
 						JOptionPane.showMessageDialog(frame, er.getMessage(),
 								"Greška", JOptionPane.INFORMATION_MESSAGE);
 						
