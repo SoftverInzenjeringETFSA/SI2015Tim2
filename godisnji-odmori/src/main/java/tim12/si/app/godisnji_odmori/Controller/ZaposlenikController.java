@@ -45,9 +45,9 @@ public class ZaposlenikController
 		return Zaposlenik.listaZaposlenika.size();
 	}
 	//edituje podatke o zaposleniku
-	public void ModificirajZaposlenika(ZaposlenikVM zaposlenikVM, int id)
+	public void ModificirajZaposlenika(ZaposlenikVM zaposlenikVM, long id)
 	{
-		Zaposlenik zaposlenik = dajZaposlenikaPoId(id);
+	    Zaposlenik zaposlenik = dajZaposlenikaPoId(id);
 		zaposlenik.setIme(zaposlenikVM.ime);
 		zaposlenik.setPrezime(zaposlenikVM.prezime);
 		zaposlenik.setAdresa_stanovanja(zaposlenikVM.adresaStanovanja);
@@ -110,7 +110,7 @@ public class ZaposlenikController
 	 * 
 	 * @param sektorID
 	 */
-	public List<Zaposlenik> DajZaposlenikePoSektoru(int sektorID)
+	public List<Zaposlenik> DajZaposlenikePoSektoru(long sektorID)
 	{
 		List<Zaposlenik> listaZ=new ArrayList<Zaposlenik>();
 		for(Zaposlenik z:Zaposlenik.listaZaposlenika)
@@ -186,6 +186,26 @@ public class ZaposlenikController
 		return vm;
 	}
 	
+	public ZaposlenikVM DajInformacijeZaTabelu (String username) throws ZaposlenikNotFound
+	{
+		Transaction t=session.beginTransaction();
+		//id, ime, prezime, sektor, broj dana godišnjeg
+		String neki="Select new tim12.si.app.godisnji_odmori.Model.Zaposlenik(z.id, z.ime,z.prezime,z.sektor_id, z.broj_dana_godisnjeg)"+
+		"FROM Zaposlenik z WHERE z.username = :username";
+		
+		Query q=session.createQuery(neki);
+		q.setString("username",username);
+		
+		List l=q.list();
+		t.commit();
+		
+		if(l.isEmpty())
+			throw new ZaposlenikNotFound("Zaposlenik s username-om: " + username + " nije pronadjen.");
+			
+		ZaposlenikVM vm = (ZaposlenikVM) l.get(0);
+		return vm;
+	}
+	
 	//Informacije o logovanom korisniku
 	public ZaposlenikVM DajZaposlenikoveInformacije(String username) throws ZaposlenikNotFound
 	{
@@ -257,7 +277,7 @@ public class ZaposlenikController
 	
 	public String dajNazivSektoraZaposlenikaBaza(String username){
 			
-		int idSektora;
+		long idSektora;
 		
 		Criteria criteria = session.createCriteria(Zaposlenik.class);
 		criteria.add(Restrictions.eq("username", username));

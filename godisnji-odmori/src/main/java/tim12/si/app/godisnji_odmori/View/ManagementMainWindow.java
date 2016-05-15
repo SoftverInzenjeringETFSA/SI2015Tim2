@@ -370,7 +370,7 @@ public class ManagementMainWindow {
 		panel_3.add(txtHasi);
 		txtHasi.setColumns(10);
 		
-		JDateChooser dateRodjen = new JDateChooser();
+		final JDateChooser dateRodjen = new JDateChooser();
 		dateRodjen.setDateFormatString("yyyy-MM-dd");
 		dateRodjen.setBounds(140, 96, 139, 19);
 		panel_3.add(dateRodjen);
@@ -525,7 +525,7 @@ public class ManagementMainWindow {
 				ocistiUnosZaposlenika();
             	if(!validirajUnosZaposlenika())
             		return;
-            	zC.DodajZaposlenika(new ZaposlenikVM (txtHaso.getText(), txtHasi.getText(),txtEmail.getText(), dateRodjen.getDate(), txtBrojTelefona.getText(), lblAdresa.getText()));
+            	zC.DodajZaposlenika(new ZaposlenikVM (txtHaso.getText(), txtHasi.getText(),txtEmail.getText(), dateRodjen.getDate(), txtBrojTelefona.getText(), txtAdresa.getText()));
             	osvjeziTabeluZaposlenika();
             	ocistiPoljaZaposlenik();
 			}
@@ -570,15 +570,16 @@ public class ManagementMainWindow {
 		btnSpasiPromjene.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ocistiUnosZaposlenika();
-            	if(!validirajUnosZaposlenika())
-            		return;
+            	//if(!validirajUnosZaposlenika())
+            		//return;
             	//uvezati sa tabelom
             	{
             		
             		JOptionPane.showMessageDialog (null, "Ako zelite dodati novog zaposlenika pritisnite dugme Dodaj zaposlenika", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
-            		return;
+            		//return;
             	}
-            	zC.ModificirajZaposlenika(new ZaposlenikVM(txtHaso.getText(), txtHasi.getText(),txtEmail.getText(), dateRodjen.getDate(), txtBrojTelefona.getText(), lblAdresa.getText()));
+            	//umjesto broja 5 treba ubaciti index selektovanog zaposlenika iz tabele
+            	zC.ModificirajZaposlenika(new ZaposlenikVM(txtHaso.getText(), txtHasi.getText(),txtEmail.getText(), dateRodjen.getDate(), txtBrojTelefona.getText(),txtAdresa.getText()),5);
             	osvjeziTabeluZaposlenika();
             	ocistiPolja();
 			}
