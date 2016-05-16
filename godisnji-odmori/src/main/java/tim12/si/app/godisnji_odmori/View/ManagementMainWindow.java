@@ -250,7 +250,8 @@ public class ManagementMainWindow {
 		panel.add(label_3);
 		
 		lblMenadmentLjudskihResursa = new JLabel("Menadžment ljudskih resursa");
-		lblMenadmentLjudskihResursa.setBounds(148, 258, 219, 20);
+		lblMenadmentLjudskihResursa.setHorizontalAlignment(SwingConstants.LEFT);
+		lblMenadmentLjudskihResursa.setBounds(148, 258, 263, 20);
 		lblMenadmentLjudskihResursa.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(lblMenadmentLjudskihResursa);
 		
@@ -744,7 +745,7 @@ public class ManagementMainWindow {
 		lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setForeground(Color.RED);
-		lblNewLabel.setBounds(192, 55, 147, 14);
+		lblNewLabel.setBounds(117, 55, 222, 14);
 		panel_9.add(lblNewLabel);
 		
 		lblNewLabel_1 = new JLabel("");
@@ -978,6 +979,15 @@ public Boolean validirajUnosSektora(){
 		  
 		  lblNewLabel.setText("Polje Naziv je obavezno");
 		  validacija=false;
+		  
+	  }else{
+		  
+		  if(sC.dajSektorPoNazivu(txtEkonomskiSektor.getText())!=null){
+			  
+			  lblNewLabel.setText("Sektor sa tim nazivom vec postoji.");
+			  validacija=false;
+		  }
+		  
 		  
 	  }
 	  
