@@ -567,6 +567,7 @@ public class ManagementMainWindow {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					
+				
 					
 					int id = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
 					ZaposlenikVM zaposlenikVM=zC.dajZaposlenikaZaUredjivanje(id);
@@ -590,10 +591,10 @@ public class ManagementMainWindow {
 					
 				} catch (Exception er) {
 					
+            		JOptionPane.showMessageDialog (null, "Prvo izaberite zaposlenika kojeg zelite modifikovat", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
+
 					logger.error(er);
-					if (er.getMessage() != null )
-						JOptionPane.showMessageDialog(frame, er.getMessage(),
-								"Greška", JOptionPane.INFORMATION_MESSAGE);
+					
 				}
 				
 				
@@ -796,18 +797,29 @@ public class ManagementMainWindow {
 			
             public void actionPerformed(ActionEvent e)
             {   
-            	String naziv = list_1.getSelectedValue();
-            	Sektor sektor = sC.dajSektorPoNazivu(naziv);
-            	txtEkonomskiSektor.setText(sektor.getNaziv());
-            	txtrEkonomskiSektorSe.setText(sektor.getOpis());     	
-            	spinner_1.setValue(sektor.getGodina_osnivanja());
-            	spinner_2.setValue(sektor.getMax_broj_odsutnih());
-            	spinner_3.setValue((int)sektor.getSektor_id());
-            	StringBuilder sb = new StringBuilder();
-            	sb.append("");
-            	sb.append(sektor.getBroj_uposlenih());
-            	String strI = sb.toString();
-            	label_9.setText(strI);
+            	try {
+            		
+            		String naziv = list_1.getSelectedValue();
+                	Sektor sektor = sC.dajSektorPoNazivu(naziv);
+                	txtEkonomskiSektor.setText(sektor.getNaziv());
+                	txtrEkonomskiSektorSe.setText(sektor.getOpis());     	
+                	spinner_1.setValue(sektor.getGodina_osnivanja());
+                	spinner_2.setValue(sektor.getMax_broj_odsutnih());
+                	spinner_3.setValue((int)sektor.getSektor_id());
+                	StringBuilder sb = new StringBuilder();
+                	sb.append("");
+                	sb.append(sektor.getBroj_uposlenih());
+                	String strI = sb.toString();
+                	label_9.setText(strI);
+					
+				} catch (Exception e2) {
+					
+					logger.error(e2);
+            		JOptionPane.showMessageDialog (null, "Prvo izaberite sektor kojeg zelite modifikovat", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
+
+				}
+            	
+            	
             	
             }
         });
