@@ -1021,6 +1021,11 @@ public Boolean validirajUnosSektora(){
 			lblNewLabel_5.setText("Polje Prezime je obavezno");
 			validacija=false;
 		}
+		if(dateRodjen.getDate()== null)
+		{
+			lblNewLabel_6.setText("Polje datum rodjenja je obavezno");
+			validacija= false;
+		}
 
 		if(txtBrojDanaOdmora.getText().isEmpty()){
 			
