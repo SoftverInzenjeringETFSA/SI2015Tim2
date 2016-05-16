@@ -14,6 +14,7 @@ import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
+import tim12.si.app.godisnji_odmori.App;
 import tim12.si.app.godisnji_odmori.Singleton;
 import tim12.si.app.godisnji_odmori.Controller.PrisustvoController;
 import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
@@ -57,6 +58,10 @@ public class UI {
 				try {
 					UI window = new UI();
 					window.frmLogin.setVisible(true);
+					Session sessi = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+					ZaposlenikController zc = new ZaposlenikController(sessi);
+					if(zc.dajZaposlenikaPoId(1)==null)
+					App.main(null);
 				} catch (Exception e) {
 					
 					logger.error(e);

@@ -1,5 +1,7 @@
 package tim12.si.app.godisnji_odmori;
 
+import java.util.Date;
+
 /**
  * Hello world!
  *
@@ -15,27 +17,55 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World! Merseda " );
-        
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        System.out.println( "Hello World! Merseda " );
-        //dodajZaposlenika(session);
-        
-        
+    	Session session = HibernateUtil.getSessionFactory().openSession();
+        dodajSetor(session);
+        dodajTipOdsustva(session, "Godisnji", "Idemo na more");
+        dodajTipOdsustva(session, "Bolovanje", "Umiremo");
+        dodajTipOdsustva(session, "Neplanirano", "Nista ne planiram");
+        dodajZaposlenika(session);   
         session.close();
+       
     }
     
+    private static void dodajSetor(Session session)
+    {
+    	Transaction t = session.beginTransaction();
+    	Sektor s = new Sektor();
+    	s.setBroj_uposlenih(0);
+    	Date danas = new Date();
+    	s.setGodina_osnivanja(danas.getYear());
+    	s.setMax_broj_odsutnih(5);
+    	s.setNaziv("Administracija");
+    	s.setOpis("Inicijalni administratorski sektor");
+    	Long id = (Long) session.save(s);
+    	t.commit();
+    	
+    }
+    private static void dodajTipOdsustva(Session session, String naziv, String opis)
+    {
+    	Transaction t = session.beginTransaction();
+    	TipOdsustva to = new TipOdsustva();
+    	to.setNaziv(naziv);
+    	to.setOpis(opis);
+    	Long id = (Long) session.save(to);
+    	t.commit();
+    }
     private static void dodajZaposlenika(Session session) {
     	Transaction t = session.beginTransaction();
     	Zaposlenik s = new Zaposlenik();
-    	s.setIme("Manager");
-    	s.setPrezime("User");
-    	s.setUsername("2");
-    	s.setPassword("2");
+    	s.setIme("Administrator");
+    	s.setPrezime("");
+    	s.setUsername("admin");
+    	s.setPassword("admin");
     	s.setSektor_id(1);
+    	s.setAdresa_stanovanja("");
+    	s.setBroj_dana_godisnjeg(20);
+    	s.setEmail("email@email.com");
+    	s.setTelefon("+123456");
+    	Date datum = new Date(1993, 2, 2);
+    	s.setDatum_rodjenja(datum);
     	s.setPrivilegija(true);
     	Long id = (Long) session.save(s);
-    	System.out.println("Dodan student sa IDom "+id);
     	t.commit();
     	}
 

@@ -83,9 +83,12 @@ public class ZaposlenikTest {
 					"WHERE z.ime = :ime AND z.prezime=:prezime";
 			
 			Query p = sess.createQuery(x);
+			p.setString("ime", zvm.getIme());
+			p.setString("prezime", zvm.getPrezime());
+
 			//p.setString("Id",zvm.get);
 			p.executeUpdate();
-			assertEquals(tmp,true);
+			assertEquals(tmp.isEmpty(),true);
 		}
 		catch (ZaposlenikNotFound e){
 			e.printStackTrace();
