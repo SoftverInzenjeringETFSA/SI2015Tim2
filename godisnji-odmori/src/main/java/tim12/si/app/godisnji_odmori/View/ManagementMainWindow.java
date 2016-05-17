@@ -784,7 +784,7 @@ public class ManagementMainWindow {
             {
             	
             	ocistiUnosSektora();
-            	if(!validirajUnosSektora())
+            	if(!validirajUnosSektora(true))
             		return;
             	sC.dodajSektor(new SektorVM(txtEkonomskiSektor.getText(), spinner_1.getValue(),0,spinner_2.getValue().toString(),txtrEkonomskiSektorSe.getText()));
         		JOptionPane.showMessageDialog (null, "Uspjesno ste dodali novi sektor", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
@@ -868,7 +868,7 @@ public class ManagementMainWindow {
             {   
             	
             	ocistiUnosSektora();
-            	if(!validirajUnosSektora())
+            	if(!validirajUnosSektora(false))
             		return;
             	if(spinner_3.getValue()==9999){
             		
@@ -971,7 +971,7 @@ public class ManagementMainWindow {
 	  
   }
 
-public Boolean validirajUnosSektora(){
+public Boolean validirajUnosSektora(Boolean provjeri){
 	  Boolean validacija = true;
 
 	  
@@ -981,12 +981,16 @@ public Boolean validirajUnosSektora(){
 		  validacija=false;
 		  
 	  }else{
-		  
-		  if(sC.dajSektorPoNazivu(txtEkonomskiSektor.getText())!=null){
+		  if(provjeri){
 			  
-			  lblNewLabel.setText("Sektor sa tim nazivom vec postoji.");
-			  validacija=false;
+			  if(sC.dajSektorPoNazivu(txtEkonomskiSektor.getText())!=null){
+				  
+				  lblNewLabel.setText("Sektor sa tim nazivom vec postoji.");
+				  validacija=false;
+			  }
+			  
 		  }
+		 
 		  
 		  
 	  }
