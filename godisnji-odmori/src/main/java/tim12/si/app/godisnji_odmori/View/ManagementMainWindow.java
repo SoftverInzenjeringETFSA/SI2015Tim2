@@ -906,6 +906,14 @@ public class ManagementMainWindow {
 		btnIzvjetajOPreostalom.setBounds(269, 236, 251, 49);
 		panel_10.add(btnIzvjetajOPreostalom);
 		
+		btnIzvjetajOPreostalom.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				IzvjestajPoKorisniku k = new IzvjestajPoKorisniku();
+				
+			}
+		});
+		
 		JMenuBar menuBar = new JMenuBar();
 		frmSolutionsi.setJMenuBar(menuBar);
 		

@@ -165,6 +165,7 @@ public class UserMainWindow {
 			lblDatumRodjenja.setText(zvm.getDatumRodjenja().toString());
 			lblPostaviBrTel.setText(zvm.getTelefon());
 			lblpostaviEmail.setText(zvm.getEmail());
+			
 
 			final Color c = calendar_1.getDayChooser().getDayPanel().getComponent(20).getBackground();
 			sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();

@@ -8,19 +8,26 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
 
+import tim12.si.app.godisnji_odmori.Controller.SektorController;
+
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 
 public class IzvjestajPoKorisniku {
 
 	private JFrame frmSolutionsiIzvjetaj;
 	private JTable table;
+	private JComboBox comboBox;
+	private JDialog frame;
 	final static Logger logger = Logger.getLogger(IzvjestajPoKorisniku.class);
 	/**
 	 * Launch the application.
@@ -44,7 +51,28 @@ public class IzvjestajPoKorisniku {
 	 * Create the application.
 	 */
 	public IzvjestajPoKorisniku() {
+		
 		initialize();
+		frmSolutionsiIzvjetaj.setVisible(true);
+		
+		try{
+			SektorController sc = new SektorController();
+			String sektori[] = sc.dajSveSektore();
+			comboBox.setModel(new DefaultComboBoxModel(sektori));
+			comboBox.setSelectedIndex(-1);
+			}
+		
+		catch (Exception er) {
+
+			logger.error(er);
+			JOptionPane.showMessageDialog(frame, er.getMessage(),
+					"Greška", JOptionPane.INFORMATION_MESSAGE);
+			
+
+		} finally {
+			
+		}
+			
 	}
 
 	/**
@@ -54,7 +82,7 @@ public class IzvjestajPoKorisniku {
 		frmSolutionsiIzvjetaj = new JFrame();
 		frmSolutionsiIzvjetaj.setTitle("SolutionSI - Izvje\u0161taj po zaposlenicima");
 		frmSolutionsiIzvjetaj.setBounds(100, 100, 680, 300);
-		frmSolutionsiIzvjetaj.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSolutionsiIzvjetaj.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmSolutionsiIzvjetaj.getContentPane().setLayout(null);
 		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -83,7 +111,7 @@ public class IzvjestajPoKorisniku {
 		label.setBounds(10, 11, 59, 22);
 		frmSolutionsiIzvjetaj.getContentPane().add(label);
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.setBounds(57, 12, 106, 20);
 		frmSolutionsiIzvjetaj.getContentPane().add(comboBox);
 		
