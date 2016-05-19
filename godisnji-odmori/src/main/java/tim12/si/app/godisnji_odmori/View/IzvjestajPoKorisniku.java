@@ -1,19 +1,26 @@
 package tim12.si.app.godisnji_odmori.View;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
+import tim12.si.app.godisnji_odmori.Controller.KalendarController;
+import tim12.si.app.godisnji_odmori.Controller.OdsustvoController;
 import tim12.si.app.godisnji_odmori.Controller.SektorController;
 
 import javax.swing.JScrollPane;
@@ -60,6 +67,30 @@ public class IzvjestajPoKorisniku {
 			String sektori[] = sc.dajSveSektore();
 			comboBox.setModel(new DefaultComboBoxModel(sektori));
 			comboBox.setSelectedIndex(-1);
+			
+			comboBox.addActionListener (new ActionListener () {
+			    public void actionPerformed(ActionEvent e) {
+			    	Session sess = null;
+			    	try {
+			    	sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+			    	OdsustvoController oc = new OdsustvoController(sess);
+			    	KalendarController kc = new KalendarController();
+			    	
+			    	//events = oc.dajSvaOdsustva((String)combobox.getSelectedItem());
+			    	
+			    }
+			    	catch (Exception er) {
+
+			    		logger.error(er);
+						JOptionPane.showMessageDialog(frame, er.getMessage(),
+								"Greška", JOptionPane.INFORMATION_MESSAGE);
+						
+
+					} finally {
+						if (sess != null)
+							sess.close();
+					}
+			}});
 			}
 		
 		catch (Exception er) {
