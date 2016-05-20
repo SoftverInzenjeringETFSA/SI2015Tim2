@@ -335,7 +335,7 @@ public class UserMainWindow {
 		// String strDate =
 		// DateFormat.getDateInstance().format(zvm.datumRodjenja);
 		lblDatumRodjenja = new JLabel();
-		lblDatumRodjenja.setBounds(184, 113, 75, 14);
+		lblDatumRodjenja.setBounds(184, 113, 91, 14);
 		panel_10.add(lblDatumRodjenja);
 
 		// --kraj osnovni podaci
