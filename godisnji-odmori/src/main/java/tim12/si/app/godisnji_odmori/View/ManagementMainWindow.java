@@ -99,6 +99,7 @@ public class ManagementMainWindow {
 	private JLabel lblNewLabel_9;
 	private JLabel lblNewLabel_10;
 	private JLabel lblNewLabel_11;
+	private JLabel label_5;
 	private JTextArea txtrEkonomskiSektorSe;
 	private JSpinner spinner_2;
 	private JDateChooser dateRodjen;
@@ -755,13 +756,13 @@ public class ManagementMainWindow {
 		lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setForeground(Color.RED);
-		lblNewLabel.setBounds(117, 55, 222, 14);
+		lblNewLabel.setBounds(20, 55, 319, 14);
 		panel_9.add(lblNewLabel);
 		
 		lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_1.setForeground(Color.RED);
-		lblNewLabel_1.setBounds(111, 89, 228, 14);
+		lblNewLabel_1.setBounds(20, 89, 319, 14);
 		panel_9.add(lblNewLabel_1);
 		
 		lblNewLabel_2 = new JLabel("");
@@ -784,6 +785,11 @@ public class ManagementMainWindow {
 		spinner_3.setValue(9999);
 		spinner_3.setVisible(false);
 		panel_9.add(spinner_3);
+		
+	    label_5 = new JLabel("");
+		label_5.setForeground(Color.RED);
+		label_5.setBounds(20, 280, 319, 14);
+		panel_9.add(label_5);
 		
 		JButton btnDodajNoviSektor = new JButton("Dodaj sektor");
 		btnDodajNoviSektor.setBounds(59, 356, 124, 23);
@@ -1004,6 +1010,16 @@ public Boolean validirajUnosSektora(Boolean provjeri){
 	  Boolean validacija = true;
 
 	  
+	  if(!txtrEkonomskiSektorSe.getText().isEmpty()){
+		  
+		  if(txtrEkonomskiSektorSe.getText().length()>254){
+			  label_5.setText("Opis sektora ne moze sadrzavat vise od 254 karaktera.");
+			  validacija=false;
+			  
+		  }
+		  
+	  }
+	  
 	  if(txtEkonomskiSektor.getText().isEmpty()){
 		  
 		  lblNewLabel.setText("Polje Naziv je obavezno");
@@ -1020,6 +1036,11 @@ public Boolean validirajUnosSektora(Boolean provjeri){
 			  
 		  }
 		 
+		  if(txtEkonomskiSektor.getText().length()>254){
+			  lblNewLabel.setText("Naziv sektora ne moze sadrzavat vise od 254 karaktera.");
+			  validacija=false;
+			  
+		  }
 		  
 		  
 	  }
@@ -1071,11 +1092,25 @@ public Boolean validirajUnosSektora(Boolean provjeri){
 		if (txtHaso.getText().isEmpty()){
 			lblNewLabel_4.setText("Polje Ime je obavezno");
 			validacija=false;
-		}
+		}else{
+			
+			if(txtHaso.getText().length()>254){
+				lblNewLabel_4.setText("Ime ne moze sadrzavat vise od 254 karaktera.");
+			  validacija=false;
+			}
+			  
+		  }
 		if (txtHasi.getText().isEmpty()){
 			lblNewLabel_5.setText("Polje Prezime je obavezno");
 			validacija=false;
-		}
+		}else{
+			
+			if(txtHasi.getText().length()>254){
+				lblNewLabel_5.setText("Prezime ne moze sadrzavat vise od 254 karaktera.");
+			  validacija=false;
+			}
+			  
+		  }
 		if(dateRodjen.getDate()== null)
 		{
 			lblNewLabel_6.setText("Polje datum rodjenja je obavezno");
@@ -1113,6 +1148,14 @@ public Boolean validirajUnosSektora(Boolean provjeri){
 				lblNewLabel_10.setText("Polje Broj telefona moze sadrzavat samo cifre");
 				validacija=false;
 			}
+			
+			 if(txtBrojTelefona.getText().length()>254){
+				 lblNewLabel_10.setText("Broj telefona ne moze sadrzavat vise od 254 karaktera.");
+				  validacija=false;
+				  
+			  }
+			
+			
 		}
 		
 		if(!txtEmail.getText().isEmpty()){
@@ -1123,6 +1166,12 @@ public Boolean validirajUnosSektora(Boolean provjeri){
 				lblNewLabel_9.setText("Polje Email mora biti u formatu email-a");
 				validacija=false;
 			}
+			
+			if(txtEmail.getText().length()>254){
+				lblNewLabel_9.setText("Email ne moze sadrzavat vise od 254 karaktera.");
+				  validacija=false;
+				  
+			  }
 		}
 				
 		
