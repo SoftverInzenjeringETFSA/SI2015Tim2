@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.Dimension;
 
 import javax.swing.JTabbedPane;
@@ -63,6 +64,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URI;
 
 public class UserMainWindow {
 
@@ -720,7 +722,19 @@ public class UserMainWindow {
 
 		JMenuItem mntmUputstvo = new JMenuItem("Uputstvo");
 		mnHelp.add(mntmUputstvo);
-
+		mntmUputstvo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					  Desktop desktop = java.awt.Desktop.getDesktop();
+					  URI oURL = new URI("https://github.com/SoftverInzenjeringETFSA/SI2015Tim2/blob/master/Documents/User%20Interface%20v2.0.pdf");
+					  desktop.browse(oURL);
+					} catch (Exception e) {
+					  e.printStackTrace();
+					}
+			}
+			});
+			
+		
 		JMenu mnOdjava = new JMenu("Odjava");
 		menuBar.add(mnOdjava);
 

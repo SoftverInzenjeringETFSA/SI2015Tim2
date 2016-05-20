@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 
 import javax.swing.ImageIcon;
@@ -51,6 +52,7 @@ import javax.swing.ScrollPaneConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.InputStream;
+import java.net.URI;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
@@ -922,6 +924,17 @@ public class ManagementMainWindow {
 		
 		JMenuItem mntmUputstvo = new JMenuItem("Uputstvo");
 		mnHelp.add(mntmUputstvo);
+		mntmUputstvo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					  Desktop desktop = java.awt.Desktop.getDesktop();
+					  URI oURL = new URI("https://github.com/SoftverInzenjeringETFSA/SI2015Tim2/blob/master/Documents/User%20Interface%20v2.0.pdf");
+					  desktop.browse(oURL);
+					} catch (Exception e) {
+					  e.printStackTrace();
+					}
+			}
+			});
 		
 		JMenu mnOdjava = new JMenu("Odjava");
 		menuBar.add(mnOdjava);
