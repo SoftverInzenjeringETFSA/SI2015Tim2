@@ -43,6 +43,7 @@ public class ZaposlenikVM {
 		this.telefon=telefon;
 	}
 	
+	
 	public ZaposlenikVM(String ime, String prezime,String email,Date datumRodjenja,String telefon, String adresaStanovanja, String sektor, String brojDana,Boolean privilegija)
 	{
 		SektorController sc = new SektorController();

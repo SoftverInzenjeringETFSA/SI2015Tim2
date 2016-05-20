@@ -34,6 +34,14 @@ public class ZaposlenikBrDana {
 		this.iskoristeniGodisnji = iskoristeniGodisnji;
 		this.zaposlenik_id = id;
 	}
+	public ZaposlenikBrDana(String zaposlenikIme, String zaposlenikPrezime, Long radniDani, Long preostaloSlobodnih, Long iskoristeniGodisnji)
+	{
+		this.zaposlenikIme = zaposlenikIme;
+		this.zaposlenikPrezime = zaposlenikPrezime;
+		this.radniDani = radniDani;
+		this.preostaloSlobodnih = preostaloSlobodnih;
+		this.iskoristeniGodisnji = iskoristeniGodisnji;
+	}
 	public String getSektor() {
 		return sektor;
 	}

@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -22,6 +23,8 @@ import org.hibernate.Session;
 import tim12.si.app.godisnji_odmori.Controller.KalendarController;
 import tim12.si.app.godisnji_odmori.Controller.OdsustvoController;
 import tim12.si.app.godisnji_odmori.Controller.SektorController;
+import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
+import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
 
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
@@ -61,6 +64,14 @@ public class IzvjestajPoKorisniku {
 		
 		initialize();
 		frmSolutionsiIzvjetaj.setVisible(true);
+		DefaultTableModel model1 = (DefaultTableModel) table.getModel();
+    	
+    	int rowCount = model1.getRowCount();
+    	//Remove rows one by one from the end of the table
+    	for (int i = rowCount - 1; i >= 0; i--) {
+    	    model1.removeRow(i);
+    	}
+		
 		
 		try{
 			SektorController sc = new SektorController();
@@ -73,8 +84,25 @@ public class IzvjestajPoKorisniku {
 			    	Session sess = null;
 			    	try {
 			    	sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
-			    	OdsustvoController oc = new OdsustvoController(sess);
-			    	KalendarController kc = new KalendarController();
+			    	ZaposlenikController zc = new ZaposlenikController(sess);
+			    	ArrayList<ZaposlenikBrDana> al = zc.DajZaposlenikeZaIzvjestaj((String)comboBox.getSelectedItem());
+			    	DefaultTableModel model = (DefaultTableModel) table.getModel();
+			    	
+			    	int rowCount = model.getRowCount();
+			    	//Remove rows one by one from the end of the table
+			    	for (int i = rowCount - 1; i >= 0; i--) {
+			    	    model.removeRow(i);
+			    	}
+			    	
+			    	for (int i=0; i<al.size(); i++)
+			    	{
+			    		
+			    		Object[] objs = {(String)comboBox.getSelectedItem(), al.get(i).getZaposlenikIme(), al.get(i).getZaposlenikPrezime(), al.get(i).getRadniDani(), al.get(i).getPreostaloSlobodnih(), al.get(i).getIskoristeniGodisnji() };
+			    		model.addRow(objs);
+			    	}
+			    	
+
+			    	
 			    	
 			    	//events = oc.dajSvaOdsustva((String)combobox.getSelectedItem());
 			    	
@@ -112,7 +140,7 @@ public class IzvjestajPoKorisniku {
 	private void initialize() {
 		frmSolutionsiIzvjetaj = new JFrame();
 		frmSolutionsiIzvjetaj.setTitle("SolutionSI - Izvje\u0161taj po zaposlenicima");
-		frmSolutionsiIzvjetaj.setBounds(100, 100, 680, 300);
+		frmSolutionsiIzvjetaj.setBounds(100, 100, 680, 322);
 		frmSolutionsiIzvjetaj.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmSolutionsiIzvjetaj.getContentPane().setLayout(null);
 		
@@ -124,6 +152,7 @@ public class IzvjestajPoKorisniku {
 		frmSolutionsiIzvjetaj.getContentPane().add(scrollPane);
 		
 		table = new JTable();
+		table.setEnabled(false);
 		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
