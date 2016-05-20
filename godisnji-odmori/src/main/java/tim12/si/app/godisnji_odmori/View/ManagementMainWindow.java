@@ -541,9 +541,17 @@ public class ManagementMainWindow {
 			new String[] {
 				"ID zaposlenika", "Ime", "Prezime", "Sektor", "Broj dana godi\u0161njeg"
 			}
-		));
+			 
+		){
+			 @Override
+			    public boolean isCellEditable(int row, int column) {
+			        return false;
+			    }
+		});
 		table.getColumnModel().getColumn(0).setPreferredWidth(86);
 		table.getColumnModel().getColumn(4).setPreferredWidth(120);
+		
+		
 		
 		
 		JButton btnDodajZaposlenika = new JButton("Dodaj zaposlenika");
@@ -753,13 +761,13 @@ public class ManagementMainWindow {
 		lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_1.setForeground(Color.RED);
-		lblNewLabel_1.setBounds(146, 89, 193, 14);
+		lblNewLabel_1.setBounds(111, 89, 228, 14);
 		panel_9.add(lblNewLabel_1);
 		
 		lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_2.setForeground(Color.RED);
-		lblNewLabel_2.setBounds(64, 160, 275, 14);
+		lblNewLabel_2.setBounds(20, 160, 319, 14);
 		panel_9.add(lblNewLabel_2);
 		
 		lblNewLabel_3 = new JLabel("");
