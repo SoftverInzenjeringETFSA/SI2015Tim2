@@ -240,7 +240,7 @@ public class UserMainWindow {
 
 		lblEkonomski = new JLabel("Ekonomski");
 		lblEkonomski.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblEkonomski.setBounds(70, 292, 68, 14);
+		lblEkonomski.setBounds(70, 292, 156, 14);
 		panel.add(lblEkonomski);
 
 		JLabel lblUkupnoRadnihDana = new JLabel("Ukupno radnih dana:");
@@ -260,7 +260,7 @@ public class UserMainWindow {
 
 		JLabel lblZaposlenik = new JLabel("Zaposlenik");
 		lblZaposlenik.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblZaposlenik.setBounds(70, 251, 89, 21);
+		lblZaposlenik.setBounds(70, 251, 124, 21);
 		panel.add(lblZaposlenik);
 
 		calendar = new JCalendar();
