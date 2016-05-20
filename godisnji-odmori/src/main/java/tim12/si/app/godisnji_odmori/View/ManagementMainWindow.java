@@ -921,6 +921,13 @@ public class ManagementMainWindow {
 		btnGodinjiIzvjetaj.setBounds(269, 151, 251, 49);
 		panel_10.add(btnGodinjiIzvjetaj);
 		
+		btnGodinjiIzvjetaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				GodisnjiIzvjestaj g= new GodisnjiIzvjestaj();	
+			}
+		});
+		
+		
 		JButton btnIzvjetajOPreostalom = new JButton("Izvještaj o preostalim danima");
 		btnIzvjetajOPreostalom.setBounds(269, 236, 251, 49);
 		panel_10.add(btnIzvjetajOPreostalom);

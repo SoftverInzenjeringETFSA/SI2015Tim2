@@ -2,27 +2,43 @@ package tim12.si.app.godisnji_odmori.View;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
+
 import com.toedter.calendar.JYearChooser;
 
+
+import tim12.si.app.godisnji_odmori.Controller.SektorController;
+import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
+import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
+import tim12.si.app.godisnji_odmori.Model.Sektor;
 public class GodisnjiIzvjestaj {
 
 	private JFrame frmSolutionsiGodisnji;
 	private JTable table;
+	JComboBox cbSektori;
+	private JDialog frame;
+	SektorController sc;
 	final static Logger logger = Logger.getLogger(GodisnjiIzvjestaj.class);
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -46,7 +62,10 @@ public class GodisnjiIzvjestaj {
 	 * Create the application.
 	 */
 	public GodisnjiIzvjestaj() {
+		
 		initialize();
+		frmSolutionsiGodisnji.setVisible(true);	
+		
 	}
 
 	/**
@@ -69,9 +88,9 @@ public class GodisnjiIzvjestaj {
 		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"IT", "Haso", "Hasi\u0107", "125", "10"},
+				{"", "", "", null, ""},
 				{null, null, null, null, null},
-				{null, null, "Ukupno:", "125", "10"},
+				{null, null, "Ukupno:", null, "10"},
 			},
 			new String[] {
 				"Sektor", "Ime", "Prezime", "Radni dani", "Neradni dani"
@@ -82,10 +101,11 @@ public class GodisnjiIzvjestaj {
 		lblSektor.setBounds(10, 11, 59, 22);
 		frmSolutionsiGodisnji.getContentPane().add(lblSektor);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(57, 12, 106, 20);
-		frmSolutionsiGodisnji.getContentPane().add(comboBox);
-		
+		JComboBox cbSektori = new JComboBox();
+		//String sektori[] = sc.dajSveSektore();
+		//cbSektori.setModel(new DefaultComboBoxModel(sektori));
+		cbSektori.setBounds(57, 12, 106, 20);
+		frmSolutionsiGodisnji.getContentPane().add(cbSektori);
 		JLabel lblGodina = new JLabel("Godina:");
 		lblGodina.setBounds(205, 11, 67, 22);
 		frmSolutionsiGodisnji.getContentPane().add(lblGodina);
