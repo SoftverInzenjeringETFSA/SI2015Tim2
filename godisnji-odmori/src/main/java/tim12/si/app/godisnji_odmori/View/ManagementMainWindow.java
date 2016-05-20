@@ -960,6 +960,8 @@ public class ManagementMainWindow {
 		mntmLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmSolutionsi.dispose();
+        		JOptionPane.showMessageDialog (null, "Uspjesno ste se odjavili.", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
+
 				UI ui = new UI();
 				ui.UIShow();
 			}
