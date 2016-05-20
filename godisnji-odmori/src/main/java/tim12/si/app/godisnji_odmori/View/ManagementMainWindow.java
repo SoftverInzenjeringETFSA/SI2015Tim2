@@ -807,6 +807,8 @@ public class ManagementMainWindow {
         		JOptionPane.showMessageDialog (null, "Uspjesno ste dodali novi sektor", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
             	osvjeziListuSektora();
             	ocistiPolja();
+            	osvjeziComboBoxSektora();
+            	
             }
         }); 
 
@@ -1229,5 +1231,15 @@ public Boolean validirajUnosSektora(Boolean provjeri){
 		txtAdresa.setText("");
 		spinner_4.setValue(9999);
 	}
+	
+	public void osvjeziComboBoxSektora(){
+		
+		String sektori[] = sC.dajSveSektore();
+		comboSektor.setModel(new DefaultComboBoxModel(sektori));
+		comboSektor.setSelectedIndex(-1);
+		
+	}
+	
+	
 }
 
