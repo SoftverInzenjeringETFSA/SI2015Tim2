@@ -181,6 +181,7 @@ public class KalendarPregledManagement {
 	 */
 	private void initialize() {
 		frmZauzetiTerminiPo = new JFrame();
+		frmZauzetiTerminiPo.setResizable(false);
 		frmZauzetiTerminiPo.setTitle("SolutionSI - Zauzeti termini po sektorima");
 		frmZauzetiTerminiPo.setBounds(100, 100, 595, 400);
 		frmZauzetiTerminiPo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

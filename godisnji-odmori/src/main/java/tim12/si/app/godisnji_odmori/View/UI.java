@@ -145,6 +145,7 @@ public class UI {
 	private void initialize() {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		frmLogin = new JFrame();
+		frmLogin.setResizable(false);
 		frmLogin.setTitle("Login");
 		frmLogin.getContentPane().setForeground(Color.LIGHT_GRAY);
 		frmLogin.getContentPane().setBackground(SystemColor.scrollbar);

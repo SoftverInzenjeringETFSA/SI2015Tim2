@@ -201,6 +201,7 @@ public class UserMainWindow {
 	private void initialize() throws ZaposlenikNotFound {
 
 		frmSolutionsi = new JFrame();
+		frmSolutionsi.setResizable(false);
 		frmSolutionsi.setTitle("SolutionSI");
 		frmSolutionsi.getContentPane().setLayout(null);
 		frmSolutionsi.setBounds(10, 20, 665, 525);

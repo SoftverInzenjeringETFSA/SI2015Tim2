@@ -69,6 +69,7 @@ public class MjesecniIzvjestaj {
 	 */
 	private void initialize() {
 		frmSolutionsiMjesecni = new JFrame();
+		frmSolutionsiMjesecni.setResizable(false);
 		frmSolutionsiMjesecni.setTitle("SolutionSI - Mjesečni izvjestaj");
 		frmSolutionsiMjesecni.setBounds(100, 100, 547, 306);
 		frmSolutionsiMjesecni.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

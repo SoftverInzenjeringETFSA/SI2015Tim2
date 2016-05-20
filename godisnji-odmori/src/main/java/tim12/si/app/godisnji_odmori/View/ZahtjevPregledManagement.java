@@ -190,6 +190,7 @@ public class ZahtjevPregledManagement {
 	 */
 	private void initialize() {
 		frmSolutionsiZahtjev = new JFrame();
+		frmSolutionsiZahtjev.setResizable(false);
 		frmSolutionsiZahtjev.setTitle("SolutionSI - Zahtjev detalji");
 		frmSolutionsiZahtjev.setBounds(100, 100, 840, 407);
 		frmSolutionsiZahtjev.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

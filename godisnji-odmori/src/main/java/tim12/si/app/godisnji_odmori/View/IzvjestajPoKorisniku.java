@@ -139,6 +139,7 @@ public class IzvjestajPoKorisniku {
 	 */
 	private void initialize() {
 		frmSolutionsiIzvjetaj = new JFrame();
+		frmSolutionsiIzvjetaj.setResizable(false);
 		frmSolutionsiIzvjetaj.setTitle("SolutionSI - Izvje\u0161taj po zaposlenicima");
 		frmSolutionsiIzvjetaj.setBounds(100, 100, 680, 322);
 		frmSolutionsiIzvjetaj.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

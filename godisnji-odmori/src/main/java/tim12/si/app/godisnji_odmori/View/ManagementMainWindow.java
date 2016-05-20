@@ -212,6 +212,7 @@ public class ManagementMainWindow {
 	 */
 	private void initialize() {
 		frmSolutionsi = new JFrame();
+		frmSolutionsi.setResizable(false);
 		frmSolutionsi.setTitle("SolutionSI");
 		frmSolutionsi.setBounds(100, 100, 840, 550);
 		frmSolutionsi.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
