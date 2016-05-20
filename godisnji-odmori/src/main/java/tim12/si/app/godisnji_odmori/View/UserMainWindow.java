@@ -224,7 +224,7 @@ public class UserMainWindow {
 
 		lblHasoHasi = new JLabel("Haso Hasi\u0107");
 		lblHasoHasi.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblHasoHasi.setBounds(35, 188, 89, 26);
+		lblHasoHasi.setBounds(35, 188, 191, 26);
 		panel.add(lblHasoHasi);
 
 		JLabel lblZaOvuGodinu = new JLabel("Za ovu godinu Vam je ostalo da iskoristite još");
@@ -752,6 +752,13 @@ public class UserMainWindow {
 		ZahtjevController bolovanje = new ZahtjevController(sess);
 		ZahtjevVM zvm = new ZahtjevVM(Od, Do, (long) 2, opis, nalaz);
 		try {
+			
+			if(Od.after(Do) ){
+				
+				JOptionPane.showMessageDialog(null, "Datum Od pocinje nakon datuma zavrsetka.", "Obavještenje",
+						JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
 			Long bolovanje_id = bolovanje.kreirajZahtjev(zvm);
 
 			JOptionPane.showMessageDialog(null, "Uspješno poslan zahtjev za bolovanje", "Obavještenje",
@@ -811,6 +818,12 @@ public class UserMainWindow {
 		ZahtjevController neplanirano = new ZahtjevController(sess);
 		ZahtjevVM zvm = new ZahtjevVM(Od, Do, (long) 3, opis, nalaz);
 		try {
+			if(Od.after(Do) ){
+				
+				JOptionPane.showMessageDialog(null, "Datum Od pocinje nakon datuma zavrsetka.", "Obavještenje",
+						JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
 			Long neplanirano_id = neplanirano.kreirajZahtjev(zvm);
 			JOptionPane.showMessageDialog(null, "Uspješno poslan zahtjev za neplanirano odsustvo", "Obavještenje",
 					JOptionPane.INFORMATION_MESSAGE);
@@ -851,6 +864,12 @@ public class UserMainWindow {
 			if(!godisnji.provjeriMozelToliko(zvm)){
 				
 				JOptionPane.showMessageDialog(null, "Izabrali ste vie dana nego sto Vam je dozvoljeno.", "Obavještenje",
+						JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+			if(Od.after(Do) ){
+				
+				JOptionPane.showMessageDialog(null, "Datum Od pocinje nakon datuma zavrsetka.", "Obavještenje",
 						JOptionPane.INFORMATION_MESSAGE);
 				return;
 			}

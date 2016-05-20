@@ -274,7 +274,7 @@ public class ManagementMainWindow {
 		
 		lblMujoMuji = new JLabel("");
 		lblMujoMuji.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMujoMuji.setBounds(10, 152, 160, 26);
+		lblMujoMuji.setBounds(10, 152, 246, 26);
 		lblMujoMuji.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(lblMujoMuji);
 		
@@ -399,21 +399,21 @@ public class ManagementMainWindow {
 		lblNewLabel_4.setForeground(Color.RED);
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		lblNewLabel_4.setBounds(89, 54, 190, 14);
+		lblNewLabel_4.setBounds(10, 54, 269, 14);
 		panel_3.add(lblNewLabel_4);
 		
 		lblNewLabel_5 = new JLabel("");
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblNewLabel_5.setForeground(Color.RED);
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_5.setBounds(89, 83, 190, 14);
+		lblNewLabel_5.setBounds(10, 83, 269, 14);
 		panel_3.add(lblNewLabel_5);
 		
 		lblNewLabel_6 = new JLabel("");
 		lblNewLabel_6.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_6.setForeground(Color.RED);
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		lblNewLabel_6.setBounds(89, 114, 190, 14);
+		lblNewLabel_6.setBounds(10, 114, 269, 14);
 		panel_3.add(lblNewLabel_6);
 		
 		JPanel panel_5 = new JPanel();
@@ -446,14 +446,14 @@ public class ManagementMainWindow {
 		lblNewLabel_7.setForeground(Color.RED);
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblNewLabel_7.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_7.setBounds(74, 38, 205, 14);
+		lblNewLabel_7.setBounds(10, 38, 269, 14);
 		panel_5.add(lblNewLabel_7);
 		
 		lblNewLabel_8 = new JLabel("");
 		lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_8.setForeground(Color.RED);
-		lblNewLabel_8.setBounds(103, 71, 176, 14);
+		lblNewLabel_8.setBounds(10, 71, 269, 14);
 		panel_5.add(lblNewLabel_8);
 		
 		chckbxManagerPrivilegija = new JCheckBox("Manager privilegija            ");
@@ -504,14 +504,14 @@ public class ManagementMainWindow {
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblNewLabel_9.setForeground(Color.RED);
 		lblNewLabel_9.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_9.setBounds(91, 36, 188, 14);
+		lblNewLabel_9.setBounds(20, 36, 259, 14);
 		panel_4.add(lblNewLabel_9);
 		
 		lblNewLabel_10 = new JLabel("");
 		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblNewLabel_10.setForeground(Color.RED);
 		lblNewLabel_10.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_10.setBounds(90, 64, 188, 14);
+		lblNewLabel_10.setBounds(10, 64, 268, 14);
 		panel_4.add(lblNewLabel_10);
 		
 		lblNewLabel_11 = new JLabel("");
@@ -1059,6 +1059,13 @@ public Boolean validirajUnosSektora(Boolean provjeri){
 		{
 			lblNewLabel_6.setText("Polje datum rodjenja je obavezno");
 			validacija= false;
+		}else{
+			
+			Date datum = new Date();
+			
+			if(datum.before(dateRodjen.getDate()))
+				lblNewLabel_6.setText("Polje datum rodjenja mora biti prije danasnje dana");
+			
 		}
 
 		if(txtBrojDanaOdmora.getText().isEmpty()){
@@ -1076,6 +1083,27 @@ public Boolean validirajUnosSektora(Boolean provjeri){
 			}
 			
 		}
+		
+		if(!txtBrojTelefona.getText().isEmpty()){
+			
+			String regex = "^\\d+$";
+			if(!txtBrojTelefona.getText().matches(regex)){
+				
+				lblNewLabel_10.setText("Polje Broj telefona moze sadrzavat samo cifre");
+				validacija=false;
+			}
+		}
+		
+		if(!txtEmail.getText().isEmpty()){
+			
+			String regex ="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+			if(!txtEmail.getText().matches(regex)){
+				
+				lblNewLabel_9.setText("Polje Email mora biti u formatu email-a");
+				validacija=false;
+			}
+		}
+				
 		
 		if (comboSektor.getSelectedIndex()==-1){
 			lblNewLabel_8.setText("Polje Sektor je obavezno");

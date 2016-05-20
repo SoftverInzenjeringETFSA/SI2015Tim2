@@ -19,9 +19,9 @@ public class App
     {
     	Session session = HibernateUtil.getSessionFactory().openSession();
         dodajSetor(session);
-        dodajTipOdsustva(session, "Godisnji", "Idemo na more");
-        dodajTipOdsustva(session, "Bolovanje", "Umiremo");
-        dodajTipOdsustva(session, "Neplanirano", "Nista ne planiram");
+        dodajTipOdsustva(session, "Godisnji", "Idemo na more",1);
+        dodajTipOdsustva(session, "Bolovanje", "Umiremo",2);
+        dodajTipOdsustva(session, "Neplanirano", "Nista ne planiram",3);
         dodajZaposlenika(session);   
         session.close();
        
@@ -31,6 +31,7 @@ public class App
     {
     	Transaction t = session.beginTransaction();
     	Sektor s = new Sektor();
+    	s.setSektor_id(1);
     	s.setBroj_uposlenih(0);
     	Date danas = new Date();
     	s.setGodina_osnivanja(danas.getYear());
@@ -41,10 +42,11 @@ public class App
     	t.commit();
     	
     }
-    private static void dodajTipOdsustva(Session session, String naziv, String opis)
+    private static void dodajTipOdsustva(Session session, String naziv, String opis,long idTo)
     {
     	Transaction t = session.beginTransaction();
     	TipOdsustva to = new TipOdsustva();
+    	to.setId_odsustva(idTo);
     	to.setNaziv(naziv);
     	to.setOpis(opis);
     	Long id = (Long) session.save(to);
@@ -53,6 +55,7 @@ public class App
     private static void dodajZaposlenika(Session session) {
     	Transaction t = session.beginTransaction();
     	Zaposlenik s = new Zaposlenik();
+    	s.setZaposlenik_id(1);
     	s.setIme("Administrator");
     	s.setPrezime("");
     	s.setUsername("admin");
