@@ -166,6 +166,7 @@ public class ZaposlenikController
 		zaposlenik.setEmail(zaposlenikVM.email);
 		zaposlenik.setSektor_id(zaposlenikVM.sektor);
 		zaposlenik.setTelefon(zaposlenikVM.telefon);
+		zaposlenik.setPrivilegija(zaposlenikVM.privilegija);
 		modificirajZaposlenikBaza(zaposlenik);
 	}
 
