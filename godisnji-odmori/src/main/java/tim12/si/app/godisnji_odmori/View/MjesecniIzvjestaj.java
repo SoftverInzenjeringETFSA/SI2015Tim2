@@ -1,8 +1,12 @@
 package tim12.si.app.godisnji_odmori.View;
 
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.URI;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -29,15 +33,21 @@ import com.toedter.calendar.JMonthChooser;
 
 import tim12.si.app.godisnji_odmori.HibernateUtil;
 import tim12.si.app.godisnji_odmori.Controller.IzvjestajController;
+import tim12.si.app.godisnji_odmori.Controller.SektorController;
+import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
 import tim12.si.app.godisnji_odmori.ViewModel.IzvjestajZapVM;
+import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
+import javax.swing.JButton;
 
 public class MjesecniIzvjestaj {
 
 	private JFrame frmSolutionsiMjesecni;
 	private JTable table;
 	private JComboBox comboBox;
+	private JButton btnPrikaiIzvjetaj;
+	private JMonthChooser monthChooser;
 	private JDialog frame;
-	private static final Logger logger = Logger.getLogger(MjesecniIzvjestaj.class);
+	final static Logger logger = Logger.getLogger(MjesecniIzvjestaj.class);
 
 	/**
 	 * Launch the application.
@@ -60,8 +70,40 @@ public class MjesecniIzvjestaj {
 	 */
 	public MjesecniIzvjestaj() {
 		initialize();
-		OsvjeziComboBox(false);
-		frame.setVisible(true);
+		frmSolutionsiMjesecni.setVisible(true);
+		DefaultTableModel model1 = (DefaultTableModel) table.getModel();
+    	
+    	int rowCount = model1.getRowCount();
+    	//Remove rows one by one from the end of the table
+    	for (int i = rowCount - 1; i >= 0; i--) {
+    	    model1.removeRow(i);
+    	}
+    	
+    	try{
+			SektorController sc = new SektorController();
+			String sektori[] = sc.dajSveSektore();
+			comboBox.setModel(new DefaultComboBoxModel(sektori));
+			comboBox.setSelectedIndex(-1);
+	
+			/*btnPrikaiIzvjetaj.addActionListener(new ActionListener () {
+			    public void actionPerformed(ActionEvent e) {
+			    	PrikaziIzvjestaj();
+			    }
+	});*/
+			}
+		
+		catch (Exception er) {
+
+			logger.error(er);
+			JOptionPane.showMessageDialog(frame, er.getMessage(),
+					"Greška", JOptionPane.INFORMATION_MESSAGE);
+			
+
+		} finally {
+			
+		}
+
+		
 	}
 
 	/**
@@ -74,6 +116,7 @@ public class MjesecniIzvjestaj {
 		frmSolutionsiMjesecni.setBounds(100, 100, 547, 306);
 		frmSolutionsiMjesecni.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSolutionsiMjesecni.getContentPane().setLayout(null);
+		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		frmSolutionsiMjesecni.setLocation(dim.width/2-frmSolutionsiMjesecni.getSize().width/2, dim.height/2-frmSolutionsiMjesecni.getSize().height/2);
 		
@@ -82,13 +125,15 @@ public class MjesecniIzvjestaj {
 		frmSolutionsiMjesecni.getContentPane().add(scrollPane);
 		
 		table = new JTable();
+		table.setEnabled(false);
+		scrollPane.setViewportView(table);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"", null, null, "", null},
-				{null, null, null, null, ""},
+				{"Ekonomski", "Haso", "Hasic", "125", "15"},
+				{"Ekonomski", "Haso", "Hasic", "263", "10"},
 				{null, null, null, null, null},
-				{null, "", "Ukupno:", "", null},
+				{null, "", "Ukupno:", "25", null},
 			},
 			new String[] {
 				"Sektor", "Ime", "Prezime", "Radni dani", "Neradni dani"
@@ -99,38 +144,13 @@ public class MjesecniIzvjestaj {
 		table.getColumnModel().getColumn(2).setPreferredWidth(96);
 		table.getColumnModel().getColumn(3).setPreferredWidth(105);
 		table.getColumnModel().getColumn(4).setPreferredWidth(109);
-		scrollPane.setViewportView(table);
 		
 		JLabel label = new JLabel("Sektor:");
 		label.setBounds(10, 11, 59, 22);
 		frmSolutionsiMjesecni.getContentPane().add(label);
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.setBounds(57, 12, 106, 20);
-		comboBox.setEditable(true);
-		JTextComponent jtc = (JTextComponent) comboBox.getEditor().getEditorComponent();
-		jtc.getDocument().addDocumentListener(new DocumentListener() {
-			
-			public void removeUpdate(DocumentEvent e) {
-				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						OsvjeziComboBox(true);
-					}
-				});
-			}
-			
-			public void insertUpdate(DocumentEvent e) {
-				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						OsvjeziComboBox(true);
-					}
-				});
-			}
-			
-			public void changedUpdate(DocumentEvent e) {
-				//This never happens
-			}
-		});
 		frmSolutionsiMjesecni.getContentPane().add(comboBox);
 		
 		JLabel lblMjesec = new JLabel("Mjesec:");
@@ -144,11 +164,32 @@ public class MjesecniIzvjestaj {
 		JMenuBar menuBar = new JMenuBar();
 		frmSolutionsiMjesecni.setJMenuBar(menuBar);
 		
+		
+		JButton btnPrikaiIzvjetaj = new JButton("Prikaži izvještaj");
+		btnPrikaiIzvjetaj.setBounds(399, 11, 126, 23);
+		btnPrikaiIzvjetaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PrikaziIzvjestaj();
+			}
+		});
+		frmSolutionsiMjesecni.getContentPane().add(btnPrikaiIzvjetaj);
+		
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
 		
 		JMenuItem mntmUputstvo = new JMenuItem("Uputstvo");
 		mnHelp.add(mntmUputstvo);
+		mntmUputstvo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					  Desktop desktop = java.awt.Desktop.getDesktop();
+					  URI oURL = new URI("https://github.com/SoftverInzenjeringETFSA/SI2015Tim2/blob/master/Documents/User%20Interface%20v2.0.pdf");
+					  desktop.browse(oURL);
+					} catch (Exception e) {
+					  e.printStackTrace();
+					}
+			}
+			});
 		
 		JMenu mnOdjava = new JMenu("Odjava");
 		menuBar.add(mnOdjava);
@@ -157,40 +198,105 @@ public class MjesecniIzvjestaj {
 		mnOdjava.add(mntmLogOut);
 	}
 	
-	private void OsvjeziComboBox(boolean expand) {
-		Session sess = null;
+	void PrikaziIzvjestaj(){
 		
-		try {
-			if ( comboBox.getEditor().getItem() instanceof String){
-				
-				sess = HibernateUtil.getSessionFactory().openSession();
-				IzvjestajController icont= new IzvjestajController (sess);
-				
-				String ime = (String) comboBox.getEditor().getItem();
-				
-
-				ArrayList<IzvjestajZapVM> data = icont.nadjiPoImenu(ime);
-				Object[] array = new Object[data.size() + 1];
-				array[0] = ime;
-				
-				for(int i = 0; i < data.size(); i++){
-					array[i+1] = data.get(i);
-				}
-				
-				DefaultComboBoxModel model = new DefaultComboBoxModel(array);
-				comboBox.setModel(model);
-				
-				if(expand)
-					comboBox.getUI().setPopupVisible(comboBox, true);
+		if(comboBox.getSelectedIndex()==-1){
+			JOptionPane.showMessageDialog(frame, "Odaberite sektor", "Greška", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		PrikaziZaposlenika();
+		
+		/*switch (monthChooser.getMonth())
+		{
+		case 0:
+			//if mjesecPrisustva=januar 
+			PrikaziZaposlenika();
+			break;
+		case 2: 
+			//if mjesecPrisustva=februar 
+			PrikaziZaposlenika();
+			break;
+		case 3:
+			//if mjesecPrisustva=mart 
+			PrikaziZaposlenika();
+			break;
+		case 4:
+			//if mjesecPrisustva=april 
+			PrikaziZaposlenika();
+			break;
+		case 5:
+			//if mjesecPrisustva=januar 
+			PrikaziZaposlenika();
+			break;
+		case 6:
+			//if mjesecPrisustva=januar 
+			PrikaziZaposlenika();
+			break;
+		case 7:
+			//if mjesecPrisustva=januar 
+			PrikaziZaposlenika();
+			break;
+		case 8:
+			//if mjesecPrisustva=januar 
+			PrikaziZaposlenika();
+			break;
+		case 9:
+			//if mjesecPrisustva=januar 
+			PrikaziZaposlenika();
+			break;
+		case 10:
+			//if mjesecPrisustva=januar 
+			PrikaziZaposlenika();
+			break;
+		case 11:
+			//if mjesecPrisustva=januar 
+			PrikaziZaposlenika();
+			break;
+		case 1:
+			//if mjesecPrisustva=januar 
+			PrikaziZaposlenika();
+			break;
+		}*/
+	  		    	
 			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(frame, e.getMessage(), 
-					"Greška!", JOptionPane.ERROR_MESSAGE);
-			logger.debug(e.getMessage(), e);
+
+	void PrikaziZaposlenika(){
+		
+		//ostalo mi je da izdvojim informacije o zaposleniku u odnosu na ono što je 
+		//selektovano u monthChooseru
+		Session sess = null;
+		try {
+		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+		ZaposlenikController zc = new ZaposlenikController(sess);
+		ArrayList<ZaposlenikBrDana> al = zc.DajZaposlenikeZaIzvjestaj((String)comboBox.getSelectedItem());
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		
+		int rowCount = model.getRowCount();
+		//Remove rows one by one from the end of the table
+		for (int i = rowCount - 1; i >= 0; i--) {
+		    model.removeRow(i);
+		}
+		
+		for (int i=0; i<al.size(); i++)
+		{
+			
+			Object[] objs = {(String)comboBox.getSelectedItem(), al.get(i).getZaposlenikIme(), al.get(i).getZaposlenikPrezime(), al.get(i).getRadniDani(), al.get(i).getIskoristeniGodisnji()};
+			model.addRow(objs);
+		}
+		
+		//events = oc.dajSvaOdsustva((String)combobox.getSelectedItem());
+		
+		}
+		catch (Exception er) {
+		
+			logger.error(er);
+			JOptionPane.showMessageDialog(frame, er.getMessage(),
+					"Greška", JOptionPane.INFORMATION_MESSAGE);
+			
+		
 		} finally {
 			if (sess != null)
 				sess.close();
 		}
-		
 	}
 }
