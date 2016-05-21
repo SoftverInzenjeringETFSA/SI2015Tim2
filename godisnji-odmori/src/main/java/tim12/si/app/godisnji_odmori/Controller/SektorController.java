@@ -155,6 +155,7 @@ public class SektorController {
 	
 	public String dajNazivSektoraPoIdBaza (long idSektora){
 		
+		
 		Criteria criteria = session.createCriteria(Sektor.class);
 		criteria.add(Restrictions.eq("sektor_id", (long)idSektora));
 		Sektor s=  (Sektor) criteria.uniqueResult();

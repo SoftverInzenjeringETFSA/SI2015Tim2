@@ -593,7 +593,11 @@ public class ManagementMainWindow {
 					dateRodjen.setDate(zaposlenikVM.datumRodjenja);
 					txtBrojTelefona.setText(zaposlenikVM.telefon);
 					txtAdresa.setText(zaposlenikVM.adresaStanovanja);
+					if(zaposlenikVM.sektor!=0)
 					comboSektor.setSelectedItem(sC.dajNazivSektoraPoIdBaza(zaposlenikVM.sektor));
+					else
+						comboSektor.setSelectedIndex(-1);
+
 					chckbxManagerPrivilegija.setSelected(zaposlenikVM.privilegija);
 					spinner_4.setValue(id);
 					
