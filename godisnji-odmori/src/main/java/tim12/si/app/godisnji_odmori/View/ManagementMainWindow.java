@@ -628,6 +628,13 @@ public class ManagementMainWindow {
             		JOptionPane.showMessageDialog (null, "Da bi ste obrisali zapolsenika, prvo ga morate selektovat", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
+				int id = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
+				if(zC.dajIdPoUsernamuBaza(Singleton.getInstance().getUsername())==id){
+					
+					JOptionPane.showMessageDialog (null, "Ne mozete brisati svoj racun", "Obavjestenje", JOptionPane.INFORMATION_MESSAGE);
+					return;
+					
+				}
 				/*sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
 				zC = new ZaposlenikController(sess);*/
 				Object[] options = { "Da", "Ne" };
@@ -642,7 +649,7 @@ public class ManagementMainWindow {
 				
 				if (n == JOptionPane.YES_OPTION) {
 					
-					int id = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
+					//int id = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
 					zC.obrisiZaposlenika(id);
 				    osvjeziTabeluZaposlenika();
 				    ocistiPolja();
