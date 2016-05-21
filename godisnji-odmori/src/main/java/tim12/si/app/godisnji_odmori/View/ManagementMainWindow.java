@@ -966,7 +966,8 @@ public class ManagementMainWindow {
 					  URI oURL = new URI("https://github.com/SoftverInzenjeringETFSA/SI2015Tim2/blob/master/Documents/User%20Interface%20v2.0.pdf");
 					  desktop.browse(oURL);
 					} catch (Exception e) {
-					  e.printStackTrace();
+						
+						logger.error(e);
 					}
 			}
 			});
