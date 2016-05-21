@@ -1,9 +1,11 @@
 package tim12.si.app.godisnji_odmori.View;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
@@ -25,18 +27,21 @@ import javax.swing.JDialog;
 
 import com.toedter.calendar.JYearChooser;
 
-
+import tim12.si.app.godisnji_odmori.Controller.IzvjestajController;
 import tim12.si.app.godisnji_odmori.Controller.SektorController;
 import tim12.si.app.godisnji_odmori.Controller.ZaposlenikController;
+import tim12.si.app.godisnji_odmori.ViewModel.IzvjestajVM;
 import tim12.si.app.godisnji_odmori.ViewModel.ZaposlenikBrDana;
 import tim12.si.app.godisnji_odmori.Model.Sektor;
 public class GodisnjiIzvjestaj {
 
 	private JFrame frmSolutionsiGodisnji;
 	private JTable table;
-	JComboBox cbSektori;
+	private JComboBox cbSektori;
 	private JDialog frame;
-	SektorController sc;
+	private SektorController sc;
+	private JYearChooser godina;
+	private IzvjestajController ic;
 	final static Logger logger = Logger.getLogger(GodisnjiIzvjestaj.class);
 	
 	/**
@@ -65,7 +70,73 @@ public class GodisnjiIzvjestaj {
 		
 		initialize();
 		frmSolutionsiGodisnji.setVisible(true);	
+		DefaultTableModel model1 = (DefaultTableModel) table.getModel();
+    	
+    	int rowCount = model1.getRowCount();
+    	//Remove rows one by one from the end of the table
+    	for (int i = rowCount - 1; i >= 0; i--) {
+    	    model1.removeRow(i);
+    	}
 		
+    	
+		try{
+			SektorController sc = new SektorController();
+			String sektori[] = sc.dajSveSektore();
+			
+			System.out.println("tusam");
+			cbSektori.setModel(new DefaultComboBoxModel(sektori));
+			
+			cbSektori.setSelectedIndex(-1);
+			
+			cbSektori.addActionListener (new ActionListener () {
+			    public void actionPerformed(ActionEvent e) {
+			    	Session sess = null;
+			    	try {
+			    	sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+			    	ZaposlenikController zc = new ZaposlenikController(sess);
+			    	ArrayList<ZaposlenikBrDana> al = zc.DajZaposlenikeZaIzvjestaj((String)cbSektori.getSelectedItem());
+			    	DefaultTableModel model = (DefaultTableModel) table.getModel();
+			    	//List<IzvjestajVM> lista=ic.dajGodisnjiIzvjestaj(godina.getValue());
+			    	int rowCount = model.getRowCount();
+			    	//Remove rows one by one from the end of the table
+			    	for (int i = rowCount - 1; i >= 0; i--) {
+			    	    model.removeRow(i);
+			    	}
+			    	
+			    	for (int i=0; i<al.size(); i++)
+			    	{
+			    		
+			    		Object[] objs = {(String)cbSektori.getSelectedItem(), al.get(i).getZaposlenikIme(), al.get(i).getZaposlenikPrezime(), al.get(i).getRadniDani(), al.get(i).getNeradniDani() };
+			    		model.addRow(objs);
+			    	}
+			    	
+			    	
+			    	
+			    }
+			    	catch (Exception er) {
+
+			    		logger.error(er);
+						JOptionPane.showMessageDialog(frame, er.getMessage(),
+								"Greška", JOptionPane.INFORMATION_MESSAGE);
+						
+
+					} finally {
+						if (sess != null)
+							sess.close();
+					}
+			}});
+			}
+		
+		catch (Exception er) {
+
+			logger.error(er);
+			JOptionPane.showMessageDialog(frame, er.getMessage(),
+					"Greška", JOptionPane.INFORMATION_MESSAGE);
+			
+
+		} finally {
+			
+		}
 	}
 
 	/**
@@ -76,7 +147,7 @@ public class GodisnjiIzvjestaj {
 		frmSolutionsiGodisnji.setResizable(false);
 		frmSolutionsiGodisnji.setTitle("SolutionSI - Godišnji izvjestaj");
 		frmSolutionsiGodisnji.setBounds(100, 100, 675, 300);
-		frmSolutionsiGodisnji.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSolutionsiGodisnji.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmSolutionsiGodisnji.getContentPane().setLayout(null);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 70, 639, 159);
@@ -101,18 +172,16 @@ public class GodisnjiIzvjestaj {
 		lblSektor.setBounds(10, 11, 59, 22);
 		frmSolutionsiGodisnji.getContentPane().add(lblSektor);
 		
-		JComboBox cbSektori = new JComboBox();
-		//String sektori[] = sc.dajSveSektore();
-		//cbSektori.setModel(new DefaultComboBoxModel(sektori));
+		cbSektori = new JComboBox();
 		cbSektori.setBounds(57, 12, 106, 20);
 		frmSolutionsiGodisnji.getContentPane().add(cbSektori);
 		JLabel lblGodina = new JLabel("Godina:");
 		lblGodina.setBounds(205, 11, 67, 22);
 		frmSolutionsiGodisnji.getContentPane().add(lblGodina);
 		
-		JYearChooser yearChooser = new JYearChooser();
-		yearChooser.setBounds(268, 13, 67, 20);
-		frmSolutionsiGodisnji.getContentPane().add(yearChooser);
+		godina = new JYearChooser();
+		godina.setBounds(268, 13, 67, 20);
+		frmSolutionsiGodisnji.getContentPane().add(godina);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmSolutionsiGodisnji.setJMenuBar(menuBar);
@@ -122,6 +191,17 @@ public class GodisnjiIzvjestaj {
 		
 		JMenuItem mntmUputstvo = new JMenuItem("Uputstvo");
 		mnHelp.add(mntmUputstvo);
+		mntmUputstvo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					  Desktop desktop = java.awt.Desktop.getDesktop();
+					  URI oURL = new URI("https://github.com/SoftverInzenjeringETFSA/SI2015Tim2/blob/master/Documents/User%20Interface%20v2.0.pdf");
+					  desktop.browse(oURL);
+					} catch (Exception e) {
+					  e.printStackTrace();
+					}
+			}
+			});
 		
 		JMenu mnOdjava = new JMenu("Odjava");
 		menuBar.add(mnOdjava);

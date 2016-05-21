@@ -1,10 +1,12 @@
 package tim12.si.app.godisnji_odmori.View;
 
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URI;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -177,6 +179,17 @@ public class MjesecniIzvjestaj {
 		
 		JMenuItem mntmUputstvo = new JMenuItem("Uputstvo");
 		mnHelp.add(mntmUputstvo);
+		mntmUputstvo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					  Desktop desktop = java.awt.Desktop.getDesktop();
+					  URI oURL = new URI("https://github.com/SoftverInzenjeringETFSA/SI2015Tim2/blob/master/Documents/User%20Interface%20v2.0.pdf");
+					  desktop.browse(oURL);
+					} catch (Exception e) {
+					  e.printStackTrace();
+					}
+			}
+			});
 		
 		JMenu mnOdjava = new JMenu("Odjava");
 		menuBar.add(mnOdjava);
