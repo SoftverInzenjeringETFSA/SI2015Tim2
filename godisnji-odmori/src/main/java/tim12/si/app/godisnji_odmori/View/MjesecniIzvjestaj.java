@@ -84,12 +84,45 @@ public class MjesecniIzvjestaj {
 			String sektori[] = sc.dajSveSektore();
 			comboBox.setModel(new DefaultComboBoxModel(sektori));
 			comboBox.setSelectedIndex(-1);
-	
-			/*btnPrikaiIzvjetaj.addActionListener(new ActionListener () {
+			
+			comboBox.addActionListener (new ActionListener () {
 			    public void actionPerformed(ActionEvent e) {
-			    	PrikaziIzvjestaj();
+			    	Session sess = null;
+			    	try {
+			    	sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
+			    	ZaposlenikController zc = new ZaposlenikController(sess);
+			    	ArrayList<ZaposlenikBrDana> al = zc.DajZaposlenikeZaGodisnjiIzvjestaj((String)comboBox.getSelectedItem(), monthChooser.getMonth());
+			    	DefaultTableModel model = (DefaultTableModel) table.getModel();
+			    	
+			    	int rowCount = model.getRowCount();
+			    	//Remove rows one by one from the end of the table
+			    	for (int i = rowCount - 1; i >= 0; i--) {
+			    	    model.removeRow(i);
+			    	}
+			    int brojiRadne=0;
+			    int brojiNeradne=0;
+			    	for (int i=0; i<al.size(); i++)
+			    	{
+			    		
+			    		Object[] objs = {(String)comboBox.getSelectedItem(), al.get(i).getZaposlenikIme(), al.get(i).getZaposlenikPrezime(), al.get(i).getRadniDani(), al.get(i).getPreostaloSlobodnih()};
+			    		model.addRow(objs);
+			    		brojiRadne+=al.get(i).getRadniDani();
+			    		brojiNeradne+=al.get(i).getPreostaloSlobodnih();
+			    	}
+			    	Object[] objs = {"", "", "Ukupno: ", brojiRadne,brojiNeradne};
+			    	model.addRow(objs);			    	
 			    }
-	});*/
+			    	catch (Exception er) {
+
+			    		logger.error(er);
+						JOptionPane.showMessageDialog(frame, er.getMessage(),
+								"Greška", JOptionPane.INFORMATION_MESSAGE);
+
+					} finally {
+						if (sess != null)
+							sess.close();
+					}
+			}});
 			}
 		
 		catch (Exception er) {
@@ -97,7 +130,6 @@ public class MjesecniIzvjestaj {
 			logger.error(er);
 			JOptionPane.showMessageDialog(frame, er.getMessage(),
 					"Greška", JOptionPane.INFORMATION_MESSAGE);
-			
 
 		} finally {
 			
@@ -157,22 +189,12 @@ public class MjesecniIzvjestaj {
 		lblMjesec.setBounds(206, 12, 59, 20);
 		frmSolutionsiMjesecni.getContentPane().add(lblMjesec);
 		
-		JMonthChooser monthChooser = new JMonthChooser();
+		monthChooser = new JMonthChooser();
 		monthChooser.setBounds(261, 11, 117, 22);
 		frmSolutionsiMjesecni.getContentPane().add(monthChooser);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmSolutionsiMjesecni.setJMenuBar(menuBar);
-		
-		
-		JButton btnPrikaiIzvjetaj = new JButton("Prikaži izvještaj");
-		btnPrikaiIzvjetaj.setBounds(399, 11, 126, 23);
-		btnPrikaiIzvjetaj.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				PrikaziIzvjestaj();
-			}
-		});
-		frmSolutionsiMjesecni.getContentPane().add(btnPrikaiIzvjetaj);
 		
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
@@ -198,106 +220,5 @@ public class MjesecniIzvjestaj {
 		JMenuItem mntmLogOut = new JMenuItem("Odjavi se");
 		mnOdjava.add(mntmLogOut);
 	}
-	
-	void PrikaziIzvjestaj(){
 		
-		if(comboBox.getSelectedIndex()==-1){
-			JOptionPane.showMessageDialog(frame, "Odaberite sektor", "Greška", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		PrikaziZaposlenika();
-		
-		/*switch (monthChooser.getMonth())
-		{
-		case 0:
-			//if mjesecPrisustva=januar 
-			PrikaziZaposlenika();
-			break;
-		case 2: 
-			//if mjesecPrisustva=februar 
-			PrikaziZaposlenika();
-			break;
-		case 3:
-			//if mjesecPrisustva=mart 
-			PrikaziZaposlenika();
-			break;
-		case 4:
-			//if mjesecPrisustva=april 
-			PrikaziZaposlenika();
-			break;
-		case 5:
-			//if mjesecPrisustva=januar 
-			PrikaziZaposlenika();
-			break;
-		case 6:
-			//if mjesecPrisustva=januar 
-			PrikaziZaposlenika();
-			break;
-		case 7:
-			//if mjesecPrisustva=januar 
-			PrikaziZaposlenika();
-			break;
-		case 8:
-			//if mjesecPrisustva=januar 
-			PrikaziZaposlenika();
-			break;
-		case 9:
-			//if mjesecPrisustva=januar 
-			PrikaziZaposlenika();
-			break;
-		case 10:
-			//if mjesecPrisustva=januar 
-			PrikaziZaposlenika();
-			break;
-		case 11:
-			//if mjesecPrisustva=januar 
-			PrikaziZaposlenika();
-			break;
-		case 1:
-			//if mjesecPrisustva=januar 
-			PrikaziZaposlenika();
-			break;
-		}*/
-	  		    	
-			}
-
-	void PrikaziZaposlenika(){
-		
-		//ostalo mi je da izdvojim informacije o zaposleniku u odnosu na ono što je 
-		//selektovano u monthChooseru
-		Session sess = null;
-		try {
-		sess = tim12.si.app.godisnji_odmori.HibernateUtil.getSessionFactory().openSession();
-		ZaposlenikController zc = new ZaposlenikController(sess);
-		ArrayList<ZaposlenikBrDana> al = zc.DajZaposlenikeZaIzvjestaj((String)comboBox.getSelectedItem());
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		
-		int rowCount = model.getRowCount();
-		//Remove rows one by one from the end of the table
-		for (int i = rowCount - 1; i >= 0; i--) {
-		    model.removeRow(i);
-		}
-		
-		for (int i=0; i<al.size(); i++)
-		{
-			
-			Object[] objs = {(String)comboBox.getSelectedItem(), al.get(i).getZaposlenikIme(), al.get(i).getZaposlenikPrezime(), al.get(i).getRadniDani(), al.get(i).getIskoristeniGodisnji()};
-			model.addRow(objs);
-		}
-		
-		//events = oc.dajSvaOdsustva((String)combobox.getSelectedItem());
-		
-		}
-		catch (Exception er) {
-		
-			logger.error(er);
-			JOptionPane.showMessageDialog(frame, er.getMessage(),
-					"Greška", JOptionPane.INFORMATION_MESSAGE);
-			
-		
-		} finally {
-			if (sess != null)
-				sess.close();
-		}
-	}
 }
