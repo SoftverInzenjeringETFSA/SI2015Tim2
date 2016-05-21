@@ -512,7 +512,7 @@ public class UserMainWindow {
 
 		label_1 = new JLabel("");
 		label_1.setForeground(Color.RED);
-		label_1.setBounds(326, 333, 285, 36);
+		label_1.setBounds(240, 333, 371, 36);
 		panel_9.add(label_1);
 
 		JPanel panel_1 = new JPanel();
@@ -916,7 +916,19 @@ public class UserMainWindow {
 			label_1.setText("Sva polja moraju biti popunjena.");
 			return false;
 
+		}else{
+			String regex = "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{8,}$";
+			
+			if(!txtNovaSifra.getText().matches(regex)){
+				
+				label_1.setText("Sifra mora biti duzine 8 karaktera i sadrzavat barem jednu cifru");
+				return false;
+			}
+			
 		}
+			
+			
+			
 
 		if (!zc.uporediSifruBaza(Singleton.getInstance().getUsername(), txtStaraSifra.getText())) {
 
