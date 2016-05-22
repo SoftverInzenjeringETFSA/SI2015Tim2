@@ -819,6 +819,7 @@ public class ManagementMainWindow {
             	osvjeziListuSektora();
             	ocistiPolja();
             	osvjeziComboBoxSektora();
+            	osvjeziTabeluZaposlenika();
             	
             }
         }); 
