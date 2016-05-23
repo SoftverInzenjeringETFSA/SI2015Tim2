@@ -15,23 +15,10 @@ public class HibernateUtil {
 
 	private static SessionFactory buildSessionFactory() {
 		try {
-
 			java.util.Properties properties = new Properties();
-			properties.load(new FileInputStream("src/main/resources/db.properties"));
-
-			Configuration configuration = new Configuration();
-			 	File f = new File("src/main/resources/hibernate.cfg.xml");
-
-			configuration.configure(f).addProperties(properties);
-			
-
-			//ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-
-			SessionFactory sessionFactory = configuration.buildSessionFactory();
+			properties.load(new FileInputStream("db.properties"));
 			// Create the SessionFactory from hibernate.cfg.xml
-			//File f = new File("src/main/java/hibernate.cfg.xml");
-			//return new Configuration().configure(f).buildSessionFactory();
-			return sessionFactory;
+			return new Configuration().addProperties(properties).configure().buildSessionFactory();
 		} catch (Exception ex) {
 			// Make sure you log the exception, as it might be swallowed
 			System.err.println("Initial SessionFactory creation failed." + ex);
@@ -40,6 +27,9 @@ public class HibernateUtil {
 	}
 
 	public static SessionFactory getSessionFactory() {
+
 		return sessionFactory;
+
 	}
+
 }
