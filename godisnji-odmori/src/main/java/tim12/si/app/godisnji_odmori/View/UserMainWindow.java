@@ -217,7 +217,7 @@ public class UserMainWindow {
 		tabbedPane.addTab("Početna", null, panel, null);
 		panel.setLayout(null);
 
-		ImageIcon ii = new ImageIcon(getClass().getResource("/boss2.png"));
+		ImageIcon ii = new ImageIcon();
 		JLabel label = new JLabel("");
 		label.setVerticalAlignment(SwingConstants.BOTTOM);
 		label.setHorizontalAlignment(SwingConstants.CENTER);

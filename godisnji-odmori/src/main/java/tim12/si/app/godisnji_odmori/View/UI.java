@@ -104,15 +104,17 @@ public class UI {
 			Singleton.getInstance().setUsername(usernameInput.getText());
 			Date danas = new Date();
 			if(!pC.provjeriDaLiPostoji(zc.dajIdPoUsernamuBaza(Singleton.getInstance().getUsername()),danas))		
-			pC.evidentirajPrisustvo(zc.dajIdPoUsernamuBaza(Singleton.getInstance().getUsername()),danas);
-			 ZaposlenikAccountVM acc = zc.DajZaposlenikAccVM(Singleton.getInstance().getUsername(), passwordInput.getText());
-			 
+			 pC.evidentirajPrisustvo(zc.dajIdPoUsernamuBaza(Singleton.getInstance().getUsername()),danas);
+			ZaposlenikAccountVM acc = zc.DajZaposlenikAccVM(Singleton.getInstance().getUsername(), passwordInput.getText());
 			 if(acc.getPrivilegija()==true)
 			 {
 			
 				 //otvori manager formu
+
 				 ManagementMainWindow mw = new ManagementMainWindow();
+
 				 mw.Management();
+
 			 }
 			 else
 			 {

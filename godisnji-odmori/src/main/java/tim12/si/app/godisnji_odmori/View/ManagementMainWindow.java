@@ -211,6 +211,7 @@ public class ManagementMainWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
 		frmSolutionsi = new JFrame();
 		frmSolutionsi.setResizable(false);
 		frmSolutionsi.setTitle("SolutionSI");
@@ -219,7 +220,7 @@ public class ManagementMainWindow {
 		frmSolutionsi.getContentPane().setLayout(null);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		frmSolutionsi.setLocation(dim.width/2-frmSolutionsi.getSize().width/2, dim.height/2-frmSolutionsi.getSize().height/2);
-		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 11, 804, 468);
 		frmSolutionsi.getContentPane().add(tabbedPane);
@@ -228,14 +229,14 @@ public class ManagementMainWindow {
 		tabbedPane.addTab("Početna", null, panel, null);
 		panel.setLayout(null);
 		
-		ImageIcon ii = new ImageIcon(getClass().getResource("/boss2.png"));
+		ImageIcon ii = new ImageIcon();
 		JLabel label = new JLabel("");
 		label.setVerticalAlignment(SwingConstants.BOTTOM);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setBounds(10, 11, 160, 128);
 		label.setIcon(ii);
 		panel.add(label);
-		
+
 		JLabel label_1 = new JLabel("Status:");
 		label_1.setHorizontalAlignment(SwingConstants.LEFT);
 		label_1.setBounds(10, 223, 68, 14);
@@ -269,7 +270,6 @@ public class ManagementMainWindow {
 		label_6.setBounds(148, 301, 46, 14);
 		label_6.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(label_6);
-		
 		JLabel lblZaOvuGodinu = new JLabel("Za ovu godinu Vam je ostalo da iskoristite još ");
 		lblZaOvuGodinu.setBounds(10, 346, 292, 26);
 		lblZaOvuGodinu.setForeground(new Color(128, 0, 0));
